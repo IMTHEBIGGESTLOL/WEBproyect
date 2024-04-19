@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Analyst Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <!-- Bootstrap CSS v5.2.1 -->
+   <link rel="stylesheet" href="../Search_Page/navbar.css">
+   <link
+       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+       rel="stylesheet"
+       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+       crossorigin="anonymous"
+   />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-dark" style="background: #7469B6;" id="navbar">
+        <a class="navbar-brand mx-2" href="P01_index.html"
+        ><img
+            src="../Login_SignUp_Page/Img/logo.png"
+            alt=""
+            width="50"
+        /></a>
+        <button
+        class="navbar-toggler d-lg-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        >
+        <i class="bi bi-list"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav me-auto mt-0 mt-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" href="../Search_Page/navbar.html" aria-current="page"
+                >Home </a
+            >
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="../Search_Page/categories.html">Categories</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="../Search_Page/continent_map.html">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../recipes/recipes.html">Recipes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../profile_page/index.html">My Profile</a>
+            </li>
+        </ul> 
+        <div class="d-grid gap-2">
+            <button type="button" class="action-btn mx-3 my-1 my-sm-0"><a href="../Login_SignUp_Page/login.html" class="nav-link active">Get Started</a></button>
+        </div>
+        </div>
+    </nav>
+</header>
+    <div class="background-container"></div>
+
+    <div class="container">
+        <h2>Data Analytics</h2>
+        <canvas id="analyticsChart"></canvas>
+      </div>
+    
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const analyticsData = {
+            labels: ['New Recipes', 'New Users', 'Eliminated Users', 'Eliminated Recipes'],
+            datasets: [{
+              label: 'Quantity',
+              backgroundColor: 'rgba(253,202,225, 1)',
+              borderColor: 'rgba(253,253,150, 6)',
+              borderWidth: 1,
+              data: [25, 10, 5, 15]
+            }]
+          };
+    
+          const chartOptions = {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            },
+            defaultFontFamily: "'Arial', sans-serif", // Change the font family here
+             defaultFontSize: 16, // Change the font size here
+            defaultFontStyle: 'bold' // Change the font weight here
+          };
+    
+          const ctx = document.getElementById('analyticsChart').getContext('2d');
+          const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: analyticsData,
+            options: chartOptions
+          });
+        });
+      </script>
+      <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+  ></script>
+
+  <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+  ></script>
+</body>
+</html>

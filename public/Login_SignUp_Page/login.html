@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Title</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+
+        <link href="css/login_style.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+
+        <style>
+            body{
+                background: #FF9B9B;
+                background: linear-gradient(to right, #FFFEC4, #FF9B9B);
+            }
+
+            .bg{
+                background-image: url(https://i.pinimg.com/564x/5b/19/63/5b196339db468435434d2669a9067526.jpg);
+                background-position: center center;
+            }
+            .bg img{
+                width: 60;
+            }
+
+            h2{
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .container{
+                font-family: 'Bilbo', cursive;
+            }
+
+            #SignUpM{
+                font-family: 'Bilbo', cursive;
+            }
+        </style>
+
+        <form action="">
+            <div
+            class="modal fade"
+            id="SignUpM"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="modalTitleId"
+            aria-hidden="true"
+            >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="background: #CBFFA9;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Sign Up</h5>
+                    <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                        <div class="input-group mb-3">
+                            <input
+                            type="text"
+                            class="form-control ml-3"
+                            placeholder="First Name"
+                            aria-label="First_name"
+                            aria-describedby="basic-addon1"
+                            required
+                            pattern="[a-zA-Z]*"
+                            />
+                        </div>
+                        </div>
+                        <div class="col-6">
+                        <div class="input-group mb-3">
+                            <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Last Name"
+                            aria-label="Last_name"
+                            aria-describedby="basic-addon1"
+                            pattern="[a-zA-Z]*"
+                            required
+                            />
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input
+                        id="e-mail"
+                        type="email"
+                        class="form-control"
+                        placeholder="Enter your E-mail"
+                        aria-label="E_mail"
+                        aria-describedby="basic-addon1"
+                        required
+                        />
+                    </div>
+                    <label for="BirthDate" class="form-label">Birth Date</label>
+                    <div class="input-group mb-3">
+                        <input
+                          type="date"
+                          class="form-control"
+                          aria-label="Date"
+                          aria-describedby="basic-addon1"
+                          placeholder="Birth Date"
+                          name="BirthDate"
+                          required
+                        />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Password"
+                        aria-label="Password"
+                        aria-describedby="basic-addon1"
+                        required
+                        />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Confirm Password"
+                        aria-label="Confirm_Password"
+                        aria-describedby="basic-addon1"
+                        required
+                        />
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="submit" class="action-btn">Sign Up</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </form>
+
+        <script src="myCode.js"></script>
+
+        <script>
+            var modalId = document.getElementById("modalId");
+
+            modalId.addEventListener("show.bs.modal", function (event) {
+            // Button that triggered the modal
+            let button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            let recipient = button.getAttribute("data-bs-whatever");
+
+            let html = `<table border cellspacing="0" width="400px">
+                    <tr>
+                        <th>Name</th>
+                        <th>Grade</th>
+                    </tr>`;
+
+            // Use above variables to manipulate the DOM
+            });
+        </script>
+    </head>
+
+    <body>
+       
+        <div class="container w-75 mt-5 rounded shadow">
+            <div class="row align-items-stretch">
+                <div class="col bg d-none d-md-block col-md-5 col-lg-5 col-xl-6 rounded" ></div>
+                <div class="col p-5 rounded-end" style="background: #CBFFA9;">
+                    <div class="text-end">
+                        <img src="Img/logo.png" width="60" alt="">
+                    </div>
+                    <img class="title" style="display: block; margin: 0 auto;" src="Img/CookIt_Text.png" width="200" alt="">
+                    <form action="#">
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" name="connected" class="form-check-input">
+                            <label for="connected" class="form-check-label">Remember me</label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="action-btn">Log In</button>
+                        </div>
+                        <div class="my-3">
+                            <span>Dont have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#SignUpM">Sign Up</a></span><br>
+                            <span><a href="#">Forgot password?</a></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

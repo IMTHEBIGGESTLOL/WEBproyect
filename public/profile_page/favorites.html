@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorites Recipes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../recipes/styleRecipe.css" />
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link rel="stylesheet" href="../Search_Page/navbar.css">
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-dark" style="background: #7469B6;" id="navbar">
+        <a class="navbar-brand mx-2" href="P01_index.html"
+        ><img
+            src="../Login_SignUp_Page/Img/logo.png"
+            alt=""
+            width="50"
+        /></a>
+        <button
+        class="navbar-toggler d-lg-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        >
+        <i class="bi bi-list"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav me-auto mt-0 mt-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" href="../Search_Page/navbar.html" aria-current="page"
+                >Home </a
+            >
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="../Search_Page/categories.html">Categories</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="../Search_Page/continent_map.html">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../recipes/recipes.html">Recipes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../profile_page/index.html">My Profile</a>
+            </li>
+        </ul> 
+        <div class="d-grid gap-2">
+            <button type="button" class="action-btn mx-3 my-1 my-sm-0"><a href="../Login_SignUp_Page/login.html" class="nav-link active">Get Started</a></button>
+        </div>
+        </div>
+    </nav>
+</header>
+<div class="background-container"></div>
+
+<div class="container">
+  <h1 class="mt-4">Favorites Recipes</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="recipe-card">
+          <section class="recipe-hero">
+              <img src="https://sallysbakingaddiction.com/wp-content/uploads/2013/05/classic-chocolate-chip-cookies.jpg" class="img recipe-hero-img" />
+              <article class="recipe-info">
+                <h2>Chocolate Chip Cookies</h2>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, exercitationem rerum dolor temporibus quas accusamus, provident iste ad obcaecati maxime magni laudantium consequuntur quam. Ratione assumenda corporis quos! A, dolorum!.
+                </p>
+                <div class="recipe-icons">
+                  <article>
+                    <h5>Recipe Duration</h5>
+                    <p>75 min.</p>
+                  </article>
+                </div>
+              </article>
+            </section>
+            <!-- content -->
+            <section class="recipe-container">
+              <article>
+                <h4>instructions</h4>
+                <!-- single instruction -->
+                <div class="single-instruction">
+                  <header>
+                    <p>step 1</p>
+                    <div></div>
+                  </header>
+                  <p>
+                    Mix all ingredients
+                  </p>
+                </div>
+                <!-- end of single instruction -->
+                <!-- single instruction -->
+                <div class="single-instruction">
+                  <header>
+                    <p>step 2</p>
+                    <div></div>
+                  </header>
+                  <p>
+                    Let the mix rest for an hour
+                  </p>
+                </div>
+                <!-- end of single instruction -->
+                <!-- single instruction -->
+                <div class="single-instruction">
+                  <header>
+                    <p>step 3</p>
+                    <div></div>
+                  </header>
+                  <p>
+                    Bake the cookies in an oven for 15 min at 180°C
+                  </p>
+                </div>
+                <!-- end of single instruction -->
+              </article>
+              <article>
+                <div>
+                  <h4>ingredients</h4>
+                  <p class="single-ingredient">1 1/2 cups dry pancake mix</p>
+                  <p class="single-ingredient">1/2 cup flax seed meal</p>
+                  <p class="single-ingredient">1 cup skim milk</p>
+                </div>
+                <div>
+                  <h4>tools</h4>
+                  <p class="single-tool">Hand Blender</p>
+                  <p class="single-tool">Large Heavy Pot With Lid</p>
+                  <p class="single-tool">Measuring Spoons</p>
+                  <p class="single-tool">Measuring Cups</p>
+                </div>
+              </article>
+            </section>   
+            <button class="btn-custom-color show-recipe">Show Recipe</button>
+          </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Recipes List</h2>
+      <div class="favorites-list">
+        <ol type="I">
+          <li>Chocolate Chip Cookies</li>
+          <!-- Add more favorite recipes here -->
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const showButtons = document.querySelectorAll('.show-recipe');
+
+    showButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const recipeInfo = this.parentNode.querySelector('.recipe-container');
+        recipeInfo.classList.toggle('show');
+        this.parentNode.parentNode.classList.toggle('col-md-6');
+        this.parentNode.parentNode.classList.toggle('col-md-12');
+      });
+    });
+  });
+</script>
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+crossorigin="anonymous"
+></script>
+</body>
+</html>

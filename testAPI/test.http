@@ -1,0 +1,167 @@
+@host = http://localhost:3000
+
+//USERS
+
+### GET ALL USERS
+GET {{host}}/api/users
+x-auth: 23423
+
+### GET USER BY _ID
+GET {{host}}/api/users/6620682a8c79b23fa54bd305
+x-auth: 23423
+
+### GET USER BY EMAIL
+GET {{host}}/api/users/email/hola@gmail.com
+x-auth: 23423
+
+### POST NEW USER
+POST {{host}}/api/users
+Content-Type: application/json
+
+{
+    "username": "Guillermo",
+    "userPhoto": "",
+    "name": "El Guille",
+    "bio": "soy estudiante",
+    "email": "guille@gmail.com",
+    "password": "4321",
+    "phone": "3345621789",
+    "birthday": "2004-06-23T06:00:00.000Z",
+    "country": "Mexico"
+}
+
+### PUT USER (UPDATE)
+PUT {{host}}/api/users/email/juanito@gmail.com
+Content-Type: application/json
+
+{
+    "username": "Ivan34EDIT",
+    "userPhoto": "",
+    "name": "Juanito Estrella EDIT",
+    "bio": "Estudio pero ps xd",
+    "email": "yanoesjuanito@gmail.com",
+    "password": "1234",
+    "phone": "3345621789",
+    "birthday": "2004-06-23T06:00:00.000Z",
+    "country": "Mexico"
+}
+
+### DELETE USER
+DELETE {{host}}/api/users/email/juanito@gmail.com
+x-auth: 23423
+
+
+//RECIPES
+
+### GET ALL RECIPES
+GET {{host}}/api/recipes
+x-auth: 23423
+
+###
+GET {{host}}/api/recipes/662056c78c79b23fa54bd303
+x-auth: 23423
+
+//Fecha, rating
+### POST NEW RECIPE
+POST {{host}}/api/recipes
+Content-Type: application/json
+
+{
+    "title": "Kimchi de Cerdo",
+    "description": "Es una delicia en plato",
+    "ingredients": [
+        "carne",
+        "soya"
+    ],
+    "steps": [
+        "cocinar",
+        "comer"
+    ],
+    "author": {
+        "_id": "6620682a8c79b23fa54bd305"
+    },
+    "reviews": [
+        "muy deliciosa"
+    ],
+    "categories": [],
+    "uid": "5",
+    "photo": "https://static.vecteezy.com/system/resources/previews/002/873/829/large_2x/stir-fried-pork-with-kimchi-korean-food-style-free-photo.jpg",
+    "cook_time": 20,
+    "prep_time": 15
+}
+
+###PUT RECIPE (UPDATE)
+PUT {{host}}/api/recipes/6622caa0c8da3b1876015508
+Content-Type: application/json
+
+{
+    "title": "Kimchi de Cerdo EDIT",
+    "description": "Es una delicia en plato EDIT",
+    "ingredients": [
+        "carne",
+        "soya"
+    ],
+    "steps": [
+        "cocinar",
+        "comer"
+    ],
+    "author": {
+        "_id": "6620682a8c79b23fa54bd305"
+    },
+    "reviews": [
+        "muy deliciosa"
+    ],
+    "categories": [],
+    "uid": "5",
+    "rating": 4.3,
+    "photo": "https://static.vecteezy.com/system/resources/previews/002/873/829/large_2x/stir-fried-pork-with-kimchi-korean-food-style-free-photo.jpg",
+    "cook_time": 20,
+    "prep_time": 15
+}
+
+###DELETE RECIPE
+DELETE {{host}}/api/recipes/6622caa0c8da3b1876015508
+
+
+
+
+
+
+
+###
+GET {{host}}/api/categories
+x-auth: 23423
+
+###
+GET {{host}}/users/4/test@abc.com
+
+###
+GET {{host}}/users?minID=4&maxID=6
+
+###
+GET {{host}}/users?pageNumber=2&pageSize=5
+
+###
+POST {{host}}/users
+Content-Type: application/json
+
+{
+    "name":"Test Name",
+    "email": "T2est email",
+    "age":24
+}
+
+
+
+###
+PUT {{host}}/users/4
+Content-Type: application/json
+
+{
+    "name": "Put Name"
+}
+
+###
+DELETE {{host}}/users/4
+x-auth: 23423
+
