@@ -1,8 +1,10 @@
 const {mongoose} = require("../DB/connectDB")
+const {User} = require("./User");
 
 let recipeSchema = mongoose.Schema({
     uid: {
         type: String,
+        unique: true,
         required: true
     },
     title: {
@@ -59,7 +61,7 @@ let recipeSchema = mongoose.Schema({
 })
 
 recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=4, pageNumber=1)=>{
-    let proj = isAdmin? {}:{name: 1, description:1, _id:0};
+    let proj = isAdmin? {}:{title: 1, description:1, _id:0};
     // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
     let docs = Recipe.find(filter, proj).sort({name: 1}).skip((pageNumber-1)*pageSize).limit(pageSize).populate('author', 'username').populate('categories', 'name');
     let count = Recipe.find(filter).count();
@@ -72,14 +74,24 @@ recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=4, pa
     return {recipes: resp[0], total: resp[1]};
 }
 
-recipeSchema.statics.saveRecipe = async (recipeData)=>{
+recipeSchema.statics.saveRecipe = async (username, recipeData)=>{
+
+    let autor = await User.findUser(username);
+    let id = autor._id;
+
+    recipeData.author = id;
+
     let newRecipe = Recipe(recipeData);
-    return await newRecipe.save();
+    let doc = await newRecipe.save();
+
+    await User.addrecipes(username, doc._id);
+    return doc;
+
 }
 
-recipeSchema.statics.findRecipe = async (filters, _id) => {
+recipeSchema.statics.findRecipe = async (filters, isAdmin = false, _id) => {
     try {
-        let proj = {title: 1, author: 1, rating: 1}
+        let proj = isAdmin? {title: 1, author: 1, rating: 1}:{title: 1, author: 1, rating: 1, _id: 0}
         let recipe = await Recipe.findOne({ _id }, proj).populate('author', 'username');
         console.log(recipe);
 
@@ -101,6 +113,7 @@ recipeSchema.statics.findRecipe = async (filters, _id) => {
 
 recipeSchema.statics.updateRecipe = async (_id, recipeData)=>{
     delete recipeData.rating;
+    delete recipeData.author;
     let updateRecipe = await Recipe.findOneAndUpdate({_id},
                                 {$set: recipeData},
                                 {new: true}

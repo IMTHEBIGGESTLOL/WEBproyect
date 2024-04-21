@@ -1,15 +1,28 @@
 function validateHeader(req,res,next)
 {
-    let header = req.get('x-auth');
+    let admin = req.get('x-auth');
+
+    if(admin)
+    {
+        req.auth = admin;
+        next();
+    }else{
+        req.auth = "Nuser"
+        next();
+    }
+}
+
+function validateUser(req, res, next)
+{
+    let header = req.get('x-token');
 
     if(!header)
     {
-        res.status(403).send({error: "No auth data"});
+        res.status(403).send({error: "User required for this action"});
         return;
     }
 
     req.token = header;
-
     next();
 }
 
@@ -17,7 +30,7 @@ function validateAdmin(req,res,next)
 {
     let pass = '23423';
 
-    if(req.token == pass)
+    if(req.auth == pass)
     {
         req.admin = true;
     }else{
@@ -41,4 +54,4 @@ function requireAdmin(req,res,next)
 }
 
 
-module.exports = {validateHeader, validateAdmin, requireAdmin}
+module.exports = {validateHeader, validateAdmin, requireAdmin, validateUser}

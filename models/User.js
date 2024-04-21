@@ -6,6 +6,7 @@ let userSchema = mongoose.Schema({
     },
     username: {
         type: String,
+        unique: true,
         required: true
     },
     userPhoto: {
@@ -42,13 +43,18 @@ let userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Recipe',
         deafult: []
+    }],
+    friends: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        deafult: []
     }]
 })
 
 userSchema.statics.findUsers= async (filter, isAdmin = false, pageSize=4, pageNumber=1)=>{
     let proj = isAdmin? {}:{name: 1, email:1, _id:0};
     // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
-    let docs = User.find(filter, proj).sort({name: 1}).skip((pageNumber-1)*pageSize).limit(pageSize).populate('myrecipes', 'title');
+    let docs = User.find(filter, proj).sort({name: 1}).skip((pageNumber-1)*pageSize).limit(pageSize).populate('myrecipes', 'title').populate('friends', 'username name');
     let count = User.find(filter).count();
 
     let resp = await Promise.all([docs, count]);
@@ -61,19 +67,47 @@ userSchema.statics.findUsers= async (filter, isAdmin = false, pageSize=4, pageNu
     return {users: resp[0], total: resp[1]};
 }
 
-userSchema.statics.saveUser = async (userData)=>{
-    let newUser = User(userData);
-    return await newUser.save();
+userSchema.statics.addrecipes = async (username, recipeId) => {
+    let user = await User.findOne({username});
+    if(user){
+        user.myrecipes.push(recipeId);
+        return await user.save();
+    }
+
+    return {error: "User not found"};
 }
 
-userSchema.statics.findUser = async (email)=>{
-    let user = await User.findOne({email});
+userSchema.statics.addFriends = async (username, friendId) => {
+    let user = await User.findOne({username});
+    if(user)
+    {
+        user.friends.push(friendId);
+        return await user.save();
+    }
+
+    return {error: "user not found"};
+}
+
+userSchema.statics.saveUser = async (userData)=>{
+
+    try {
+        let newUser = User(userData);
+        let doc =  await newUser.save();
+        return doc;
+    }catch(error)
+    {
+        return {error_mesg : error.errmsg};
+    }
+}
+
+userSchema.statics.findUser = async (username)=>{
+    let user = await User.findOne({username});
     return user;
 }
 
 userSchema.statics.findUserById = async (_id)=>{
     let proj = {username: 1, myrecipes: 1};
-    let user = await User.findById({_id},proj).populate('myrecipes', 'description');
+    let user = await User.findById({_id},proj).populate('myrecipes', 'title');
     return user;
 }
 

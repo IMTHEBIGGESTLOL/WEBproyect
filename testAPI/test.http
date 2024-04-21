@@ -10,8 +10,8 @@ x-auth: 23423
 GET {{host}}/api/users/6620682a8c79b23fa54bd305
 x-auth: 23423
 
-### GET USER BY EMAIL
-GET {{host}}/api/users/email/hola@gmail.com
+### GET USER BY USERNAME
+GET {{host}}/api/users/email/Guillermo
 x-auth: 23423
 
 ### POST NEW USER
@@ -19,14 +19,14 @@ POST {{host}}/api/users
 Content-Type: application/json
 
 {
-    "username": "Ivan",
+    "username": "IMTHEBIGGESTLOL",
     "userPhoto": "",
-    "name": "El ivan",
-    "bio": "soy ivan",
-    "email": "ivan@gmail.com",
+    "name": "Daniel Arellano",
+    "bio": "Naci en GDL y me encanta cocinar",
+    "email": "dany@gmail.com",
     "password": "1234",
     "phone": "3345621789",
-    "birthday": "2004-06-23T06:00:00.000Z",
+    "birthday": "2004-04-04T06:00:00.000Z",
     "country": "Mexico"
 }
 
@@ -53,45 +53,47 @@ x-auth: 23423
 
 //RECIPES
 
-### GET ALL RECIPES
+### GET ALL RECIPES ADMIN
 GET {{host}}/api/recipes
 x-auth: 23423
 
+### GET ALL RECIPES NOT ADMIN
+GET {{host}}/api/recipes
+x-auth: 2342
+
 ###
-GET {{host}}/api/recipes/662056c78c79b23fa54bd303
+GET {{host}}/api/recipes/66256e68c3d0c110c660a8f8
 x-auth: 23423
 
 //Fecha, rating
 ### POST NEW RECIPE
 POST {{host}}/api/recipes
+x-token: Ivan
 Content-Type: application/json
 
 {
-    "title": "Kimchi de Cerdo",
-    "description": "Es una delicia en plato",
+    "title": "Tongue Burrito",
+    "description": "Is a squecity",
     "ingredients": [
         "carne",
-        "soya"
+        "tortilla harina"
     ],
     "steps": [
         "cocinar",
         "comer"
     ],
-    "author": {
-        "_id": "6620682a8c79b23fa54bd305"
-    },
     "reviews": [
-        "muy deliciosa"
+        "muy ricos los burritos"
     ],
-    "categories": [],
-    "uid": "5",
-    "photo": "https://static.vecteezy.com/system/resources/previews/002/873/829/large_2x/stir-fried-pork-with-kimchi-korean-food-style-free-photo.jpg",
-    "cook_time": 20,
-    "prep_time": 15
+    "uid": "6",
+    "photo": "https://i.pinimg.com/564x/c6/30/fc/c630fc61c9ea588682d99ca39c64151f.jpg",
+    "cook_time": 5,
+    "prep_time": 10
 }
 
 ###PUT RECIPE (UPDATE)
-PUT {{host}}/api/recipes/6622caa0c8da3b1876015508
+PUT {{host}}/api/recipes/66256e68c3d0c110c660a8f8
+x-token: Guillermo
 Content-Type: application/json
 
 {
@@ -99,15 +101,13 @@ Content-Type: application/json
     "description": "Es una delicia en plato EDIT",
     "ingredients": [
         "carne",
-        "soya"
+        "soya",
+        "huevo"
     ],
     "steps": [
         "cocinar",
         "comer"
     ],
-    "author": {
-        "_id": "6620682a8c79b23fa54bd305"
-    },
     "reviews": [
         "muy deliciosa"
     ],
@@ -120,7 +120,9 @@ Content-Type: application/json
 }
 
 ###DELETE RECIPE
-DELETE {{host}}/api/recipes/6622caa0c8da3b1876015508
+DELETE {{host}}/api/recipes/662056c78c79b23fa54bd303
+x-token: Guillermo
+x-auth: 23423
 
 
 //PRUEBA DE QUE ESTA PARTE DEL CODIGO DE ACTUALICE EN GITHUB :)!!!!!
