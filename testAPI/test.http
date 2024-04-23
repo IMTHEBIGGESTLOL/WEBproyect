@@ -50,6 +50,14 @@ Content-Type: application/json
 DELETE {{host}}/api/users/email/juanito@gmail.com
 x-auth: 23423
 
+### ADD A NEW REVIEW SUBSCRIPTION TO USER
+POST {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
+x-token: Ivan
+
+### DELETE A REVIEW SUBSCRIPTION
+DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
+x-token: Ivan
+
 
 //RECIPES
 
@@ -123,6 +131,15 @@ Content-Type: application/json
 DELETE {{host}}/api/recipes/662056c78c79b23fa54bd303
 x-token: Guillermo
 x-auth: 23423
+
+###POST MESSAGE TO A RECIPE (CHAT)
+POST {{host}}/api/recipes/66256e68c3d0c110c660a8f8/chat
+x-token: Guillermo
+Content-Type: application/json
+
+{
+    "content": "Esta muy buena esta receta"
+}
 
 
 //PRUEBA DE QUE ESTA PARTE DEL CODIGO DE ACTUALICE EN GITHUB :)!!!!!

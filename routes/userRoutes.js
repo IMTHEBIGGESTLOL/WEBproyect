@@ -155,4 +155,36 @@ router.delete('/email/:email', auth.validateHeader, auth.requireAdmin, async (re
     res.send({pos})
 })
 
+// POST /api/users/:userId/reviews/subscribe
+router.post('/:userId/reviews/subscribe', auth.validateHeader, auth.validateUser ,async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        let user = await User.findUser(req.token);
+        const subscriberId = user._id; // ID del usuario autenticado
+
+        // Agregar el ID del usuario a seguir a la lista de suscripciones del usuario actual
+        await User.findByIdAndUpdate(subscriberId, { $addToSet: { reviewsubscriptions: userId } });
+
+        res.status(200).send("Usuario suscrito a las reseñas correctamente.");
+    } catch (error) {
+        res.status(500).send("Error al suscribirse a las reseñas: " + error.message);
+    }
+});
+
+// DELETE /api/users/:userId/reviews/subscribe
+router.delete('/:userId/reviews/subscribe', auth.validateHeader, auth.validateUser, async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        let user = await User.findUser(req.token);
+        const subscriberId = user._id; // ID del usuario autenticado
+
+        // Eliminar el ID del usuario a dejar de seguir de la lista de suscripciones del usuario actual
+        await User.findByIdAndUpdate(subscriberId, { $pull: { reviewsubscriptions: userId } });
+
+        res.status(200).send("Suscripción a las reseñas eliminada correctamente.");
+    } catch (error) {
+        res.status(500).send("Error al eliminar la suscripción a las reseñas: " + error.message);
+    }
+});
+
 module.exports = router;

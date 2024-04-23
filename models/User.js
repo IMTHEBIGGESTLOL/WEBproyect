@@ -44,17 +44,32 @@ let userSchema = mongoose.Schema({
         ref: 'Recipe',
         deafult: []
     }],
+    myreviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review',
+        default: []
+    }],
+    reviewsubscriptions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
     friends: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         deafult: []
+    }],
+    favorites: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Recipe',
+        default: []
     }]
 })
 
 userSchema.statics.findUsers= async (filter, isAdmin = false, pageSize=4, pageNumber=1)=>{
     let proj = isAdmin? {}:{name: 1, email:1, _id:0};
     // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
-    let docs = User.find(filter, proj).sort({name: 1}).skip((pageNumber-1)*pageSize).limit(pageSize).populate('myrecipes', 'title').populate('friends', 'username name');
+    let docs = User.find(filter, proj).sort({name: 1}).populate('myrecipes', 'title').populate('friends', 'username name').populate('reviewsubscriptions', 'username').populate('favorites', 'title');
     let count = User.find(filter).count();
 
     let resp = await Promise.all([docs, count]);
@@ -71,6 +86,16 @@ userSchema.statics.addrecipes = async (username, recipeId) => {
     let user = await User.findOne({username});
     if(user){
         user.myrecipes.push(recipeId);
+        return await user.save();
+    }
+
+    return {error: "User not found"};
+}
+
+userSchema.statics.addFavorites = async (username, recipeId) => {
+    let user = await User.findOne({username});
+    if(user){
+        user.favorites.push(recipeId);
         return await user.save();
     }
 

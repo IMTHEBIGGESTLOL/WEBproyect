@@ -1,5 +1,7 @@
 const {mongoose} = require("../DB/connectDB")
 const {User} = require("./User");
+const {Message} = require('./Message');
+
 
 let recipeSchema = mongoose.Schema({
     uid: {
@@ -57,13 +59,18 @@ let recipeSchema = mongoose.Schema({
     prep_time: {
         type: Number,
         required: true
-    }
+    },
+    chat: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Message',
+        default: []
+    }]
 })
 
 recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=4, pageNumber=1)=>{
     let proj = isAdmin? {}:{title: 1, description:1, _id:0};
     // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
-    let docs = Recipe.find(filter, proj).sort({name: 1}).skip((pageNumber-1)*pageSize).limit(pageSize).populate('author', 'username').populate('categories', 'name');
+    let docs = Recipe.find(filter, proj).sort({name: 1}).populate('author', 'username').populate('categories', 'name').populate('chat', 'user content');
     let count = Recipe.find(filter).count();
 
     let resp = await Promise.all([docs, count]);

@@ -5,6 +5,7 @@ const {Recipe} = require('../models/Recipe.js')
 const fs = require('fs');
 const {User} = require('../models/User.js');
 const auth = require('../middleware/auth.js');
+const {Message} = require('../models/Message.js');
 
 // Operación GET para obtener todas las recetas
 router.get('/', auth.validateHeader ,auth.validateAdmin,async (req, res)=> {
@@ -75,6 +76,37 @@ router.put('/:recipeId',auth.validateUser, async (req, res) => {
     let updateRecipe = await Recipe.updateRecipe(recipe._id, req.body);
     //fs.writeFileSync('./data/usersdata.json', JSON.stringify(users) )
     res.send(updateRecipe)
+});
+
+// Endpoint para añadir un mensaje al chat de una receta específica
+router.post('/:recipeId/chat', auth.validateHeader, auth.validateUser ,async (req, res) => {
+    try {
+        const user = req.token
+        const { content } = req.body;
+        const recipeId = req.params.recipeId;
+
+        console.log(user)
+
+        //Verificar si la receta existe
+        const recipe = await Recipe.findById(recipeId);
+        if (!recipe) {
+            return res.status(404).json({ message: 'Receta no encontrada' });
+        }
+
+        // Crear el mensaje
+        const message = new Message({ user, content });
+
+        // Guardar el mensaje en la base de datos
+        await message.save();
+
+        // Añadir el ID del mensaje al chat de la receta
+        recipe.chat.push(message._id);
+        await recipe.save();
+
+        res.status(201).json({ message: 'Mensaje añadido al chat de la receta correctamente' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al añadir mensaje al chat de la receta', error: error.message });
+    }
 });
 
 module.exports = router;
