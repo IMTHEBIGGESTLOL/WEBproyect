@@ -1,6 +1,6 @@
 const {mongoose} = require("../DB/connectDB")
 const {User} = require("./User");
-const {Message} = require('./Message');
+const {Post} = require('./Message');
 
 
 let recipeSchema = mongoose.Schema({
@@ -33,6 +33,7 @@ let recipeSchema = mongoose.Schema({
     creation_date: {
         type: String,
         format: Date,
+        default: Date.now,
         required: true
     },
     reviews: {
@@ -81,10 +82,55 @@ recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=4, pa
     return {recipes: resp[0], total: resp[1]};
 }
 
-recipeSchema.statics.saveRecipe = async (username, recipeData)=>{
+recipeSchema.statics.getRecipes = async (username)=>{
+    try {
+        let user = await User.findUser(username);
+        if (!user) {
+            throw new Error('Usuario no encontrado');
+        }
 
-    let autor = await User.findUser(username);
-    let id = autor._id;
+        let recipes = await Recipe.find({ author: user._id });
+        console.log(recipes);
+        return recipes;
+    } catch (error) {
+        console.error('Error al obtener recetas:', error);
+        throw error;
+    }
+}
+
+recipeSchema.statics.getChat = async (recipeId) => {
+    try {
+        // Buscar la receta por su ID
+        const recipe = await Recipe.findById(recipeId);
+        
+        if (!recipe) {
+            throw new Error('Receta no encontrada');
+        }
+
+        // Obtener los mensajes de la receta con los campos deseados
+        const chat = await Post.find({ _id: { $in: recipe.chat } }, 'user content timestamp -_id');
+
+        return chat;
+    } catch (error) {
+        console.error('Error al obtener mensajes:', error);
+        throw error;
+    }
+}
+
+recipeSchema.statics.addMessages = async (recipeId, messageId) => {
+    let recipe = await Recipe.findById(recipeId);
+    if(recipe){
+        recipe.chat.push(messageId);
+        return await recipe.save();
+    }
+
+    return {error: "Recipe not found"};
+}
+
+
+recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
+
+    let id = _id;
 
     recipeData.author = id;
 

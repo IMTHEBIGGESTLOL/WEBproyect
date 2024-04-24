@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const {User} = require("./User");
+const {Recipe} = require('./Recipe')
 
 // Schema para los mensajes del chat
-const messageSchema = new mongoose.Schema({
+let messageSchema = new mongoose.Schema({
     user: { 
         type: String, 
         required: true 
@@ -16,6 +18,19 @@ const messageSchema = new mongoose.Schema({
     }
 });
 
-let Message = mongoose.model('Message', messageSchema);
+messageSchema.statics.saveMessage = async (username, recipeId, messageData)=>{
+    let user = username;
 
-module.exports = {Message};
+    messageData.user = user ;
+
+    let newMessage = Post(messageData);
+    let doc = await newMessage.save();
+
+    await Recipe.addMessages(recipeId, doc._id);
+    return doc;
+
+}
+
+let Post = mongoose.model('Message', messageSchema);
+
+module.exports = {Post};

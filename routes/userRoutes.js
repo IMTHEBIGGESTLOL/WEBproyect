@@ -114,9 +114,9 @@ router.post('/', async (req,res)=>{
 
 
 //updating an existent object
-router.put('/email/:email', async (req,res)=>{
+router.put('/username/:username', async (req,res)=>{
     //search for the id
-    let user = await User.findUser(req.params.email);
+    let user = await User.findUser(req.params.username);
 
     //if not found 
     if (!user){

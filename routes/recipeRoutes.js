@@ -5,7 +5,7 @@ const {Recipe} = require('../models/Recipe.js')
 const fs = require('fs');
 const {User} = require('../models/User.js');
 const auth = require('../middleware/auth.js');
-const {Message} = require('../models/Message.js');
+const {Post} = require('../models/Message.js');
 
 // Operación GET para obtener todas las recetas
 router.get('/', auth.validateHeader ,auth.validateAdmin,async (req, res)=> {
@@ -15,14 +15,28 @@ router.get('/', auth.validateHeader ,auth.validateAdmin,async (req, res)=> {
     res.json(recipes);
 });
 
+router.get('/mine', auth.validateToken, async (req,res)=>{
+    console.log("owner", req.username, req._id);
+    const myrecipes =  await Recipe.getRecipes(req.username)
+    
+    res.send(myrecipes)
+});
+
+router.get('/favorites', auth.validateToken, async (req,res)=>{
+    let recipes = await User.getFavorites(req._id);
+    res.send(recipes);
+});
+
+router.get('/chat/:recipeId', async (req, res)=>{
+    let chat = await Recipe.getChat(req.params.recipeId);
+    res.send(chat);
+})
+
 // Operación POST para crear una nueva receta
-router.post('/', auth.validateUser,async (req, res) => {
-    const fechaDeHoy = new Date();
-    const fechaLegible = fechaDeHoy.toDateString();
-    req.body.creation_date = fechaLegible;
+router.post('/', auth.validateToken,async (req, res) => {
     console.log(req.body);
     let recipe = req.body;
-    let newRecipe = await Recipe.saveRecipe(req.token, recipe);
+    let newRecipe = await Recipe.saveRecipe(req.username, req._id, recipe);
     res.send(recipe);
 });
 
@@ -79,9 +93,9 @@ router.put('/:recipeId',auth.validateUser, async (req, res) => {
 });
 
 // Endpoint para añadir un mensaje al chat de una receta específica
-router.post('/:recipeId/chat', auth.validateHeader, auth.validateUser ,async (req, res) => {
+router.post('/:recipeId/chat',auth.validateToken,async (req, res) => {
     try {
-        const user = req.token
+        const user = req.username
         const { content } = req.body;
         const recipeId = req.params.recipeId;
 
@@ -94,7 +108,7 @@ router.post('/:recipeId/chat', auth.validateHeader, auth.validateUser ,async (re
         }
 
         // Crear el mensaje
-        const message = new Message({ user, content });
+        const message = new Post({ user, content });
 
         // Guardar el mensaje en la base de datos
         await message.save();

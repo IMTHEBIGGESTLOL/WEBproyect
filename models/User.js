@@ -1,4 +1,6 @@
 const {mongoose} = require("../DB/connectDB")
+const bcrypt = require("bcryptjs")
+const {Recipe} = require("./Recipe")
 
 let userSchema = mongoose.Schema({
     uid:{
@@ -37,7 +39,8 @@ let userSchema = mongoose.Schema({
         format: Date
     },
     country: {
-        type: String
+        type: String,
+        required: true
     },
     myrecipes: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -69,7 +72,14 @@ let userSchema = mongoose.Schema({
 userSchema.statics.findUsers= async (filter, isAdmin = false, pageSize=4, pageNumber=1)=>{
     let proj = isAdmin? {}:{name: 1, email:1, _id:0};
     // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
-    let docs = User.find(filter, proj).sort({name: 1}).populate('myrecipes', 'title').populate('friends', 'username name').populate('reviewsubscriptions', 'username').populate('favorites', 'title');
+    let docs = User.find(filter, proj).sort({name: 1}).populate('myrecipes', 'title').populate('friends', 'username name').populate('reviewsubscriptions', 'username').populate({
+        path: 'favorites',
+        select: 'title', // Selecciona solo el título de cada favorito
+        populate: { // Anidamos otra llamada a populate para el atributo 'author' de cada favorito
+            path: 'author',
+            select: 'username' // Selecciona solo el nombre de usuario del autor de cada favorito
+        }
+    })
     let count = User.find(filter).count();
 
     let resp = await Promise.all([docs, count]);
@@ -102,6 +112,25 @@ userSchema.statics.addFavorites = async (username, recipeId) => {
     return {error: "User not found"};
 }
 
+userSchema.statics.getFavorites = async (userId) => {
+    try {
+        // Buscar al usuario por su ID
+        const user = await User.findById(userId);
+        
+        if (!user) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        // Obtener las recetas favoritas del usuario
+        const favorites = await Recipe.find({ _id: { $in: user.favorites } });
+
+        return favorites;
+    } catch (error) {
+        console.error('Error al obtener recetas favoritas:', error);
+        throw error;
+    }
+}
+
 userSchema.statics.addFriends = async (username, friendId) => {
     let user = await User.findOne({username});
     if(user)
@@ -116,6 +145,8 @@ userSchema.statics.addFriends = async (username, friendId) => {
 userSchema.statics.saveUser = async (userData)=>{
 
     try {
+        let hash = bcrypt.hashSync(userData.password, 10)
+        userData.password = hash; 
         let newUser = User(userData);
         let doc =  await newUser.save();
         return doc;
@@ -138,6 +169,10 @@ userSchema.statics.findUserById = async (_id)=>{
 
 userSchema.statics.updateUser = async (email, userData)=>{
     delete userData.email;
+    if (userData.password){
+        let hash = bcrypt.hashSync(userData.password, 10)
+        userData.password = hash; 
+    }
     let updateUser = await User.findOneAndUpdate({email},
                                 {$set: userData},
                                 {new: true}
@@ -149,6 +184,19 @@ userSchema.statics.deleteUser = async (email)=>{
     let deletedUser = await User.findOneAndDelete({email})
     console.log(deletedUser);
     return deletedUser;
+}
+
+userSchema.statics.authUser = async(email, password)=>{
+    let user = await User.findOne({email})
+
+    if(!user)
+        return null
+
+    if (bcrypt.compareSync(password, user.password)){
+        return user
+    }
+
+    return null
 }
 
 let User = mongoose.model('User', userSchema);
