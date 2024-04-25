@@ -107,8 +107,34 @@ userSchema.statics.addrecipes = async (username, recipeId) => {
 userSchema.statics.addFavorites = async (username, recipeId) => {
     let user = await User.findOne({username});
     if(user){
-        user.favorites.push(recipeId);
-        return await user.save();
+        // Verificar si la receta ya está en la lista de favoritos
+        if(user.favorites.includes(recipeId)) {
+            return { error: "Recipe already exists in user's favorites" };
+        } else {
+            user.favorites.push(recipeId);
+            return await user.save();
+        }
+    }
+
+    return {error: "User not found"};
+}
+
+userSchema.statics.removeFavorites = async (username, recipeId) => {
+    let user = await User.findOne({username});
+    if(user){
+        // Buscar el índice del objeto con el ID de la receta en los favoritos del usuario
+        var indiceAEliminar = user.favorites.findIndex(function(favorite) {
+            return favorite._id == recipeId;
+        });
+
+        // Si se encuentra el objeto, eliminarlo
+        if (indiceAEliminar !== -1) {
+            user.favorites.splice(indiceAEliminar, 1);
+            await user.save(); // Guardar los cambios en la base de datos
+            return { success: true };
+        } else {
+            return { error: "Recipe not found in user's favorites" };
+        }
     }
 
     return {error: "User not found"};

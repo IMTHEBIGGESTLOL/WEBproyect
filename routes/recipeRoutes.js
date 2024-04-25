@@ -27,6 +27,16 @@ router.get('/favorites', auth.validateToken, async (req,res)=>{
     res.send(recipes);
 });
 
+router.post('/favorites/:recipeId', auth.validateToken, async (req,res)=>{
+    let status = await User.addFavorites(req.username, req.params.recipeId);
+    res.send(status);
+});
+
+router.delete('/favorites/:recipeId', auth.validateToken, async (req,res)=>{
+    let status = await User.removeFavorites(req.username, req.params.recipeId);
+    res.send(status);
+});
+
 router.get('/chat/:recipeId', async (req, res)=>{
     let chat = await Recipe.getChat(req.params.recipeId);
     res.send(chat);
