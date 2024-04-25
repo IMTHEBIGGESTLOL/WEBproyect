@@ -1,7 +1,7 @@
 
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const userRoute = require('./routes/userRoutes.js');
 const recipeRoute = require('./routes/recipeRoutes.js');
 const categoryRoute = require('./routes/categoryRoutes.js');
