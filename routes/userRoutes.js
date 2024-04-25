@@ -1,5 +1,4 @@
 const router = require("express").Router()
-const users = require('../data/usersdata.json')
 const {User} = require('../models/User')
 const auth = require('../middleware/auth')
 //const {nanoid} = require('nanoid')
