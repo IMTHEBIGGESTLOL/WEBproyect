@@ -2,12 +2,16 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
+const cookieParser = require('cookie-parser');
 const userRoute = require('./routes/userRoutes.js');
 const recipeRoute = require('./routes/recipeRoutes.js');
 const categoryRoute = require('./routes/categoryRoutes.js');
 const authRoute = require('./routes/authRoutes.js');
 const messageRoute = require('./routes/messagesRoutes.js');
 const path = require('path');
+
+app.use(cookieParser())
+//req.cookie res.cookie
 
 function logger(req,res,next)
 {
@@ -31,7 +35,7 @@ app.use('/api/recipes', logger, recipeRoute)
 
 app.use('/api/categories', logger, categoryRoute)
 
-app.use('/api/login', logger, authRoute);
+app.use('/api/auth', logger, authRoute);
 
 app.use('/api/messages', logger, messageRoute);
 

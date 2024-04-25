@@ -77,6 +77,28 @@ function validateToken(req, res, next){
 
 }
 
+function validateTokenWithCookie(req, res, next){
+    let token = req.cookies.access_token
+
+    if(!token){
+        res.status(401).send({error: "token is missing"})
+        return;
+    }
+
+    jwt.verify(token, process.env.TOKEN_KEY, (err, decoded)=>{
+        if(err){
+            res.status(401).send({error: err.message})
+            return
+        }
+
+        req.username= decoded.username;
+        req._id = decoded._id;
+        next()
+
+    })
+
+}
+
 const addSkipLimittoGet = () => {
     return (req, res, next) => {
         // Puedes hacer lo que necesites con param1 y param2 aquí antes de llamar a next()
@@ -87,4 +109,4 @@ const addSkipLimittoGet = () => {
 };
 
 
-module.exports = {validateHeader, validateAdmin, requireAdmin, validateUser, validateToken, addSkipLimittoGet}
+module.exports = {validateHeader, validateAdmin, requireAdmin, validateUser, validateToken, addSkipLimittoGet, validateTokenWithCookie}

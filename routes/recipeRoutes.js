@@ -15,24 +15,24 @@ router.get('/', auth.validateHeader ,auth.validateAdmin, auth.addSkipLimittoGet(
     res.json(recipes);
 });
 
-router.get('/mine', auth.validateToken, async (req,res)=>{
+router.get('/mine', auth.validateTokenWithCookie, async (req,res)=>{
     console.log("owner", req.username, req._id);
     const myrecipes =  await Recipe.getRecipes(req._id)
     
     res.send(myrecipes)
 });
 
-router.get('/favorites', auth.validateToken, async (req,res)=>{
+router.get('/favorites', auth.validateTokenWithCookie, async (req,res)=>{
     let recipes = await User.getFavorites(req._id);
     res.send(recipes);
 });
 
-router.post('/favorites/:recipeId', auth.validateToken, async (req,res)=>{
+router.post('/favorites/:recipeId', auth.validateTokenWithCookie, async (req,res)=>{
     let status = await User.addFavorites(req.username, req.params.recipeId);
     res.send(status);
 });
 
-router.delete('/favorites/:recipeId', auth.validateToken, async (req,res)=>{
+router.delete('/favorites/:recipeId', auth.validateTokenWithCookie, async (req,res)=>{
     let status = await User.removeFavorites(req.username, req.params.recipeId);
     res.send(status);
 });
