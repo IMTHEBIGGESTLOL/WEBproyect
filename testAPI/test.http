@@ -85,23 +85,23 @@ x-auth: 23423
 //Fecha, rating
 ### POST NEW RECIPE
 POST {{host}}/api/recipes
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzk4NTUwMSwiZXhwIjoxNzEzOTg5MTAxfQ.mMltKAW5LLQay1EjfGE1kOTL92XuWAFKAT_23KrTD8k
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZyb250VXNlciIsIl9pZCI6IjY2MjljODNiODI1NmU2MzFhZGFlOWZlMSIsImlhdCI6MTcxNDAxNzE4NiwiZXhwIjoxNzE0MDIwNzg2fQ.XSyGrbLiXoTZY546rM3bu15mGdoOrwO0t80tWkHLOcc
 Content-Type: application/json
 
 {
-    "title": "Nachos",
-    "description": "Is a crunchy",
+    "title": "Egg Omellette",
+    "description": "Very delicius",
     "ingredients": [
-        "Tortilla",
-        "Aguacate"
+        "Eggs",
+        "Slat"
     ],
     "steps": [
         "cocinar",
         "comer"
     ],
-    "uid": "13",
-    "photo": "https://i.pinimg.com/564x/a9/b5/0e/a9b50e650cf3ea220e1fcd7a11be4d28.jpg",
-    "cook_time": 5,
+    "uid": "14",
+    "photo": "https://i.pinimg.com/736x/45/51/74/455174d200410eae4e74cdb7eb97013b.jpg",
+    "cook_time": 10,
     "prep_time": 5
 }
 
@@ -147,13 +147,21 @@ Content-Type: application/json
     "content": "Sigo y sigo comiendo"
 }
 
+### POST RECIPE TO FAVORITES
+POST {{host}}/api/recipes/favorites/66256e68c3d0c110c660a8f8
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxNDAwNzUyNSwiZXhwIjoxNzE0MDExMTI1fQ.vC-GWDLqmRKW0rCQjP7fRGGXzb7Wyvm7-cCSnD5rIls
+
+### DELETE RECIPE IN FAVORITES
+DELETE {{host}}/api/recipes/favorites/66256e68c3d0c110c660a8f8
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxNDAwNzUyNSwiZXhwIjoxNzE0MDExMTI1fQ.vC-GWDLqmRKW0rCQjP7fRGGXzb7Wyvm7-cCSnD5rIls
+
 ### GET CURRENT USER RECIPES
 GET {{host}}/api/recipes/mine
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzk3ODc4MCwiZXhwIjoxNzEzOTgyMzgwfQ.uLqFPom4NSC-6gmotSeZviLJlaxbKxBE-cOBep8tgHg
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxNDAwNzUyNSwiZXhwIjoxNzE0MDExMTI1fQ.vC-GWDLqmRKW0rCQjP7fRGGXzb7Wyvm7-cCSnD5rIls
 
 ### GET CURRENT USER FAVORITES
 GET {{host}}/api/recipes/favorites
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzk4NTUwMSwiZXhwIjoxNzEzOTg5MTAxfQ.mMltKAW5LLQay1EjfGE1kOTL92XuWAFKAT_23KrTD8k
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxNDAwNzUyNSwiZXhwIjoxNzE0MDExMTI1fQ.vC-GWDLqmRKW0rCQjP7fRGGXzb7Wyvm7-cCSnD5rIls
 
 ### GET CHAT DE UNA RECETA EN ESPECIFICO
 GET {{host}}/api/recipes/chat/66256e68c3d0c110c660a8f8
@@ -187,8 +195,6 @@ Content-Type: application/json
     "email": "T2est email",
     "age":24
 }
-
-
 
 ###
 PUT {{host}}/users/4

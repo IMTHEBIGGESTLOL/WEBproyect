@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 
 router.post('/', async(req,res)=>{
     let {email, password} = req.body;
+    console.log(email);
     let user = await User.authUser(email, password)
     if(!user){
         res.status(401).send({error: "email or password not correct"})

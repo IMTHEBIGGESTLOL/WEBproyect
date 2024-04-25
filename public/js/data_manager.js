@@ -26,6 +26,8 @@ class DataManager
     
         console.log(resp.status);
         let data = await resp.json()
+
+        console.log(data);
         
         recipesArray = data.recipes;
 
@@ -84,10 +86,18 @@ class DataManager
 
         // Format the date as a string
         let formattedCreationDate = creationDate.toLocaleString();
-        let html = `<div class="content" style="background: url(${obj.photo}) no-repeat right center; background-size: auto 100%;">
+        let html = `
+                    <div class="container row" style=" background: url(${obj.photo}) var(--cl-4--);
+                    background-repeat: no-repeat;
+                    background-position: right center;
+                    background-size: contain;
+                    overflow: hidden;
+                    border-radius: 50px 0px 0px 50px;">
+                    <div class="hero-content">
+                    <div class="content">
                         
                         <div class="recipe row">
-                            <img src="Alguna LOGO AQUÍ" alt="">
+                            <img src="${obj.photo}" alt="">
                                 HOT recipes
                         </div>
                         <h1>${obj.title}</h1>
@@ -117,6 +127,8 @@ class DataManager
                                 </svg>
                             </a>
                         </div>
+                    </div>
+                    </div>
                     </div>
         `;
 
