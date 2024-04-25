@@ -85,7 +85,7 @@ x-auth: 23423
 //Fecha, rating
 ### POST NEW RECIPE
 POST {{host}}/api/recipes
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzkyMjk2MywiZXhwIjoxNzEzOTIzMTQzfQ.vg3-gPJoRv-FKDGi28LZj6qvmP42Q7f0fZviQde9tFM
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzk4NTUwMSwiZXhwIjoxNzEzOTg5MTAxfQ.mMltKAW5LLQay1EjfGE1kOTL92XuWAFKAT_23KrTD8k
 Content-Type: application/json
 
 {
@@ -99,7 +99,7 @@ Content-Type: application/json
         "cocinar",
         "comer"
     ],
-    "uid": "8",
+    "uid": "13",
     "photo": "https://i.pinimg.com/564x/a9/b5/0e/a9b50e650cf3ea220e1fcd7a11be4d28.jpg",
     "cook_time": 5,
     "prep_time": 5
@@ -149,11 +149,11 @@ Content-Type: application/json
 
 ### GET CURRENT USER RECIPES
 GET {{host}}/api/recipes/mine
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzkyMzY2OSwiZXhwIjoxNzEzOTI3MjY5fQ.U2q8cz4xisPlJDU-rVxChu7iVbju1CmmEDzxtV_DCLI
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzk3ODc4MCwiZXhwIjoxNzEzOTgyMzgwfQ.uLqFPom4NSC-6gmotSeZviLJlaxbKxBE-cOBep8tgHg
 
 ### GET CURRENT USER FAVORITES
 GET {{host}}/api/recipes/favorites
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzkyMzY2OSwiZXhwIjoxNzEzOTI3MjY5fQ.U2q8cz4xisPlJDU-rVxChu7iVbju1CmmEDzxtV_DCLI
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzk4NTUwMSwiZXhwIjoxNzEzOTg5MTAxfQ.mMltKAW5LLQay1EjfGE1kOTL92XuWAFKAT_23KrTD8k
 
 ### GET CHAT DE UNA RECETA EN ESPECIFICO
 GET {{host}}/api/recipes/chat/66256e68c3d0c110c660a8f8

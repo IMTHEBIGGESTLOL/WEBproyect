@@ -8,16 +8,16 @@ const auth = require('../middleware/auth.js');
 const {Post} = require('../models/Message.js');
 
 // Operación GET para obtener todas las recetas
-router.get('/', auth.validateHeader ,auth.validateAdmin,async (req, res)=> {
+router.get('/', auth.validateHeader ,auth.validateAdmin, auth.addSkipLimittoGet() ,async (req, res)=> {
     let filters = {}
     console.log(req.admin)
-    let recipes = await Recipe.findRecipes(filters, req.admin, 5,1);
+    let recipes = await Recipe.findRecipes(filters, req.admin, 5,1, req.skip, req.limit);
     res.json(recipes);
 });
 
 router.get('/mine', auth.validateToken, async (req,res)=>{
     console.log("owner", req.username, req._id);
-    const myrecipes =  await Recipe.getRecipes(req.username)
+    const myrecipes =  await Recipe.getRecipes(req._id)
     
     res.send(myrecipes)
 });
@@ -34,6 +34,7 @@ router.get('/chat/:recipeId', async (req, res)=>{
 
 // Operación POST para crear una nueva receta
 router.post('/', auth.validateToken,async (req, res) => {
+    console.log(User)
     console.log(req.body);
     let recipe = req.body;
     let newRecipe = await Recipe.saveRecipe(req.username, req._id, recipe);
@@ -71,9 +72,8 @@ router.delete('/:recipeId',auth.validateHeader, auth.validateAdmin,auth.validate
 });
 
 // Operación PUT para actualizar una receta por su ID
-router.put('/:recipeId',auth.validateUser, async (req, res) => {
+router.put('/:recipeId', auth.validateToken, async (req, res) => {
     let recipe = await Recipe.findRecipe({},req.params.recipeId);
-    let user = await User.findUser(req.token);
 
     console.log(recipe.author._id.toString());
     if (!recipe){
@@ -82,7 +82,7 @@ router.put('/:recipeId',auth.validateUser, async (req, res) => {
         return
     }
 
-    if(user == null || user._id != recipe.author._id.toString()){
+    if(req._id != recipe.author._id.toString()){
         res.status(403).send({error: 'You are not the owner'})
         return
     }

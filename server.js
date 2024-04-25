@@ -11,7 +11,7 @@ const path = require('path');
 
 function logger(req,res,next)
 {
-    console.log(req);
+    // console.log(req);
     next();
 }
 

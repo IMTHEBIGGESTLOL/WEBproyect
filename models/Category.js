@@ -1,4 +1,5 @@
 const {mongoose} = require("../DB/connectDB")
+const {User} = require("./User")
 
 let categorySchema = mongoose.Schema({
     uid:{
@@ -7,6 +8,10 @@ let categorySchema = mongoose.Schema({
         required: true
     },
     name:{
+        type: String,
+        required: true
+    },
+    photo:{
         type: String,
         required: true
     }
@@ -21,7 +26,6 @@ categorySchema.statics.findCategories= async (filter, isAdmin = false)=>{
     let resp = await Promise.all([docs, count]);
 
     console.log(resp[0], resp[1]);
-
 
     return {categories: resp[0], total: resp[1]};
 }

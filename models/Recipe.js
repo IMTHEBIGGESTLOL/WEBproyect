@@ -1,7 +1,7 @@
 const {mongoose} = require("../DB/connectDB")
-const {User} = require("./User");
-const {Post} = require('./Message');
-
+const {Post} = require('./Message')
+const {User} = require('./User')
+const {Category} = require('./Category')
 
 let recipeSchema = mongoose.Schema({
     uid: {
@@ -68,28 +68,24 @@ let recipeSchema = mongoose.Schema({
     }]
 })
 
-recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=4, pageNumber=1)=>{
+recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=4, pageNumber=1, skip=0, limit=0)=>{
     let proj = isAdmin? {}:{title: 1, description:1, _id:0};
     // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
-    let docs = Recipe.find(filter, proj).sort({name: 1}).populate('author', 'username').populate('categories', 'name').populate('chat', 'user content');
+    let docs = Recipe.find(filter, proj).skip(skip).limit(limit).sort({creation_date: 1}).populate('author', 'username userPhoto').populate('categories', 'name').populate('chat', 'user content');
     let count = Recipe.find(filter).count();
 
     let resp = await Promise.all([docs, count]);
 
     console.log(resp[0], resp[1]);
 
-
+    console.log({user : User});
     return {recipes: resp[0], total: resp[1]};
 }
 
-recipeSchema.statics.getRecipes = async (username)=>{
+recipeSchema.statics.getRecipes = async (_id)=>{
     try {
-        let user = await User.findUser(username);
-        if (!user) {
-            throw new Error('Usuario no encontrado');
-        }
 
-        let recipes = await Recipe.find({ author: user._id });
+        let recipes = await Recipe.find({ author: _id });
         console.log(recipes);
         return recipes;
     } catch (error) {
@@ -97,6 +93,8 @@ recipeSchema.statics.getRecipes = async (username)=>{
         throw error;
     }
 }
+
+
 
 recipeSchema.statics.getChat = async (recipeId) => {
     try {
@@ -126,7 +124,6 @@ recipeSchema.statics.addMessages = async (recipeId, messageId) => {
 
     return {error: "Recipe not found"};
 }
-
 
 recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
 
@@ -181,6 +178,7 @@ recipeSchema.statics.deleteRecipe = async (_id)=>{
 }
 
 let Recipe = mongoose.model('Recipe', recipeSchema);
+
 
 async  function createAndShow(){
     let doc = await Recipe.saveRecipe({

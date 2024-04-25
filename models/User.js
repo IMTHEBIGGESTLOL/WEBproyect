@@ -1,6 +1,6 @@
 const {mongoose} = require("../DB/connectDB")
 const bcrypt = require("bcryptjs")
-const {Recipe} = require("./Recipe")
+
 
 let userSchema = mongoose.Schema({
     uid:{
@@ -88,11 +88,13 @@ userSchema.statics.findUsers= async (filter, isAdmin = false, pageSize=4, pageNu
 
     console.log(resp);
 
+    
 
     return {users: resp[0], total: resp[1]};
 }
 
 userSchema.statics.addrecipes = async (username, recipeId) => {
+    console.log("entro")
     let user = await User.findOne({username});
     if(user){
         user.myrecipes.push(recipeId);
@@ -120,6 +122,8 @@ userSchema.statics.getFavorites = async (userId) => {
         if (!user) {
             throw new Error('Usuario no encontrado');
         }
+
+        const {Recipe} = require('./Recipe');
 
         // Obtener las recetas favoritas del usuario
         const favorites = await Recipe.find({ _id: { $in: user.favorites } });
