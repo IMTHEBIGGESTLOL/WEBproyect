@@ -26,7 +26,7 @@ async function login(){
 
     let userData = {email, password}
 
-    let resp = await fetch('/api/login',{
+    let resp = await fetch('/api/auth/login2',{
         method :'POST',
         headers:{
             'content-type': 'Application/json'
