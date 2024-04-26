@@ -1,41 +1,106 @@
-function agregarIngrediente() {
-    const ingredientesTextArea = document.getElementById('ingredients');
-    const nuevoIngrediente = prompt("Enter ingredient:");
-
-    if (nuevoIngrediente) {
-        ingredientesTextArea.value += nuevoIngrediente + '\n';
-    }
+// Función para obtener el parámetro de la URL por su nombre
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-// Función para enviar el formulario y crear una nueva receta
-document.getElementById('recipeForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Evitar que se envíe el formulario automáticamente
 
-    // Obtener los valores de los campos del formulario
-    const titulo = document.getElementById('titulo').value;
-    const descripcion = document.getElementById('descripcion').value;
-    const duracion = document.getElementById('duracion').value;
-    const cooktime = document.getElementById('cooktime').value;
-    const categoria = document.getElementById('categoryDropDown').value;
-    const pasos = document.getElementById("pasos").value.split(",").filter(Boolean);
-    const ingredientes = document.getElementById('ingredients').value.split(',').filter(Boolean); // Convertir el texto en un arreglo de ingredientes y eliminar elementos vacíos
-    const herramientas = document.getElementById('tools').value.split(',').filter(Boolean); // Convertir el texto en un arreglo de herramientas y eliminar elementos vacíos
-
-    // Crear el objeto de receta
-    const receta = {
-        titulo: titulo,
-        descripcion: descripcion,
-        duracion: parseInt(duracion),
-        cooktime: parseInt(cooktime),
-        categoria: categoria,
-        pasos: pasos,
-        ingredientes: ingredientes,
-        herramientas: herramientas
-    };
-
-    // Aquí puedes hacer lo que desees con el objeto de receta, por ejemplo, enviarlo a una base de datos o mostrarlo en la consola
-    console.log(receta);
-
-    // Limpiar el formulario después de enviarlo
-    this.reset();
+document.addEventListener("DOMContentLoaded", function() {
+    // Obtener el ID de la receta de la URL
+    var recipeId = getParameterByName('id');
+    loadRecipe(recipeId);
 });
+
+async function loadRecipe(recipeId)
+{
+    let resp = await fetch('/api/recipes/'+recipeId,{
+        method :'GET',
+        headers: {
+            'x-auth': 23423
+        }
+    })
+
+    console.log(resp.status);
+    let data = await resp.json()
+
+    console.log(data);
+
+    let html = renderRecipe(data);
+    render(html, "recipe");
+}
+
+function renderRecipe(obj){
+
+    let ingredientsHtml = '';
+    obj.ingredients.forEach((ingredient, index) => {
+        ingredientsHtml += `<li><span>${ingredient}</span></li>`;
+    });
+
+    let instructionsHtml = '';
+    obj.steps.forEach((instruction, index) => {
+        instructionsHtml += `<div class="item">
+                                <div class="num">${index + 1}.</div>
+                                <p><span>${instruction}</span></p>
+                            </div>`;
+    });
+
+    let html = `
+                <div class="recipe-img">
+                    <img src="${obj.photo}" alt="">
+                </div>
+
+                <div class="recipe-info">
+                    <h1>${obj.title}</h1>
+                    <h2>${obj.author.username}</h2>
+                    <h3>${obj.creation_date}</h3>
+                    <p class="description">${obj.description}</p>
+  
+                    <div class="recipe-prep-time">
+                        <h3>Preparation and Cook time</h3>
+                        <ul>
+                            <li><span>Total</span>: Approx  ${obj.prep_time + obj.cook_time}</li>
+                            <li><span>Preparation</span>: ${obj.prep_time}</li>
+                            <li><span>Cooking</span>: ${obj.cook_time}</li>
+                        </ul>
+                    </div>
+
+                    <div class="recipe-step">
+                        <h2>Ingredients</h2>
+                        <ul class="ingredients">
+                            ${ingredientsHtml}
+                        </ul>
+                    </div>
+
+                    <hr>
+
+                    <div class="recipe-step">
+                        <h2>Instructions</h2>
+                        <div class="instructions">
+                            ${instructionsHtml}
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="chat-area">
+                        <p>chat will be here</p>
+                    </div>
+
+                </div>
+    `;
+
+    return html;
+}
+
+function render(html, elementId){
+    document.querySelector(`#${elementId}`).innerHTML = html;
+}
+
+function goBack() {
+    window.history.back();
+}

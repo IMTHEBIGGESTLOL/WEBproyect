@@ -141,7 +141,7 @@ recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
 
 recipeSchema.statics.findRecipe = async (filters, isAdmin = false, _id) => {
     try {
-        let proj = isAdmin? {title: 1, author: 1, rating: 1}:{title: 1, author: 1, rating: 1, _id: 0}
+        let proj = {}
         let recipe = await Recipe.findOne({ _id }, proj).populate('author', 'username');
         console.log(recipe);
 

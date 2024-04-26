@@ -213,7 +213,7 @@ class View
     
     static toHtmlDiv(obj) {
         let html = `
-                    <a href="" class="card">
+                    <a href="./recipes/single_recipe.html?id=${obj._id}" class="card">
                         <img src="${obj.photo}" alt="">
                         <h5>${obj.title}</h5>
                         <div class="time row">
