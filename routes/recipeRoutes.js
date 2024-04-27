@@ -11,7 +11,7 @@ const {Post} = require('../models/Message.js');
 router.get('/', auth.validateHeader ,auth.validateAdmin, auth.addSkipLimittoGet() ,async (req, res)=> {
     let filters = {}
     console.log(req.admin)
-    let recipes = await Recipe.findRecipes(filters, req.admin, 5,1, req.skip, req.limit);
+    let recipes = await Recipe.findRecipes(filters, req.admin, 10,1, req.skip, req.limit);
     res.json(recipes);
 });
 

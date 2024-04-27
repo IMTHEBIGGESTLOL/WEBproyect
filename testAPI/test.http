@@ -135,7 +135,7 @@ Content-Type: application/json
 }
 
 ###DELETE RECIPE
-DELETE {{host}}/api/recipes/662c5f176bcc56690a19f9b9
+DELETE {{host}}/api/recipes/662d20794178701c0d8c8670
 
 ###POST MESSAGE TO A RECIPE (CHAT)
 POST {{host}}/api/recipes/662c5ca131d708cc0b160897/chat

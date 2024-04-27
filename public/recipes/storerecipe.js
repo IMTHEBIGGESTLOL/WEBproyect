@@ -35,7 +35,7 @@ function renderRecipe(obj){
 
     let ingredientsHtml = '';
     obj.ingredients.forEach((ingredient, index) => {
-        ingredientsHtml += `<li><span>${ingredient}</span></li>`;
+        ingredientsHtml += `<li><span>${ingredient.name}</span>: ${ingredient.quantity}</li>`;
     });
 
     let instructionsHtml = '';

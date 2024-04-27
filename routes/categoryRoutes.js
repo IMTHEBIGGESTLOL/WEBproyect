@@ -6,7 +6,7 @@ const fs = require('fs');
 const auth = require('../middleware/auth.js');
 const { Category } = require("../models/Category.js");
 
-// Operación GET para obtener todas las recetas
+// Operación GET para obtener todas las categorias
 router.get('/', auth.validateHeader ,auth.validateAdmin,async (req, res)=> {
     let filters = {}
     let categories = await Category.findCategories(filters, req.admin);

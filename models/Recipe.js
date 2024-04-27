@@ -69,7 +69,7 @@ let recipeSchema = mongoose.Schema({
     }]
 })
 
-recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=4, pageNumber=1, skip=0, limit=0)=>{
+recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=10, pageNumber=1, skip=0, limit=0)=>{
     let proj = isAdmin? {}:{title: 1, description:1, _id:0};
     // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
     let docs = Recipe.find(filter, proj).skip(skip).limit(limit).sort({creation_date: 1}).populate('author', 'username userPhoto').populate('categories', 'name').populate('chat', 'user content');
