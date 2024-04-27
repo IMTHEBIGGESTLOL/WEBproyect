@@ -34,7 +34,6 @@ let recipeSchema = mongoose.Schema({
     creation_date: {
         type: String,
         format: Date,
-        default: Date.now,
         required: true
     },
     reviews: [{
@@ -163,6 +162,12 @@ recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
     recipeData.author = id;
 
     recipeData.uid = nanoid(6);
+
+    var fechaActual = new Date();
+    // Obtener la fecha en formato "YYYY-MM-DD"
+    var fechaFormateada = fechaActual.toISOString().split('T')[0];
+
+    recipeData.creation_date = fechaFormateada;
 
     let newRecipe = Recipe(recipeData);
     let doc = await newRecipe.save();

@@ -52,9 +52,9 @@ router.post('/', auth.validateTokenWithCookie,async (req, res) => {
 });
 
 // Operación GET para obtener una receta por su ID
-router.get('/:recipeId', auth.validateHeader ,auth.validateAdmin, async (req, res) => {
+router.get('/:recipeId', auth.validateTokenWithCookie, async (req, res) => {
     let filters = {}
-    let recipe = await Recipe.findRecipe({filters},req.admin, req.params.recipeId)
+    let recipe = await Recipe.findRecipe(req.params.recipeId)
     if(!recipe){
         res.status(404).send({error: "Recipe Not Found"})
         return;

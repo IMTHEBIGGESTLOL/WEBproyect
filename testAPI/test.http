@@ -99,19 +99,19 @@ POST {{host}}/api/recipes
 Content-Type: application/json
 
 {
-    "title": "Mushroom Pizza",
-    "description": "Very italian",
+    "title": "Tacos",
+    "description": "Soooo delocious",
     "ingredients": [
-        "Mushroom",
-        "Cheese"
+        "Tortilla",
+        "Meat"
     ],
     "steps": [
-        "Bake it",
+        "Cook the meat",
         "Eat it"
     ],
-    "photo": "https://i.pinimg.com/564x/11/e0/37/11e037e9c94e2da47e2abbee299f023f.jpg",
-    "cook_time": 25,
-    "prep_time": 15
+    "photo": "https://i.pinimg.com/564x/5f/57/da/5f57da87bc9041c42ab120e2857da837.jpg",
+    "cook_time": 10,
+    "prep_time": 5
 }
 
 ###PUT RECIPE (UPDATE)
@@ -135,7 +135,7 @@ Content-Type: application/json
 }
 
 ###DELETE RECIPE
-DELETE {{host}}/api/recipes/6629642c6c7b8ce78f29355a
+DELETE {{host}}/api/recipes/662c5f176bcc56690a19f9b9
 
 ###POST MESSAGE TO A RECIPE (CHAT)
 POST {{host}}/api/recipes/662c5ca131d708cc0b160897/chat

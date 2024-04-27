@@ -19,10 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 async function loadRecipe(recipeId)
 {
     let resp = await fetch('/api/recipes/'+recipeId,{
-        method :'GET',
-        headers: {
-            'x-auth': 23423
-        }
+        method :'GET'
     })
 
     console.log(resp.status);
