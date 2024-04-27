@@ -155,10 +155,10 @@ router.delete('/email/:email', auth.validateHeader, auth.requireAdmin, async (re
 })
 
 // POST /api/users/:userId/reviews/subscribe
-router.post('/:userId/reviews/subscribe', auth.validateHeader, auth.validateUser ,async (req, res) => {
+router.post('/:userId/reviews/subscribe', auth.validateTokenWithCookie ,async (req, res) => {
     try {
         const userId = req.params.userId;
-        let user = await User.findUser(req.token);
+        let user = await User.findUserById(req._id);
         const subscriberId = user._id; // ID del usuario autenticado
 
         // Agregar el ID del usuario a seguir a la lista de suscripciones del usuario actual
@@ -171,10 +171,10 @@ router.post('/:userId/reviews/subscribe', auth.validateHeader, auth.validateUser
 });
 
 // DELETE /api/users/:userId/reviews/subscribe
-router.delete('/:userId/reviews/subscribe', auth.validateHeader, auth.validateUser, async (req, res) => {
+router.delete('/:userId/reviews/subscribe', auth.validateTokenWithCookie, async (req, res) => {
     try {
         const userId = req.params.userId;
-        let user = await User.findUser(req.token);
+        let user = await User.findUserById(req._id);
         const subscriberId = user._id; // ID del usuario autenticado
 
         // Eliminar el ID del usuario a dejar de seguir de la lista de suscripciones del usuario actual

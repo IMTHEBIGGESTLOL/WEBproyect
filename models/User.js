@@ -104,6 +104,17 @@ userSchema.statics.addrecipes = async (username, recipeId) => {
     return {error: "User not found"};
 }
 
+userSchema.statics.addMyReviews = async (_id, reviewId) => {
+    let user = await User.findOne({_id});
+    if(user)
+    {
+        user.myreviews.push(reviewId);
+        return await user.save();
+    }
+
+    return {error: "User not found"};
+}
+
 userSchema.statics.addFavorites = async (username, recipeId) => {
     let user = await User.findOne({username});
     if(user){

@@ -43,7 +43,7 @@ router.get('/chat/:recipeId', async (req, res)=>{
 })
 
 // Operación POST para crear una nueva receta
-router.post('/', auth.validateToken,async (req, res) => {
+router.post('/', auth.validateTokenWithCookie,async (req, res) => {
     console.log(User)
     console.log(req.body);
     let recipe = req.body;
@@ -64,15 +64,16 @@ router.get('/:recipeId', auth.validateHeader ,auth.validateAdmin, async (req, re
 });
 
 // Operación DELETE para eliminar una receta por su ID
-router.delete('/:recipeId',auth.validateHeader, auth.validateAdmin,auth.validateUser ,async (req, res) => {
+router.delete('/:recipeId',auth.validateTokenWithCookie ,async (req, res) => {
     const recipeId = req.params.recipeId;
-    let recipe = await Recipe.findRecipe({}, req.params.recipeId)
+    let recipe = await Recipe.findRecipe(recipeId)
+    console.log(recipe);
     if(!recipe){
         res.status(404).send({error: "Recipe Not Found"})
         return;
     } 
 
-    if(recipe.author.username != req.token && !req.admin){
+    if(recipe.author._id != req._id){
         res.status(403).send({error: "You dont have permissions"})
         return
     }
@@ -82,8 +83,8 @@ router.delete('/:recipeId',auth.validateHeader, auth.validateAdmin,auth.validate
 });
 
 // Operación PUT para actualizar una receta por su ID
-router.put('/:recipeId', auth.validateToken, async (req, res) => {
-    let recipe = await Recipe.findRecipe({},req.params.recipeId);
+router.put('/:recipeId', auth.validateTokenWithCookie, async (req, res) => {
+    let recipe = await Recipe.findById(req.params.recipeId);
 
     console.log(recipe.author._id.toString());
     if (!recipe){
@@ -103,7 +104,7 @@ router.put('/:recipeId', auth.validateToken, async (req, res) => {
 });
 
 // Endpoint para añadir un mensaje al chat de una receta específica
-router.post('/:recipeId/chat',auth.validateToken,async (req, res) => {
+router.post('/:recipeId/chat',auth.validateTokenWithCookie,async (req, res) => {
     try {
         const user = req.username
         const { content } = req.body;

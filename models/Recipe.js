@@ -2,6 +2,7 @@ const {mongoose} = require("../DB/connectDB")
 const {Post} = require('./Message')
 const {User} = require('./User')
 const {Category} = require('./Category')
+const {nanoid} = require('nanoid')
 
 let recipeSchema = mongoose.Schema({
     uid: {
@@ -36,10 +37,11 @@ let recipeSchema = mongoose.Schema({
         default: Date.now,
         required: true
     },
-    reviews: {
-        type: Array,
-        required: true
-    },
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review',
+        default: []
+    }],
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
@@ -94,7 +96,26 @@ recipeSchema.statics.getRecipes = async (_id)=>{
     }
 }
 
+recipeSchema.statics.removeReviews = async (reviewId, recipeId) => {
+    let recipe = await Recipe.findById(recipeId);
+    if(recipe){
+        
+        var indiceAEliminar = recipe.reviews.findIndex(function(review) {
+            return review._id == reviewId;
+        });
 
+        // Si se encuentra el objeto, eliminarlo
+        if (indiceAEliminar !== -1) {
+            recipe.reviews.splice(indiceAEliminar, 1);
+            await recipe.save(); // Guardar los cambios en la base de datos
+            return { success: true };
+        } else {
+            return { error: "review not found in recipe's reviews" };
+        }
+    }
+
+    return {error: "recipe not found"};
+}
 
 recipeSchema.statics.getChat = async (recipeId) => {
     try {
@@ -125,11 +146,23 @@ recipeSchema.statics.addMessages = async (recipeId, messageId) => {
     return {error: "Recipe not found"};
 }
 
+recipeSchema.statics.addReviews = async (recipeId, reviewId) => {
+    let recipe = await Recipe.findById(recipeId);
+    if(recipe){
+        recipe.reviews.push(reviewId);
+        return await recipe.save();
+    }
+
+    return {error: "Recipe not found"};
+}
+
 recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
 
     let id = _id;
 
     recipeData.author = id;
+
+    recipeData.uid = nanoid(6);
 
     let newRecipe = Recipe(recipeData);
     let doc = await newRecipe.save();
@@ -139,10 +172,10 @@ recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
 
 }
 
-recipeSchema.statics.findRecipe = async (filters, isAdmin = false, _id) => {
+recipeSchema.statics.findRecipe = async (_id) => {
     try {
         let proj = {}
-        let recipe = await Recipe.findOne({ _id }, proj).populate('author', 'username');
+        let recipe = await Recipe.findById(_id).populate('author', 'username');
         console.log(recipe);
 
         if (!recipe) {

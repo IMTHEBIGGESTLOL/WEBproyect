@@ -52,11 +52,9 @@ x-auth: 23423
 
 ### ADD A NEW REVIEW SUBSCRIPTION TO USER
 POST {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
-x-token: Ivan
 
 ### DELETE A REVIEW SUBSCRIPTION
 DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
-x-token: Ivan
 
 ### 
 POST {{host}}/api/auth/login
@@ -98,66 +96,53 @@ x-auth: 23423
 //Fecha, rating
 ### POST NEW RECIPE
 POST {{host}}/api/recipes
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZyb250VXNlciIsIl9pZCI6IjY2MjljODNiODI1NmU2MzFhZGFlOWZlMSIsImlhdCI6MTcxNDAxNzE4NiwiZXhwIjoxNzE0MDIwNzg2fQ.XSyGrbLiXoTZY546rM3bu15mGdoOrwO0t80tWkHLOcc
 Content-Type: application/json
 
 {
-    "title": "Egg Omellette",
-    "description": "Very delicius",
+    "title": "Mushroom Pizza",
+    "description": "Very italian",
     "ingredients": [
-        "Eggs",
-        "Slat"
+        "Mushroom",
+        "Cheese"
     ],
     "steps": [
-        "cocinar",
-        "comer"
+        "Bake it",
+        "Eat it"
     ],
-    "uid": "14",
-    "photo": "https://i.pinimg.com/736x/45/51/74/455174d200410eae4e74cdb7eb97013b.jpg",
-    "cook_time": 10,
-    "prep_time": 5
+    "photo": "https://i.pinimg.com/564x/11/e0/37/11e037e9c94e2da47e2abbee299f023f.jpg",
+    "cook_time": 25,
+    "prep_time": 15
 }
 
 ###PUT RECIPE (UPDATE)
 PUT {{host}}/api/recipes/66256e68c3d0c110c660a8f8
-x-token: Guillermo
 Content-Type: application/json
 
 {
-    "title": "Kimchi de Cerdo EDIT",
-    "description": "Es una delicia en plato EDIT",
+    "title": "Mushroom Pizza EDIT",
+    "description": "Very italian",
     "ingredients": [
-        "carne",
-        "soya",
-        "huevo"
+        "Mushroom",
+        "Cheese"
     ],
     "steps": [
-        "cocinar",
-        "comer"
+        "Bake it",
+        "Eat it"
     ],
-    "reviews": [
-        "muy deliciosa"
-    ],
-    "categories": [],
-    "uid": "5",
-    "rating": 4.3,
-    "photo": "https://static.vecteezy.com/system/resources/previews/002/873/829/large_2x/stir-fried-pork-with-kimchi-korean-food-style-free-photo.jpg",
-    "cook_time": 20,
+    "photo": "https://i.pinimg.com/564x/11/e0/37/11e037e9c94e2da47e2abbee299f023f.jpg",
+    "cook_time": 25,
     "prep_time": 15
 }
 
 ###DELETE RECIPE
-DELETE {{host}}/api/recipes/662056c78c79b23fa54bd303
-x-token: Guillermo
-x-auth: 23423
+DELETE {{host}}/api/recipes/6629642c6c7b8ce78f29355a
 
 ###POST MESSAGE TO A RECIPE (CHAT)
-POST {{host}}/api/recipes/66256e68c3d0c110c660a8f8/chat
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1aWxsZXJtbyIsIl9pZCI6IjY2MjJiZTlkNTdlMzFmYmQ2MzI1NDZjNiIsImlhdCI6MTcxMzkyMzY2OSwiZXhwIjoxNzEzOTI3MjY5fQ.U2q8cz4xisPlJDU-rVxChu7iVbju1CmmEDzxtV_DCLI
+POST {{host}}/api/recipes/662c5ca131d708cc0b160897/chat
 Content-Type: application/json
 
 {
-    "content": "Sigo y sigo comiendo"
+    "content": "Deliciosa pizza la vrd"
 }
 
 ### POST RECIPE TO FAVORITES
@@ -179,9 +164,19 @@ GET {{host}}/api/recipes/chat/66256e68c3d0c110c660a8f8
 //PRUEBA DE QUE ESTA PARTE DEL CODIGO DE ACTUALICE EN GITHUB :)!!!!!
 
 
-//MESSAGES
+//Reviews
 
+### POST REVIEW
+POST {{host}}/api/reviews/66295c636264b2ab44818399
+Content-Type: application/json
 
+{
+    "comment": "Great recipe, the nachos were delicious",
+    "rating": 4.2
+}
+
+### DELETE REVIEW
+DELETE {{host}}/api/reviews/66295c636264b2ab44818399/662c561141abc223196c6f24
 
 ###
 GET {{host}}/api/categories

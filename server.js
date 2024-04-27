@@ -8,6 +8,7 @@ const recipeRoute = require('./routes/recipeRoutes.js');
 const categoryRoute = require('./routes/categoryRoutes.js');
 const authRoute = require('./routes/authRoutes.js');
 const messageRoute = require('./routes/messagesRoutes.js');
+const reviewRoute = require('./routes/reviewRoutes.js');
 const path = require('path');
 
 app.use(cookieParser())
@@ -38,6 +39,8 @@ app.use('/api/categories', logger, categoryRoute)
 app.use('/api/auth', logger, authRoute);
 
 app.use('/api/messages', logger, messageRoute);
+
+app.use('/api/reviews', logger, reviewRoute);
 
 app.listen(port, ()=> console.log("Running in port" + port))
 
