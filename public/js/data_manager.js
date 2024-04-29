@@ -31,12 +31,8 @@ class DataManager
         
         recipesArray = data.recipes;
 
-        newest_recipe = recipesArray[0];
-
-        recipesArray.shift();
-
         let html = this.toHtml(View.toHtmlList,recipesArray);
-        View.render(html, "card_recipes");
+        View.render(html, "recipes_display");
 
         let resp_cat = await fetch('/api/categories',{
             method :'GET',
@@ -50,26 +46,10 @@ class DataManager
         
         categories = cat.categories;
 
-        let cat_html = this.toHtml(ViewCategory.toHtmlList,categories);
+        const primeras_3_categorias = categories.slice(0, 3);
+
+        let cat_html = this.toHtml(ViewCategory.toHtmlList,primeras_3_categorias);
         View.render(cat_html, "categories");
-
-        let resp_recipes_bottom = await fetch('/api/recipes' + '?skip=5&limit=4',{
-            method :'GET',
-            headers: {
-                'x-auth': 23423
-            }
-        })
-    
-        console.log(resp.status);
-        let data_recipes = await resp_recipes_bottom.json()
-        
-        latest_recipes = data_recipes.recipes;
-
-        let html_recipes = this.toHtml(View.toHtmlList,latest_recipes);
-        View.render(html_recipes, "try-cards");
-
-        let newest_html = this.rendernewest(newest_recipe);
-        View.render(newest_html, "newest");
 
         // if(category == null)
         // {
@@ -78,61 +58,6 @@ class DataManager
         //     this.filterProducts(category);
         // }
   
-    }
-
-    static rendernewest(obj)
-    {
-        let creationDate = new Date(obj.creation_date);
-
-        // Format the date as a string
-        let formattedCreationDate = creationDate.toLocaleString();
-        let html = `
-                    <div class="container row" style=" background: url(${obj.photo}) var(--cl-4--);
-                    background-repeat: no-repeat;
-                    background-position: right center;
-                    background-size: contain;
-                    overflow: hidden;
-                    border-radius: 50px 0px 0px 50px;">
-                    <div class="hero-content">
-                    <div class="content">
-                        
-                        <div class="recipe row">
-                            <img src="${obj.photo}" alt="">
-                                HOT recipes
-                        </div>
-                        <h1>${obj.title}</h1>
-                        <p>${obj.description}</p>
-                        <div class="time row">
-                            <div class="row">
-                                <p><i class="bi bi-alarm-fill"></i> ${obj.prep_time} minutes</p>
-                            </div>
-                            <div class="row">
-                                <p><i class="fa-solid fa-drumstick-bite"></i> Chicken</p>
-                            </div>
-                        </div>
-                        <div class="profile-btn row">
-                            <div class="profile row">
-                                <div class="p-img row">
-                                    <img src="${obj.author.userPhoto}" alt="">
-                                </div>
-                                <div class="column">
-                                    <h6>${obj.author.username}</h6>
-                                    <p>${formattedCreationDate}</p>
-                                </div>
-                            </div>
-                            <a href="#" class="hero-btn row">
-                                View Recipes
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-        `;
-
-        return html;
     }
 
     static filterProducts(category)
@@ -213,21 +138,20 @@ class View
     
     static toHtmlDiv(obj) {
         let html = `
-                    <a href="./recipes/single_recipe.html?id=${obj._id}" class="card">
-                        <img src="${obj.photo}" alt="">
-                        <h5>${obj.title}</h5>
-                        <div class="time row">
-                            <div class="row">
-                                <p><i class="bi bi-alarm-fill"></i> ${obj.prep_time}</p>
+                    <div class="col">
+                        <div class="card" style="width: 18rem;">
+                            <img src="${obj.photo}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h3 class="card-title">${obj.title}</h3>
+                                <p class="card-text">${obj.description}</p>
                             </div>
-                            <div class="row">
-                                <p><i class="fa-solid fa-drumstick-bite"></i> ${obj.author.username}</p>
+                            <div class="d-flex justify-content-around mb-5">
+                                <p>${obj.author.username}</p>
+                                <p>${obj.prep_time}</p>
+                                <a href="./recipes/single_recipe.html?id=${obj._id}" class="btn btn-primary">More Info</a>
                             </div>
                         </div>
-                        <div class="like row active">
-                            <i class="bi bi-heart"></i>
-                        </div>
-                    </a>`;
+                    </div>`;
         return html;
     }
 
@@ -295,10 +219,14 @@ class ViewCategory
     
     static toHtmlDiv(obj) {
         console.log("entro3");
-        let html = `<a href="#" class="cat-card">
-                        <img src="${obj.photo}" alt="">
-                        <h6>${obj.name}</h6>
-                    </a>`;
+        let html = `<div class="col-lg-4">
+                        <div class="bd-placeholder-img rounded-circle" style="width: 200px; height: 200px;">
+                            <img src="${obj.photo}" alt="" class="w-100">
+                        </div>
+    
+                        <h2>${obj.name}</h2>
+                        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                    </div>`;
         return html;
         
     }

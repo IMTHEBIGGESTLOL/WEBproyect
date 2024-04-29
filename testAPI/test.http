@@ -57,13 +57,13 @@ POST {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
 DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
 
 ### 
-POST {{host}}/api/auth/login
-Content-Type: application/json
+# POST {{host}}/api/auth/login
+# Content-Type: application/json
 
-{
-    "email": "guille@gmail.com",
-    "password" : "4321"
-}
+# {
+#     "email": "dany@gmail.com",
+#     "password" : "1234"
+# }
 
 ###
 
@@ -71,8 +71,8 @@ POST {{host}}/api/auth/login2
 Content-Type: application/json
 
 {
-    "email": "guille@gmail.com",
-    "password" : "4321"
+    "email": "dany@gmail.com",
+    "password" : "1234"
 }
 
 ###
@@ -81,8 +81,11 @@ GET {{host}}/api/auth/logout
 
 //RECIPES
 
-### GET ALL RECIPES ADMIN
+###
 GET {{host}}/api/recipes
+
+### GET ALL RECIPES ADMIN
+GET {{host}}/api/recipes/search?steps=2&&cook_time_gte=15
 x-auth: 23423
 
 ### GET ALL RECIPES NOT ADMIN
@@ -146,10 +149,10 @@ Content-Type: application/json
 }
 
 ### POST RECIPE TO FAVORITES
-POST {{host}}/api/recipes/favorites/66256e68c3d0c110c660a8f8
+POST {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
 
 ### DELETE RECIPE IN FAVORITES
-DELETE {{host}}/api/recipes/favorites/66256e68c3d0c110c660a8f8
+DELETE {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
 
 ### GET CURRENT USER RECIPES
 GET {{host}}/api/recipes/mine
@@ -183,33 +186,10 @@ GET {{host}}/api/categories
 x-auth: 23423
 
 ###
-GET {{host}}/users/4/test@abc.com
-
-###
-GET {{host}}/users?minID=4&maxID=6
-
-###
-GET {{host}}/users?pageNumber=2&pageSize=5
-
-###
-POST {{host}}/users
+POST {{host}}/api/categories
 Content-Type: application/json
 
 {
-    "name":"Test Name",
-    "email": "T2est email",
-    "age":24
+    "name": "Pastas",
+    "photo": "https://i.pinimg.com/564x/b9/5e/28/b95e28ff906b6fdd024d5799e98f2573.jpg"
 }
-
-###
-PUT {{host}}/users/4
-Content-Type: application/json
-
-{
-    "name": "Put Name"
-}
-
-###
-DELETE {{host}}/users/4
-x-auth: 23423
-

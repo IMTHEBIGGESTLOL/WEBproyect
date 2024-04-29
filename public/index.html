@@ -1,169 +1,209 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Cook It!!</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-        <!-- Bootstrap CSS v5.2.1 -->
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+    crossorigin="anonymous" />
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+        integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+        crossorigin="anonymous" />
 
-        <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style2_1.css">
+  </head>
 
-        <style>
-            .scrollmenu {
-                overflow: auto;
-                white-space: wrap;
-            }
-        </style>
+  <body>
 
-    </head>
+    <!-- navigation -->
 
-    <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="./index.html">COOK IT</a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Search</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./Login_SignUp_Page/index.html">Log In</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./profile_page/index.html">My Profile</a>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </nav>
 
-        <!-- navbar -->
-
-        <header class="row container">
-            <a href="#" class="logo">
-                <img src="./imgs/CookIt_Text.png" alt="logo" id="logo">
-            </a>
-            <div class="nav row">
-                <ul class="primary-links row">
-                    <li><a href="">Home</a></li>
-                    <li><a href="./recipes/recipes_page.html">Recipes</a></li>
-                    <li><a href="">Search</a></li>
-                    <li><a href="">Categories</a></li>
-                </ul>
-                <ul class="secondary-links row">
-                    <li><a href="./Login_SignUp_Page/index.html">Login</a></li>
-                    <li><a href="#">MyProfile</a></li>
-                </ul>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="overlay-image" style="background-image: url(./imgs/slide1.jpg);"></div>
+          <div class="container">
+            <div class="carousel-caption text-start">
+              <h1>Example headline.</h1>
+              <p>Some representative placeholder content for the first slide of the carousel.</p>
+              <p><a class="btn btn-primary" href="#">Sign up today</a></p>
             </div>
-        </header>
-
-        <!-- end_of_navbar -->
-
-        <!-- main_section -->
-
-        <section class="hero" id="newest">
-            
-        </section>
-
-        <!-- end_of_main_section -->
-
-        <!-- category -->
-
-        <section class="category container">
-            <div class="category-title row">
-                <h2>Categories</h2>
-                <a href="" class="category-btn">View All Categories</a>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="overlay-image" style="background-image: url(./imgs/slide2.jpg);"></div>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p>Some representative placeholder content for the second slide of the carousel.</p>
+              <p><a class="btn btn-primary" href="#">Learn more</a></p>
             </div>
-            <div class="category-cards column" id="categories">
-                
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="overlay-image" style="background-image: url(./imgs/slide3.jpg);"></div>
+          <div class="container">
+            <div class="carousel-caption text-end">
+              <h1>One more for good measure.</h1>
+              <p>Some representative placeholder content for the third slide of this carousel.</p>
+              <p><a class="btn btn-primary" href="#">Browse gallery</a></p>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
 
+    <div class="container marketing">
 
-        <!-- end_of_category -->
-
-        <!-- Recipes -->
-
-        <section class="recipes container">
-            <div class="section-title">
-                <h2>Simple and tasty</h2>
-                <a href="" class="category-btn">View All Recipes</a>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente nisi excepturi quo sunt molestiae veritatis rem iure voluptas odit, voluptatem porro recusandae minus distinctio, ullam possimus. Libero laborum doloremque expedita.</p>
-            </div>
-            <div class="recipe-cards column scrollmenu" id="card_recipes">
-               
-            </div>
-        </section>
-
-        <!-- end_of_recipes -->
-
-        <!-- learn -->
-
-        <section class="learn row container">
-            <div class="learn-content">
-                <div>
-                    <h2>Everyone can cook!!!</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero, natus facilis fugiat recusandae debitis omnis optio nesciunt suscipit corporis laboriosam tempora laborum voluptas nostrum quo vitae, a earum, alias excepturi?</p>
-                    <a href="" class="learn-btn">Learn More</a>
-                </div>
-            </div>
-            <div class="learn-img row">
-                <img src="https://www.shutterstock.com/image-photo/african-american-female-chef-having-600nw-2150289105.jpg" alt="">
-            </div>
-        </section>
-
-        <!-- end_learn -->
-
-        <!-- try -->
-
-        <section class="try container">
-            <div class="try-content row">
-                <h2>Try this awesome recipe to feel alive!!</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto inventore atque nihil labore. Sequi, corrupti quaerat obcaecati libero dignissimos dolor quas necessitatibus consequatur nisi qui voluptatibus incidunt sapiente. Suscipit, unde?</p>
-            </div>
-
-            <div class="try-cards column" id="try-cards">
-                
-            </div>
-        </section>
-
-        <!-- end_of_try -->
-
-
-        <!-- footer -->
-
-        <footer class="container">
-            <div class="footer-content row">
-                <div>
-                    <a href="#" class="logo">
-                        <img src="./imgs/CookIt_Text.png" alt="logo" id="logo">
-                    </a>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-                </div>
-                <ul class="row">
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Recipes</a></li>
-                    <li><a href="">Search</a></li>
-                    <li><a href="">Categories</a></li>
-                </ul>
-            </div>
-            <hr>
-            <div class="footer-links row">
-                <p class="copy-rights">&copy; 2022. All right reserved</p>
-
-            </div>
-        </footer>
-
-        <!-- end_footer -->
-
+      <!-- Three columns of text below the carousel -->
+      <div class="row" id="categories">
         
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
+      </div><!-- /.row -->
+  
+  
+      <!-- START THE FEATURETTES -->
+  
+      <hr class="featurette-divider">
+  
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Simple and tasty <span class="text-muted">It’ll blow your mind.</span></h2>
+          <button class="btn btn-dark">See all Recipes</button>
+        </div>
+        <div class="col-md-5">
+          <div class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500">
+              <img src="./imgs/section1.jpg" alt="" class="w-100">
+          </div>
+        </div>
+      </div>
+  
+      <hr class="featurette-divider">
+  
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
+          <button class="btn btn-dark">Search recipes</button>        
+        </div>
+        <div class="col-md-5 order-md-1">
+          <div class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500">
+              <img src="./imgs/section2.jpg" alt="" class="w-100">
+          </div>
+        </div>
+      </div>
+  
+      <hr class="featurette-divider">
+  
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Do not miss any of this <span class="text-muted">Be part of the community.</span></h2>
+          <button class="btn btn-dark">Register Now!!</button>        </div>
+        <div class="col-md-5">
+          <div class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500">
+              <img src="./imgs/section3.jpg" alt="" class="w-100">
+          </div>
+        </div>
+      </div>
+  
+      <hr class="featurette-divider">
+  
+      <!-- /END THE FEATURETTES -->
+  
+    </div>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
+    <div class="container recipes py-5">
+      <div class="text-center"><h1>Some of Our Recipes</h1></div>
+      <div class="row row-cols-1 row-cols-md-3 g-4 py-5" id="recipes_display">
+        <!-- recipes_display_here -->
 
-        
-        <script src="./js/categories.js"></script>
-        <script src="./js/recipes.js"></script>
-        <script src="./js/data_manager.js"></script>
-        
-    </body>
+      </div>
+    </div>
+
+    <footer class="container">
+      <hr>
+      <div class="footer-links row">
+          <p class="copy-rights">&copy; 2022. All right reserved</p>
+
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous"></script>
+
+    <script src="./js/categories.js"></script>
+    <script src="./js/recipes.js"></script>
+    <script src="./js/data_manager.js"></script>
+  </body>
 </html>

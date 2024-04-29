@@ -69,19 +69,88 @@ let recipeSchema = mongoose.Schema({
     }]
 })
 
-recipeSchema.statics.findRecipes= async (filter, isAdmin = false, pageSize=10, pageNumber=1, skip=0, limit=0)=>{
-    let proj = isAdmin? {}:{title: 1, description:1, _id:0};
-    // let docs = await User.find(filter, proj).skip(3).limit(2); filtrar por página,
-    let docs = Recipe.find(filter, proj).skip(skip).limit(limit).sort({creation_date: 1}).populate('author', 'username userPhoto').populate('categories', 'name').populate('chat', 'user content');
-    let count = Recipe.find(filter).count();
+recipeSchema.statics.findRecipes = async (filter, pageSize = 10, pageNumber = 1, skip = 0, limit = 0) => {
+    let proj = {};
+    let regexFilter = {};
+
+    
+    for (const key in filter) {
+
+        if (key === 'title' || key === 'description') {
+            console.log({key: key, valor: filter[key]})
+            regexFilter[key] = { $regex: filter[key], $options: 'i' };
+        }
+
+        if(filter.hasOwnProperty(key) && (key == 'cook_time' || key == 'prep_time')){
+            regexFilter[key] = filter[key]
+        }
+
+        if(filter.hasOwnProperty(key) && (key == 'cook_time_gt' || key == 'prep_time_gt')){
+            cadena = key.slice(0, -3);
+            regexFilter[cadena] = filter[key]
+        }
+
+        if(filter.hasOwnProperty(key) && (key == 'cook_time_lt' || key == 'prep_time_lt')){
+            cadena = key.slice(0, -3);
+            regexFilter[cadena] = filter[key]
+        }
+
+        if(filter.hasOwnProperty(key) && (key == 'cook_time_gte' || key == 'prep_time_gte')){
+            cadena = key.slice(0, -4);
+            regexFilter[cadena] = filter[key]
+        }
+
+        if(filter.hasOwnProperty(key) && (key == 'cook_time_lte' || key == 'prep_time_lte')){
+            cadena = key.slice(0, -4);
+            regexFilter[cadena] = filter[key]
+        }
+    }
+
+    console.log(regexFilter)
+
+    let docs = Recipe.find(regexFilter, proj).skip(skip).limit(limit).sort({ creation_date: 1 }).populate('author', 'username userPhoto').populate('categories', 'name').populate('chat', 'user content');
+    let count = Recipe.find(regexFilter).count();
 
     let resp = await Promise.all([docs, count]);
 
     console.log(resp[0], resp[1]);
 
-    console.log({user : User});
-    return {recipes: resp[0], total: resp[1]};
-}
+    if (filter.categories) {
+        resp[0] = resp[0].filter(objeto => {
+            return objeto.categories.some(categoria => categoria.name.toLowerCase() === filter.categories.toLowerCase());
+        });
+    }
+
+    if(filter.ingredients){
+        const filtroIngredientes = filter.ingredients.toLowerCase();
+
+        resp[0] = resp[0].filter(objeto => {
+            // Verificar si alguno de los nombres de ingredientes contiene la cadena de filtro, ignorando las mayúsculas/minúsculas
+            return objeto.ingredients.some(ingredient => {
+                // Verificar si ingredient y ingredient.name están definidos antes de llamar a toLowerCase()
+                if (ingredient && ingredient.name) {
+                    return ingredient.name.toLowerCase().includes(filtroIngredientes);
+                }
+                return false; // Si ingredient o ingredient.name es undefined, retornar false
+            });
+        });
+    }
+
+    if(filter.author){
+        resp[0] = resp[0].filter(obj => {
+            return obj.author.username.includes(filter.author)
+        })
+    }
+
+    if(filter.steps){
+        resp[0] = resp[0].filter(obj => {
+            return obj.steps.length == filter.steps
+        })
+    }
+
+    console.log({ user: User });
+    return { recipes: resp[0], total: resp[1] };
+};
 
 recipeSchema.statics.getRecipes = async (_id)=>{
     try {

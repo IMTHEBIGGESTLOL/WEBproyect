@@ -7,12 +7,67 @@ const {User} = require('../models/User.js');
 const auth = require('../middleware/auth.js');
 const {Post} = require('../models/Message.js');
 
-// Operación GET para obtener todas las recetas
-router.get('/', auth.validateHeader ,auth.validateAdmin, auth.addSkipLimittoGet() ,async (req, res)=> {
+
+router.get('/',  auth.addSkipLimittoGet(),async (req, res) => {
     let filters = {}
-    console.log(req.admin)
-    let recipes = await Recipe.findRecipes(filters, req.admin, 10,1, req.skip, req.limit);
+    let recipes = await Recipe.findRecipes(filters, 10, 1, req.skip, req.limit);
     res.json(recipes);
+});
+
+router.get('/search', async (req, res) => {
+    try {
+        let filters = {};
+
+        // Add filters
+        if (req.query) {
+            // Exact filters
+            for (const key in req.query) {
+                if (req.query.hasOwnProperty(key)) {
+                    if (key === 'title' || key === 'description' || key === 'author') {
+                        filters[key] = req.query[key];
+                        console.log({ filtro: filters, valor: req.query[key] });
+                    } else if (key === 'creation_date') {
+                        // Assuming req.query[key] contains the date in "YYYY-MM-DD" format
+                        const dateValue = new Date(req.query[key]);
+                        // Set the filter to match the entire day
+                        filters[key] = {
+                            $gte: dateValue, // Greater than or equal to the start of the day
+                            $lt: new Date(dateValue.getTime() + 24 * 60 * 60 * 1000), // Less than the start of the next day
+                        };
+                    } else if (key === 'cook_time' || key === 'prep_time') {
+                        // Assuming req.query[key] contains the time in minutes (e.g., "30")
+                        const timeInMinutes = parseInt(req.query[key], 10);
+                        filters[key] = timeInMinutes;
+                    } else if (key === 'cook_time_gt' || key === 'prep_time_gt') {
+                        // More than (>)
+                        const timeInMinutes = parseInt(req.query[key], 10);
+                        filters[key] = { $gt: timeInMinutes };
+                    } else if (key === 'prep_time_gte' || key === 'cook_time_gte') {
+                        // More than or equal to (>=)
+                        const timeInMinutes = parseInt(req.query[key], 10);
+                        filters[key] = { $gte: timeInMinutes };
+                    } else if (key === 'cook_time_lte' || key === 'prep_time_lte') {
+                        // Less than or equal to (<=)
+                        const timeInMinutes = parseInt(req.query[key], 10);
+                        filters[key] = { $lte: timeInMinutes };
+                    } else if (key === 'prep_time_lt' || key === 'cook_time_lt') {
+                        // Less than (<)
+                        const timeInMinutes = parseInt(req.query[key], 10);
+                        filters[key] = { $lt: timeInMinutes };
+                    } else {
+                        filters[key] = req.query[key];
+                    }
+                }
+            }
+        }
+
+        console.log({estelog: filters});
+        let recipes = await Recipe.findRecipes(filters, 10, 1);
+        res.json(recipes);
+    } catch (error) {
+        console.error('Error fetching recipes:', error);
+        res.status(500).json({ error: 'Error fetching recipes' });
+    }
 });
 
 router.get('/mine', auth.validateTokenWithCookie, async (req,res)=>{
@@ -28,11 +83,21 @@ router.get('/favorites', auth.validateTokenWithCookie, async (req,res)=>{
 });
 
 router.post('/favorites/:recipeId', auth.validateTokenWithCookie, async (req,res)=>{
+    let recipe = await Recipe.findById(req.params.recipeId);
+    if(!recipe){
+        res.status(404).send("Recipe doesnt exists");
+        return;
+    }
     let status = await User.addFavorites(req.username, req.params.recipeId);
     res.send(status);
 });
 
 router.delete('/favorites/:recipeId', auth.validateTokenWithCookie, async (req,res)=>{
+    let recipe = await Recipe.findById(req.params.recipeId);
+    if(!recipe){
+        res.status(404).send("Recipe doesnt exists");
+        return;
+    }
     let status = await User.removeFavorites(req.username, req.params.recipeId);
     res.send(status);
 });
