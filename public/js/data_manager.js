@@ -138,20 +138,24 @@ class View
     
     static toHtmlDiv(obj) {
         let html = `
-                    <div class="col">
-                        <div class="card" style="width: 18rem;">
-                            <img src="${obj.photo}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h3 class="card-title">${obj.title}</h3>
-                                <p class="card-text">${obj.description}</p>
-                            </div>
-                            <div class="d-flex justify-content-around mb-5">
-                                <p>${obj.author.username}</p>
-                                <p>${obj.prep_time}</p>
-                                <a href="./recipes/single_recipe.html?id=${obj._id}" class="btn btn-primary">More Info</a>
-                            </div>
-                        </div>
-                    </div>`;
+        <div class="col">
+        <div class="card position-relative" style="width: 18rem;">
+            <img src="${obj.photo}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h3 class="card-title">${obj.title}</h3>
+                <p class="card-text">${obj.description}</p>
+            </div>
+            <!-- Botón con ícono de corazón -->
+            <button type="button" class="btn btn-outline-danger position-absolute top-0 end-0 m-2">
+                <i class="bi bi-heart"></i>
+            </button>
+            <div class="d-flex justify-content-around mb-5">
+                <p>${obj.author.username}</p>
+                <p>${obj.prep_time}</p>
+                <a href="./recipes/single_recipe.html?id=${obj._id}" class="btn btn-dark">More Info</a>
+            </div>
+        </div>
+    </div>`;
         return html;
     }
 
