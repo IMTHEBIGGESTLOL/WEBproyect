@@ -1,7 +1,7 @@
 
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3001;
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routes/userRoutes.js');
 const recipeRoute = require('./routes/recipeRoutes.js');

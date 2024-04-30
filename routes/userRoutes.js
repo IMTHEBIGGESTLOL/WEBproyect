@@ -75,9 +75,9 @@ router.get('/search/me',  auth.validateTokenWithCookie ,async (req, res)=>{
 
 
 // this will never be reached
-router.get('/email/:email', async (req, res)=>{
-    console.log(req.params.email);
-    let user = await User.findUser(req.params.email);
+router.get('/username/:username', async (req, res)=>{
+    console.log(req.params.username);
+    let user = await User.findUser(req.params.username);
     if (!user){
         res.status(404).send({error: "User not found"})
         return;
@@ -150,9 +150,14 @@ router.put('/username/:username', async (req,res)=>{
         
 })
 
-router.delete('/email/:email', auth.validateHeader, auth.requireAdmin, async (req, res)=>{
+router.delete('/username/:username', auth.validateTokenWithCookie, async (req, res)=>{
     // search for the id
-    let pos= await User.deleteUser(req.params.email)
+    if(req.username != req.params.username)
+    {
+        res.status(403).send({error: "You dont have permissions"})
+        return;
+    }
+    let pos= await User.deleteUser(req.params.username)
     
     // if not found return 404
     if(!pos){

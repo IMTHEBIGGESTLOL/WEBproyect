@@ -144,6 +144,7 @@ router.delete('/:recipeId',auth.validateTokenWithCookie ,async (req, res) => {
     }
 
     let recipedeleted = await Recipe.deleteRecipe(recipeId);
+    await User.removeMyRecipes(req.username, req.params.recipeId);
     res.send(recipedeleted);
 });
 

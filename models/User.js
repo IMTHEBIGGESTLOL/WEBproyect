@@ -151,6 +151,27 @@ userSchema.statics.removeFavorites = async (username, recipeId) => {
     return {error: "User not found"};
 }
 
+userSchema.statics.removeMyRecipes = async (username, recipeId) => {
+    let user = await User.findOne({username});
+    if(user){
+        // Buscar el índice del objeto con el ID de la receta en los favoritos del usuario
+        var indiceAEliminar = user.myrecipes.findIndex(function(recipe) {
+            return recipe._id == recipeId;
+        });
+
+        // Si se encuentra el objeto, eliminarlo
+        if (indiceAEliminar !== -1) {
+            user.myrecipes.splice(indiceAEliminar, 1);
+            await user.save(); // Guardar los cambios en la base de datos
+            return { success: true };
+        } else {
+            return { error: "Recipe not found in user's favorites" };
+        }
+    }
+
+    return {error: "User not found"};
+}
+
 userSchema.statics.getFavorites = async (userId) => {
     try {
         // Buscar al usuario por su ID
@@ -221,8 +242,8 @@ userSchema.statics.updateUser = async (email, userData)=>{
     return updateUser;
 }
 
-userSchema.statics.deleteUser = async (email)=>{
-    let deletedUser = await User.findOneAndDelete({email})
+userSchema.statics.deleteUser = async (username)=>{
+    let deletedUser = await User.findOneAndDelete({username})
     console.log(deletedUser);
     return deletedUser;
 }
