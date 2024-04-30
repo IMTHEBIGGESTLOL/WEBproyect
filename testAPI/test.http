@@ -10,6 +10,9 @@ x-auth: 23423
 GET {{host}}/api/users/6620682a8c79b23fa54bd305
 x-auth: 23423
 
+### GET BY COOKIES
+GET {{host}}/api/users/search/me
+
 ### GET USER BY USERNAME
 GET {{host}}/api/users/email/Guillermo
 x-auth: 23423

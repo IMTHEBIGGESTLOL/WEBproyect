@@ -63,6 +63,16 @@ router.get('/:_id', async (req, res)=>{
     res.send(user)
 })
 
+router.get('/search/me',  auth.validateTokenWithCookie ,async (req, res)=>{
+    console.log(req.params.id);
+    let user = await User.findUserById(req._id)
+    if (!user){
+        res.status(404).send({error: "User not found"})
+        return;
+    }
+    res.send(user)
+})
+
 
 // this will never be reached
 router.get('/email/:email', async (req, res)=>{
