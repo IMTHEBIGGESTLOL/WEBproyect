@@ -159,6 +159,29 @@ class View
 
 document.querySelector('#filterBtn').addEventListener('click', readFilterValues);
 
+document.querySelector('#resetfilters').addEventListener('click', resetvalues);
+
+function resetvalues()
+{
+    // Resetear los valores de los inputs
+    document.querySelector('#Arrayselect').value = '0';
+    document.querySelector('#categorySelect').value = '0';
+
+    // Resetear el valor del dropdown
+    document.querySelector('#title').value = '';
+    document.querySelector('#ingredients').value = '';
+    document.querySelector('#min_preptime').value = '';
+    document.querySelector('#max_preptime').value = '';
+    document.querySelector('#min_cooktime').value = '';
+    document.querySelector('#max_cooktime').value = '';
+    document.querySelector('#minsteps').value = '';
+    document.querySelector('#maxsteps').value = '';
+
+    readFilterValues();
+
+}
+
+
 async function readFilterValues() {
 
     let resp = await fetch('/api/users/search/me',{
@@ -172,6 +195,15 @@ async function readFilterValues() {
 
     let selectedArray = document.querySelector('#Arrayselect').value;
     let selectedCategory = document.querySelector('#categorySelect').value;
+    let selectedTitle = document.querySelector('#title').value;
+    let selectedIngredient = document.querySelector('#ingredients').value;
+    let selectedminprepTime = document.querySelector('#min_preptime').value;
+    let selectedmaxprepTime = document.querySelector('#max_preptime').value;
+    let selectedmincookTime = document.querySelector('#min_cooktime').value;
+    let selectedmaxcookTime = document.querySelector('#max_cooktime').value;
+    let selectedminsteps = document.querySelector('#minsteps').value;
+    let selectedmaxsteps = document.querySelector('#maxsteps').value;
+    console.log({maxTime: selectedmaxprepTime})
     // let minPrice = document.querySelector('#minPrice').value;
     // let maxPrice = document.querySelector('#maxPrice').value;
 
@@ -201,6 +233,63 @@ async function readFilterValues() {
         );
     }
 
+    if(selectedTitle)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.title.toLowerCase().includes(selectedTitle.toLowerCase())
+        );
+    }
+
+    if(selectedIngredient)
+    {
+        recipelist = recipelist.filter( objeto =>
+            objeto.ingredients.some(ingredient =>
+                ingredient.name && selectedIngredient && ingredient.name.toString().toLowerCase() === selectedIngredient.toString().toLowerCase()
+            )        
+        )
+    }
+
+    if(selectedminprepTime)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.prep_time >= parseInt(selectedminprepTime)
+        )
+    }
+
+    if(selectedmaxprepTime)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.prep_time <= parseInt(selectedmaxprepTime)
+        )
+    }
+
+    if(selectedmaxcookTime)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.cook_time <= parseInt(selectedmaxcookTime)
+        )
+    }
+
+    if(selectedmincookTime)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.cook_time >= parseInt(selectedmincookTime)
+        )
+    }
+
+    if(selectedminsteps)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.steps.length >= parseInt(selectedminsteps)
+        )
+    }
+
+    if(selectedmaxsteps)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.steps.length <= parseInt(selectedmaxsteps)
+        )
+    }
     // if(minPrice){
     //     prodlist = prodlist.filter(e=> e.pricePerUnit >= minPrice);
     // }

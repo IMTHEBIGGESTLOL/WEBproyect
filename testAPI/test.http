@@ -113,8 +113,8 @@ Content-Type: application/json
     "title": "Tacos",
     "description": "Soooo delocious",
     "ingredients": [
-        "Tortilla",
-        "Meat"
+        {name: "Tortilla", quantity: "1kg"},
+        {name: "Meat", quantity: "2kg"}
     ],
     "steps": [
         "Cook the meat",
