@@ -249,7 +249,7 @@ recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
 recipeSchema.statics.findRecipe = async (_id) => {
     try {
         let proj = {}
-        let recipe = await Recipe.findById(_id).populate('author', 'username');
+        let recipe = await Recipe.findById(_id).populate('author', 'username').populate('reviews', 'rating');
         console.log(recipe);
 
         if (!recipe) {
@@ -282,6 +282,20 @@ recipeSchema.statics.deleteRecipe = async (_id)=>{
     let deletedRecipe = await Recipe.findOneAndDelete({_id})
     console.log(deletedRecipe);
     return deletedRecipe;
+}
+
+recipeSchema.statics.calculateRating = async (_id)=>{
+    let recipe_to_calculate = await Recipe.findRecipe(_id);
+    let total = 0;
+    console.log(recipe_to_calculate)
+    let len = recipe_to_calculate.reviews.length
+    recipe_to_calculate.reviews.forEach(review => {
+        total += review.rating
+    })
+
+    recipe_to_calculate.rating = total/len;
+    await recipe_to_calculate.save()
+    return recipe_to_calculate
 }
 
 let Recipe = mongoose.model('Recipe', recipeSchema);

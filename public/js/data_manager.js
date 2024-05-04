@@ -152,7 +152,7 @@ class View
             <div class="d-flex justify-content-around mb-5">
                 <p>${obj.author.username}</p>
                 <p>${obj.prep_time}</p>
-                <a href="./recipes/single_recipe.html?id=${obj._id}" class="btn btn-dark">More Info</a>
+                <a class="btn btn-dark" href="./recipes/single_recipe.html?id=${obj._id}">More Info</a>
             </div>
         </div>
     </div>`;

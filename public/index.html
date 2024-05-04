@@ -38,7 +38,10 @@
               <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./Search_Page/index.html">Search</a>
+              <a class="nav-link requiere-sesion" href="./Search_Page/index.html">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link requiere-sesion" href="./recipes/recipes_page.html">Recipes</a>
             </li>
           </ul>
           <form class="d-flex">
@@ -47,7 +50,7 @@
                 <a class="nav-link active" aria-current="page" href="./Login_SignUp_Page/index.html">Log In</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./profile_page/index.html">My Profile</a>
+                <a class="nav-link requiere-sesion" href="./profile_page/index.html">My Profile</a>
               </li>
             </ul>
           </form>
@@ -118,7 +121,7 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading">Simple and tasty <span class="text-muted">It’ll blow your mind.</span></h2>
-          <button class="btn btn-dark">See all Recipes</button>
+          <a class="btn btn-dark requiere-sesion" href="./recipes/recipes_page.html">See all Recipes</a>
         </div>
         <div class="col-md-5">
           <div class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500">
@@ -132,7 +135,7 @@
       <div class="row featurette">
         <div class="col-md-7 order-md-2">
           <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-          <button class="btn btn-dark">Search recipes</button>        
+          <a class="btn btn-dark requiere-sesion" href="./Search_Page/index.html">Search recipes</a>        
         </div>
         <div class="col-md-5 order-md-1">
           <div class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500">
@@ -146,7 +149,7 @@
       <div class="row featurette">
         <div class="col-md-7">
           <h2 class="featurette-heading">Do not miss any of this <span class="text-muted">Be part of the community.</span></h2>
-          <button class="btn btn-dark">Register Now!!</button>        </div>
+          <a class="btn btn-dark" href="./Login_SignUp_Page/index.html">Register Now!!</a>        </div>
         <div class="col-md-5">
           <div class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500">
               <img src="./imgs/section3.jpg" alt="" class="w-100">
@@ -162,7 +165,7 @@
 
     <div class="container recipes py-5">
       <div class="text-center"><h1>Some of Our Recipes</h1></div>
-      <div class="row row-cols-1 row-cols-md-3 g-4 py-5" id="recipes_display">
+      <div class="row row-cols-1 row-cols-md-3 g-4 py-5 requiere-sesion" id="recipes_display" >
         <!-- recipes_display_here -->
 
       </div>
@@ -195,6 +198,7 @@
         integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
         crossorigin="anonymous"></script>
 
+    <script src="./js/login_validation.js"></script>
     <script src="./js/categories.js"></script>
     <script src="./js/recipes.js"></script>
     <script src="./js/data_manager.js"></script>

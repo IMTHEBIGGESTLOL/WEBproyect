@@ -48,6 +48,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Search</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../recipes/recipes_page.html">Recipes</a>
+              </li>
             </ul>
             <form class="d-flex">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -69,6 +72,7 @@
             <aside class="col-md-3">
                 <div class="filter-top">
                     <button class="btn btn-primary mt-3" id="filterBtn">Apply Filters</button>
+                    <button class="btn btn-primary mt-3" id="resetfilters">Reset Filters</button>
                 </div>
                 <p>Custom</p>
                 <div class="card">
@@ -112,7 +116,7 @@
                         <div class="filter-content">
                             <div class="card-body">
                                 <label for="ingredients-input">Ingredients:</label>
-                                <input type="text" class="form-control" id="ingredients-input" placeholder="Enter ingredient...">
+                                <input type="text" class="form-control" id="ingredients" placeholder="Enter ingredient...">
                             </div> <!-- card-body.// -->
                         </div>
                     </article> <!-- card-group-item.// -->
@@ -123,7 +127,7 @@
                         <div class="filter-content">
                             <div class="card-body">
                                 <label for="ingredients-input">Title:</label>
-                                <input type="text" class="form-control" id="ingredients-input" placeholder="Enter recipe Title...">
+                                <input type="text" class="form-control" id="title" placeholder="Enter recipe Title...">
                             </div> <!-- card-body.// -->
                         </div>
                     </article> <!-- card-group-item.// -->
@@ -140,11 +144,11 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Min</label>
-                                        <input type="number" class="form-control" id="inputEmail4" placeholder="0min">
+                                        <input type="number" class="form-control" id="min_preptime" placeholder="0min">
                                     </div>
                                     <div class="form-group col-md-6 text-right">
                                         <label>Max</label>
-                                        <input type="number" class="form-control" placeholder="10min">
+                                        <input type="number" class="form-control" id="max_preptime" placeholder="10min">
                                     </div>
                                 </div>
                             </div> <!-- card-body.// -->
@@ -159,11 +163,11 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Min</label>
-                                        <input type="number" class="form-control" id="inputEmail4" placeholder="0min">
+                                        <input type="number" class="form-control" id="min_cooktime" placeholder="0min">
                                     </div>
                                     <div class="form-group col-md-6 text-right">
                                         <label>Max</label>
-                                        <input type="number" class="form-control" placeholder="10min">
+                                        <input type="number" class="form-control" id="max_cooktime" placeholder="10min">
                                     </div>
                                 </div>
                             </div> <!-- card-body.// -->
@@ -178,11 +182,11 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Min</label>
-                                        <input type="number" class="form-control" id="inputEmail4" placeholder="1step">
+                                        <input type="number" class="form-control" id="minsteps" placeholder="1step">
                                     </div>
                                     <div class="form-group col-md-6 text-right">
                                         <label>Max</label>
-                                        <input type="number" class="form-control" placeholder="10steps">
+                                        <input type="number" class="form-control" id="maxsteps" placeholder="10steps">
                                     </div>
                                 </div>
                             </div> <!-- card-body.// -->

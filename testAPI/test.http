@@ -1,4 +1,4 @@
-@host = http://localhost:3001
+@host = http://localhost:3005
 
 //commit test
 
@@ -140,7 +140,7 @@ GET {{host}}/api/recipes
 x-auth: 2342
 
 ###
-GET {{host}}/api/recipes/66256e68c3d0c110c660a8f8
+GET {{host}}/api/recipes/662962c76c7b8ce78f29353a
 x-auth: 23423
 
 //Fecha, rating
@@ -152,8 +152,8 @@ Content-Type: application/json
     "title": "Tacos",
     "description": "Soooo delocious",
     "ingredients": [
-        "Tortilla",
-        "Meat"
+        {name: "Tortilla", quantity: "1kg"},
+        {name: "Meat", quantity: "2kg"}
     ],
     "steps": [
         "Cook the meat",
@@ -204,7 +204,7 @@ GET {{host}}/api/recipes/chat/66256e68c3d0c110c660a8f8
 //Reviews
 
 ### POST REVIEW
-POST {{host}}/api/reviews/66295c636264b2ab44818399
+POST {{host}}/api/reviews/662962c76c7b8ce78f29353a
 Content-Type: application/json
 
 {
@@ -213,7 +213,7 @@ Content-Type: application/json
 }
 
 ### DELETE REVIEW
-DELETE {{host}}/api/reviews/66295c636264b2ab44818399/662c561141abc223196c6f24
+DELETE {{host}}/api/reviews/662962c76c7b8ce78f29353a/66347935eb847096967894ee
 
 ###
 GET {{host}}/api/categories
