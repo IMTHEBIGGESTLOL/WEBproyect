@@ -25,23 +25,37 @@
 
         <!-- navbar -->
 
-        <header class="row container">
-            <a href="../index.html" class="logo">
-                <img src="../imgs/CookIt_Text.png" alt="logo" id="logo">
-            </a>
-            <div class="nav row">
-                <ul class="primary-links row">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="./recipes_page.html">Recipes</a></li>
-                    <li><a href="">Search</a></li>
-                    <li><a href="">Categories</a></li>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="../index.html">COOK IT</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../Search_Page/index.html">Search</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="../recipes/recipes_page.html">Recipes</a>
+                  </li>
                 </ul>
-                <ul class="secondary-links row">
-                    <li><a href="./Login_SignUp_Page/index.html">Login</a></li>
-                    <li><a href="#">MyProfile</a></li>
-                </ul>
+                <form class="d-flex">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="../Login_SignUp_Page/index.html">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="../profile_page/index.html">My Profile</a>
+                    </li>
+                  </ul>
+                </form>
+              </div>
             </div>
-        </header>
+          </nav>
 
         <!-- end_of_navbar -->
 
@@ -52,7 +66,7 @@
             data-bs-toggle="modal"
             data-bs-target="#recipeModal"
         >
-            Launch
+            Create Your Recipe
         </button>
         
         

@@ -9,7 +9,6 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-
 document.addEventListener("DOMContentLoaded", function() {
     // Obtener el ID de la receta de la URL
     var recipeId = getParameterByName('id');
@@ -27,15 +26,22 @@ async function loadRecipe(recipeId)
 
     console.log(data);
 
-    let html = renderRecipe(data);
+    let respuser = await fetch('/api/users/search/me',{
+        method :'GET'
+    })
+
+    console.log(respuser.status);
+    user = await respuser.json()
+
+    let html = renderRecipe(data, user);
     render(html, "recipe");
 }
 
-function renderRecipe(obj){
+function renderRecipe(obj, user){
 
     let ingredientsHtml = '';
     obj.ingredients.forEach((ingredient, index) => {
-        ingredientsHtml += `<li><span>${ingredient.name}</span>: ${ingredient.quantity}</li>`;
+        ingredientsHtml += `<li><p><span>${ingredient.name}</span>: ${ingredient.quantity}</p></li>`;
     });
 
     let instructionsHtml = '';
@@ -46,6 +52,13 @@ function renderRecipe(obj){
                             </div>`;
     });
 
+    let editbutton_ifuser = '';
+    if(user.username == obj.author.username){
+        editbutton_ifuser += `<div class="edit button">
+                                <button id="back-btn"> EDIT </button>
+                          </div>`
+    }
+
     let html = `
                 <div class="recipe-img">
                     <img src="${obj.photo}" alt="">
@@ -55,6 +68,7 @@ function renderRecipe(obj){
                     <h1>${obj.title}</h1>
                     <h2>${obj.author.username}</h2>
                     <h3>${obj.creation_date}</h3>
+                    <h3>Rating: ${obj.rating}</h3>
                     <p class="description">${obj.description}</p>
   
                     <div class="recipe-prep-time">
@@ -87,6 +101,8 @@ function renderRecipe(obj){
                     <div class="chat-area">
                         <p>chat will be here</p>
                     </div>
+
+                    ${editbutton_ifuser}
 
                 </div>
     `;
