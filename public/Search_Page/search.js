@@ -176,6 +176,8 @@ function resetvalues()
     document.querySelector('#max_cooktime').value = '';
     document.querySelector('#minsteps').value = '';
     document.querySelector('#maxsteps').value = '';
+    document.querySelector('#min_rating').value = '';
+    document.querySelector('#max_rating').value = '';
 
     readFilterValues();
 
@@ -203,7 +205,9 @@ async function readFilterValues() {
     let selectedmaxcookTime = document.querySelector('#max_cooktime').value;
     let selectedminsteps = document.querySelector('#minsteps').value;
     let selectedmaxsteps = document.querySelector('#maxsteps').value;
-    console.log({maxTime: selectedmaxprepTime})
+    let selectedminrating = document.querySelector('#min_rating').value;
+    let selectedmaxrating = document.querySelector('#max_rating').value;
+    console.log({rating: selectedminrating})
     // let minPrice = document.querySelector('#minPrice').value;
     // let maxPrice = document.querySelector('#maxPrice').value;
 
@@ -290,23 +294,29 @@ async function readFilterValues() {
             objeto.steps.length <= parseInt(selectedmaxsteps)
         )
     }
-    // if(minPrice){
-    //     prodlist = prodlist.filter(e=> e.pricePerUnit >= minPrice);
-    // }
 
-    // if(maxPrice)
-    // {
-    //     prodlist = prodlist.filter(e=> e.pricePerUnit <= maxPrice)
-    // }
+    if(selectedmaxrating)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.rating <= parseInt(selectedmaxrating)
+        )
+    }
+
+    if(selectedminrating)
+    {
+        recipelist = recipelist.filter(objeto => 
+            objeto.rating >= parseInt(selectedminrating)
+        )
+    }
+    
 
     console.log(recipelist);
 
-    //showUsersTable(prodlist);
+    
     pagination(1,recipelist,View.toHtmlList);
 
 
-    // let pages=document.querySelector('#pagination');
-    // pages.style.display = 'none';
+    
 }
 
 function showUsersTable(prodlist)
