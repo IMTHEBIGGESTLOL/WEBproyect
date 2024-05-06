@@ -171,6 +171,8 @@ recipeForm.addEventListener("submit", async function(event) {
         return;
    }
 
+   location.reload();
+
     // Cerrar el modal
     var modal = bootstrap.Modal.getInstance(document.getElementById("recipeModal"));
     modal.hide();
