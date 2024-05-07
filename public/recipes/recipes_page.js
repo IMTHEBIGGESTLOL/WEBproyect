@@ -84,6 +84,8 @@ function addCategory(id, name) {
         return category.id === id;
     });
 
+    console.log({selected: selectedCategories})
+
     if (!exists) {
         selectedCategories.push({ id: id, name: name });
 
@@ -93,6 +95,8 @@ function addCategory(id, name) {
         // Limpiar dropdown
         document.getElementById("categoryDropdownMenuButton").innerHTML = "Seleccionar Categorías";
     }
+
+    console.log({selected2: selectedCategories})
 }
 
 // Renderizar las categorías seleccionadas
@@ -104,7 +108,7 @@ function renderSelectedCategories() {
         var selectedCategory = document.createElement("div");
         selectedCategory.classList.add("alert", "alert-primary", "alert-dismissible", "fade", "show");
         selectedCategory.innerHTML = `
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="removeCategory(${category.id})"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="removeCategory('${category.id}')"></button>
             ${category.name}
         `;
         selectedCategoriesContainer.appendChild(selectedCategory);
@@ -116,10 +120,12 @@ function renderSelectedCategories() {
 // Eliminar categoría seleccionada
 function removeCategory(id) {
     var index = selectedCategories.findIndex(obj => obj.id === id);
+    console.log({id,index})
     if (index !== -1) {
         selectedCategories.splice(index, 1); 
     }
 
+    console.log({selec: selectedCategories})
     renderSelectedCategories()
 }
 
