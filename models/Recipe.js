@@ -164,6 +164,7 @@ recipeSchema.statics.getRecipes = async (_id)=>{
     }
 }
 
+/**/
 recipeSchema.statics.removeReviews = async (reviewId, recipeId) => {
     let recipe = await Recipe.findById(recipeId);
     if(recipe){
@@ -214,6 +215,7 @@ recipeSchema.statics.addMessages = async (recipeId, messageId) => {
     return {error: "Recipe not found"};
 }
 
+/**/
 recipeSchema.statics.addReviews = async (recipeId, reviewId) => {
     let recipe = await Recipe.findById(recipeId);
     if(recipe){

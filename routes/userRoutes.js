@@ -169,6 +169,7 @@ router.delete('/username/:username', auth.validateTokenWithCookie, async (req, r
     res.send({pos})
 })
 
+/**/
 // POST /api/users/:userId/reviews/subscribe
 router.post('/:userId/reviews/subscribe', auth.validateTokenWithCookie ,async (req, res) => {
     try {
@@ -185,6 +186,7 @@ router.post('/:userId/reviews/subscribe', auth.validateTokenWithCookie ,async (r
     }
 });
 
+/**/
 // DELETE /api/users/:userId/reviews/subscribe
 router.delete('/:userId/reviews/subscribe', auth.validateTokenWithCookie, async (req, res) => {
     try {
