@@ -10,7 +10,6 @@ body {
   min-height: 100vh;
   font-family: 'Outfit', 'sans-serif';
   line-height: 1.4;
-  display: grid;
   place-content: center;
 }
 
@@ -162,7 +161,6 @@ hr {
 }
 
 .back-link {
-  position: absolute;
   top: 20px;
   left: 20px;
   text-decoration: none;

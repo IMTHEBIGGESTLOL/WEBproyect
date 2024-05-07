@@ -40,6 +40,7 @@ reviewSchema.statics.saveReview = async (_id,reviewData, recipeId)=>{
 
     await User.addMyReviews(_id, doc._id);
     await Recipe.addReviews(recipeId, doc._id);
+    await Recipe.calculateRating(recipeId);
     return doc;
 
 }

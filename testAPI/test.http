@@ -1,4 +1,4 @@
-@host = http://localhost:3001
+@host = http://localhost:3005
 
 //USERS
 
@@ -113,8 +113,8 @@ Content-Type: application/json
     "title": "Tacos",
     "description": "Soooo delocious",
     "ingredients": [
-        "Tortilla",
-        "Meat"
+        {name: "Tortilla", quantity: "1kg"},
+        {name: "Meat", quantity: "2kg"}
     ],
     "steps": [
         "Cook the meat",
@@ -181,7 +181,7 @@ Content-Type: application/json
 }
 
 ### DELETE REVIEW
-DELETE {{host}}/api/reviews/662962c76c7b8ce78f29353a/66347af7eb8470969678952a
+DELETE {{host}}/api/reviews/66295c636264b2ab44818399/662c561141abc223196c6f24
 
 ###
 GET {{host}}/api/categories

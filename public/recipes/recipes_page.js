@@ -1,8 +1,9 @@
-// Mock de categorías (puedes reemplazarlo con datos de tu base de datos)
 let categories = [];
+let recipes_toShow = [];
 
 document.addEventListener("DOMContentLoaded", function() {
     loadCategories();
+    getData();
     console.log(categories)
 });
 
@@ -27,6 +28,29 @@ async function loadCategories()
     renderCategoryDropdown()
 }
 
+async function getData()
+{
+    let resp = await fetch('/api/recipes/search',{
+        method :'GET'
+    })
+
+    console.log(resp.status);
+    let data = await resp.json()
+
+    console.log(data);
+    
+    recipes_toShow = data.recipes;
+
+    let html = toHtml(View.toHtmlList,recipes_toShow);
+    View.render(html, "recipes_display");
+    
+}
+
+function toHtml(fnToHtml = View.toHtmlList, prodlist) {
+    console.log("entro");
+    return fnToHtml(prodlist);
+}
+
 
 // Obtener referencia al formulario
 var recipeForm = document.getElementById("recipeForm");
@@ -44,8 +68,8 @@ function renderCategoryDropdown() {
         categoryDropdownMenu.appendChild(option);
     });
 }
-// Manejar clic en una categoría
-categoryDropdownMenu.addEventListener("click", function(event) {
+// Manejar clic en una categoría desde el menú desplegable
+document.getElementById("categoryDropdownMenu").addEventListener("click", function(event) {
     if (event.target.classList.contains("dropdown-item")) {
         var categoryId = event.target.getAttribute("data-id");
         var categoryName = event.target.innerHTML;
@@ -73,7 +97,7 @@ function addCategory(id, name) {
 
 // Renderizar las categorías seleccionadas
 function renderSelectedCategories() {
-    var selectedCategoriesContainer = document.getElementById("selectedCategories");
+    var selectedCategoriesContainer = document.getElementById("selectedCategorieshtml");
     selectedCategoriesContainer.innerHTML = "";
 
     selectedCategories.forEach(function(category) {
@@ -85,16 +109,18 @@ function renderSelectedCategories() {
         `;
         selectedCategoriesContainer.appendChild(selectedCategory);
     });
+
+    console.log({add_categories: selectedCategories});
 }
 
 // Eliminar categoría seleccionada
 function removeCategory(id) {
-    selectedCategories = selectedCategories.filter(function(category) {
-        return category.id !== id;
-    });
+    var index = selectedCategories.findIndex(obj => obj.id === id);
+    if (index !== -1) {
+        selectedCategories.splice(index, 1); 
+    }
 
-    // Volver a renderizar las categorías seleccionadas
-    renderSelectedCategories();
+    renderSelectedCategories()
 }
 
 // Manejar el envío del formulario
@@ -145,7 +171,50 @@ recipeForm.addEventListener("submit", async function(event) {
         return;
    }
 
+   location.reload();
+
     // Cerrar el modal
     var modal = bootstrap.Modal.getInstance(document.getElementById("recipeModal"));
     modal.hide();
 });
+
+class View
+{
+
+    static render(html, elementId){
+        document.querySelector(`#${elementId}`).innerHTML = html;
+    }
+
+    static toHtmlList(list){
+        console.log("entro2");
+        let html = `
+                    ${list.map((prod) => View.toHtmlDiv(prod)).join("")}
+                
+                    `;
+        return html;
+    }
+    
+    static toHtmlDiv(obj) {
+        let html = `
+        <div class="col">
+        <div class="card position-relative" style="width: 18rem;">
+            <img src="${obj.photo}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h3 class="card-title">${obj.title}</h3>
+                <p class="card-text">${obj.description}</p>
+            </div>
+            <!-- Botón con ícono de corazón -->
+            <button type="button" class="btn btn-outline-danger position-absolute top-0 end-0 m-2">
+                <i class="bi bi-heart"></i>
+            </button>
+            <div class="d-flex justify-content-around mb-5">
+                <p>${obj.author.username}</p>
+                <p>${obj.prep_time}</p>
+                <a href="../recipes/single_recipe.html?id=${obj._id}" class="btn btn-dark">More Info</a>
+            </div>
+        </div>
+    </div>`;
+        return html;
+    }
+    
+}
