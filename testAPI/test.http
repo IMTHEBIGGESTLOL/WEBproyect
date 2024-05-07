@@ -1,4 +1,4 @@
-@host = http://localhost:3005
+@host = http://localhost:3001
 
 //USERS
 
@@ -65,13 +65,13 @@ POST {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
 DELETE {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
 
 ### 
-# POST {{host}}/api/auth/login
-# Content-Type: application/json
+ POST {{host}}/api/auth/login2
+ Content-Type: application/json
 
-# {
-#     "email": "dany@gmail.com",
-#     "password" : "1234"
-# }
+ {
+     "email": "dany@gmail.com",
+     "password" : "1234"
+}
 
 ###
 
@@ -176,8 +176,8 @@ POST {{host}}/api/reviews/662962c76c7b8ce78f29353a
 Content-Type: application/json
 
 {
-    "comment": "Great recipe, the nachos were delicious",
-    "rating": 4.2
+    "comment": "Best Nachos ever",
+    "rating": 5
 }
 
 ### DELETE REVIEW

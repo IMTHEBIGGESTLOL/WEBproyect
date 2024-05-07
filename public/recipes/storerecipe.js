@@ -79,6 +79,36 @@ function renderRecipe(obj, user){
                             </div>`;
     });
 
+    let reviewHtml = '';
+    obj.reviews.forEach((review,index)=>{
+        reviewHtml += `<div class="container">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <p>
+                                                <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>${review.author.username}</strong></a>
+                                                <span class="float-right"> ${review.rating} <i class="bi bi-star-fill"></i></span>
+                                                
+
+                                            </p>
+                                            <div class="clearfix"></div>
+                                                <p style = "color:gray; font-size: 80%"><strong>${review.creation_date}</strong></p>
+                                                <p>${review.comment}</p>
+                                                <p>
+                                                    <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Subscribe</a>
+                                            </p>
+                                            </div>
+                                        </div>
+                                            
+                                    </div>
+                                </div>
+                            </div>`;
+    }); 
+
     let editbutton_ifuser = '';
     if(user.username == obj.author.username){
         editbutton_ifuser += `<div class="edit button">
@@ -129,6 +159,11 @@ function renderRecipe(obj, user){
 
                     <div class="chat-area">
                         <p>chat will be here</p>
+                    </div>
+
+                    <div class="review-area">
+                        <p>Review wil be here</p>
+                            ${reviewHtml}
                     </div>
 
                     ${editbutton_ifuser}
