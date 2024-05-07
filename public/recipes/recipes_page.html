@@ -10,6 +10,7 @@
         />
 
         <!-- Bootstrap CSS v5.2.1 -->
+        <!-- Bootstrap CSS v5.2.1 -->
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -17,8 +18,20 @@
             crossorigin="anonymous"
         />
 
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="./recipes_page.css">
+
+        <style>
+            /* Estilos del botón */
+            .fixed-button {
+              position: fixed;
+              bottom: 20px; /* Ajusta el margen desde la parte inferior */
+              right: 20px; /* Ajusta el margen desde la derecha */
+              z-index: 999; /* Asegura que esté sobre otros elementos */
+            }
+          </style>
     </head>
 
     <body>
@@ -59,10 +72,20 @@
 
         <!-- end_of_navbar -->
 
+
+        <div class="container recipes py-5">
+            <div class="text-center"><h1>Our Recipes</h1></div>
+            <div class="row row-cols-1 row-cols-md-3 g-4 py-5 requiere-sesion" id="recipes_display" >
+                <!-- recipes_display_here -->
+        
+            </div>
+        </div>
+
+
         <!-- Modal trigger button -->
         <button
             type="button"
-            class="btn btn-primary btn-lg"
+            class="btn btn-dark btn-lg fixed-button"
             data-bs-toggle="modal"
             data-bs-target="#recipeModal"
         >
@@ -75,52 +98,52 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Crear Receta</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Create Recipe</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form id="recipeForm">
                             <div class="mb-3">
-                                <label for="title" class="form-label">Título:</label>
+                                <label for="title" class="form-label">Title:</label>
                                 <input type="text" class="form-control" id="title" name="title" required>
                             </div>
                             <div class="mb-3">
-                                <label for="description" class="form-label">Descripción:</label>
+                                <label for="description" class="form-label">Description:</label>
                                 <textarea class="form-control" id="description" name="description" required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="ingredients" class="form-label">Ingredientes (formato: nombre: cantidad):</label>
+                                <label for="ingredients" class="form-label">Ingredients (format: name: quantity, 1 per line):</label>
                                 <textarea class="form-control" id="ingredients" name="ingredients" required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="steps" class="form-label">Pasos (uno por línea):</label>
+                                <label for="steps" class="form-label">Steps (one per line):</label>
                                 <textarea class="form-control" id="steps" name="steps" required></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="photo" class="form-label">Foto (URL):</label>
+                                <label for="photo" class="form-label">Photo (URL):</label>
                                 <input type="text" class="form-control" id="photo" name="photo" required>
                             </div>
                             <div class="mb-3">
-                                <label for="cook_time" class="form-label">Tiempo de Cocción (minutos):</label>
+                                <label for="cook_time" class="form-label">Cook time (minutes):</label>
                                 <input type="number" class="form-control" id="cook_time" name="cook_time" required>
                             </div>
                             <div class="mb-3">
-                                <label for="prep_time" class="form-label">Tiempo de Preparación (minutos):</label>
+                                <label for="prep_time" class="form-label">Preparation Time (minutes):</label>
                                 <input type="number" class="form-control" id="prep_time" name="prep_time" required>
                             </div>
                             <div class="mb-3">
-                                <label for="categorySelect" class="form-label">Categorías:</label>
+                                <label for="categorySelect" class="form-label">Categories:</label>
                                 <div id="categoryDropdown" class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Seleccionar Categorías
+                                        Select Categories
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="categoryDropdownMenuButton" id="categoryDropdownMenu">
                                         <!-- Aquí se agregarán las opciones de categorías -->
                                     </ul>
                                 </div>
                             </div>
-                            <div id="selectedCategories"></div>
-                            <button type="submit" class="btn btn-primary">Crear</button>
+                            <div id="selectedCategorieshtml"></div>
+                            <button type="submit" class="btn btn-primary">Create</button>
                         </form>
                     </div>
                 </div>
