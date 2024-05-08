@@ -1,6 +1,20 @@
 @host = http://localhost:3001
 
+//commit test
+
 //USERS
+
+###
+POST {{host}}/api/auth/login2
+Content-Type: application/json
+
+{
+    "email": "carlo@gmail.com",
+    "password" : "1234"
+}
+
+###
+GET {{host}}/api/auth/logout
 
 ### GET ALL USERS
 GET {{host}}/api/users
@@ -17,6 +31,10 @@ GET {{host}}/api/users/search/me
 GET {{host}}/api/users/username/Guillermo
 x-auth: 23423
 
+### GET USER BY USERNAME
+GET {{host}}/api/users/username/Carlo
+x-auth: 23423
+
 ### POST NEW USER
 POST {{host}}/api/users
 Content-Type: application/json
@@ -27,6 +45,22 @@ Content-Type: application/json
     "name": "Daniel Arellano",
     "bio": "Naci en GDL y me encanta cocinar",
     "email": "dany@gmail.com",
+    "password": "1234",
+    "phone": "3345621789",
+    "birthday": "2004-04-04T06:00:00.000Z",
+    "country": "Mexico"
+}
+
+### POST NEW USER
+POST {{host}}/api/users
+Content-Type: application/json
+
+{
+    "username": "Carlo",
+    "userPhoto": "",
+    "name": "Carlo Santoro",
+    "bio": "x",
+    "email": "carlo@gmail.com",
     "password": "1234",
     "phone": "3345621789",
     "birthday": "2004-04-04T06:00:00.000Z",
@@ -50,19 +84,28 @@ Content-Type: application/json
 }
 
 ### DELETE USER
-DELETE {{host}}/api/users/username/Willy
+DELETE {{host}}/api/users/username/Carlo
 
-### ADD A NEW REVIEW SUBSCRIPTION TO USER
-POST {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
+### GET CURRENT USER RECIPES
+GET {{host}}/api/recipes/mine
 
-### DELETE A REVIEW SUBSCRIPTION
-DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
+### GET CURRENT USER FAVORITES
+GET {{host}}/api/recipes/favorites
 
 ### POST RECIPE TO FAVORITES
 POST {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
 
 ### DELETE RECIPE IN FAVORITES
 DELETE {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
+
+
+
+
+### ADD A NEW REVIEW SUBSCRIPTION TO USER
+POST {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
+
+### DELETE A REVIEW SUBSCRIPTION
+DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
 
 ### 
  POST {{host}}/api/auth/login2
@@ -82,10 +125,6 @@ Content-Type: application/json
     "email": "guille@gmail.com",
     "password" : "4321"
 }
-
-###
-GET {{host}}/api/auth/logout
-
 
 //RECIPES
 
@@ -155,13 +194,6 @@ Content-Type: application/json
 {
     "content": "Deliciosa nuggets la vrd"
 }
-
-### GET CURRENT USER RECIPES
-GET {{host}}/api/recipes/mine
-
-
-### GET CURRENT USER FAVORITES
-GET {{host}}/api/recipes/favorites
 
 ### GET CHAT DE UNA RECETA EN ESPECIFICO
 GET {{host}}/api/recipes/chat/66256e68c3d0c110c660a8f8

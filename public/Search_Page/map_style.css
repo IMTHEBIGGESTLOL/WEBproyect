@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #FFE6E6;
+}
+
+svg path{
+    fill: #DBCC95;
+    stroke: #A5DD9B;
+    stroke-width: .25;
+}
+
+svg path:hover{
+    fill: #FF9B9B;
+    transition: 0.6s;
+    cursor: pointer;
+}
