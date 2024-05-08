@@ -16,10 +16,20 @@ router.post('/:recipeId', auth.validateToken ,async (req, res) => {
     res.send(message);
 });
 
-router.delete('/:messageId', auth.validateToken, async (req, res) => {
-    const postId = req.body.postId;
-    const deletedMessage = await Post.findOneAndDelete({ _id: postId });
-    res.send(deletedMessage);
+router.delete('/:recipeId/:messageId', auth.validateTokenWithCookie, async (req, res) => {
+    const messageid = req.params.messageId;
+    let message = await Post.findById(messageid);
+    if(!message){
+        res.status(404).send({error: "Message Not Found"})
+        return;
+    }
+    if(message.user._id != req._id){
+        res.status(403).send({error: "You dont have permissions"})
+        return
+    }
+    await Recipe.removeMessage(messageid, req.params.recipeId);
+    let messageDeleted = await Post.deleteMessage(messageid, req.params.recipeId);
+    res.send(messageDeleted);
 
 });
 

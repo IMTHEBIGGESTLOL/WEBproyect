@@ -141,15 +141,22 @@ Content-Type: application/json
 DELETE {{host}}/api/recipes/662d20794178701c0d8c8670
 
 ###POST MESSAGE TO A RECIPE (CHAT)
-POST {{host}}/api/recipes/662c5ca131d708cc0b160897/chat
+POST {{host}}/api/recipes/662962c76c7b8ce78f29353a/chat
 Content-Type: application/json
 
 {
     "content": "Deliciosa pizza la vrd"
 }
 
+### DELETE MESSAGE
+DELETE {{host}}/api/messages/662962c76c7b8ce78f29353a/663a6c5dfba4134599be94ed
+
+###
+GET {{host}}/api/recipes
+
 ### POST RECIPE TO FAVORITES
 POST {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
+
 
 ### DELETE RECIPE IN FAVORITES
 DELETE {{host}}/api/recipes/favorites/662962c76c7b8ce78f29353a
@@ -162,7 +169,7 @@ GET {{host}}/api/recipes/mine
 GET {{host}}/api/recipes/favorites
 
 ### GET CHAT DE UNA RECETA EN ESPECIFICO
-GET {{host}}/api/recipes/chat/662c5ca131d708cc0b160897
+GET {{host}}/api/recipes/chat/662962c76c7b8ce78f29353a
 
 //PRUEBA DE QUE ESTA PARTE DEL CODIGO DE ACTUALICE EN GITHUB :)!!!!!
 

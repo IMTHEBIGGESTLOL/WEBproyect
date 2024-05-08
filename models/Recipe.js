@@ -185,6 +185,27 @@ recipeSchema.statics.removeReviews = async (reviewId, recipeId) => {
     return {error: "recipe not found"};
 }
 
+recipeSchema.statics.removeMessage = async (messageId, recipeId) => {
+    let recipe = await Recipe.findById(recipeId);
+    if(recipe){
+        
+        var indiceAEliminar = recipe.chat.findIndex(function(message) {
+            return message._id == messageId;
+        });
+
+        // Si se encuentra el objeto, eliminarlo
+        if (indiceAEliminar !== -1) {
+            recipe.chat.splice(indiceAEliminar, 1);
+            await recipe.save(); // Guardar los cambios en la base de datos
+            return { success: true };
+        } else {
+            return { error: "Message not found in recipe's chat" };
+        }
+    }
+
+    return {error: "recipe not found"};
+}
+
 recipeSchema.statics.getChat = async (recipeId) => {
     try {
         // Buscar la receta por su ID
