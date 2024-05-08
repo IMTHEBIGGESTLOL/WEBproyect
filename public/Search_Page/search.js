@@ -1,5 +1,6 @@
 let recipes_toShow = [];
 let categories = []
+let ingredientesArray = [];
 
 let actualpage;
 let pageSize = 6
@@ -179,6 +180,8 @@ function resetvalues()
     document.querySelector('#min_rating').value = '';
     document.querySelector('#max_rating').value = '';
 
+    ingredientesArray = [];
+
     readFilterValues();
 
 }
@@ -199,6 +202,11 @@ async function readFilterValues() {
     let selectedCategory = document.querySelector('#categorySelect').value;
     let selectedTitle = document.querySelector('#title').value;
     let selectedIngredient = document.querySelector('#ingredients').value;
+    if(selectedIngredient != "")
+        {
+            ingredientesArray = selectedIngredient.split(',');
+            console.log({ingredients: ingredientesArray});
+        }
     let selectedminprepTime = document.querySelector('#min_preptime').value;
     let selectedmaxprepTime = document.querySelector('#max_preptime').value;
     let selectedmincookTime = document.querySelector('#min_cooktime').value;
@@ -244,13 +252,12 @@ async function readFilterValues() {
         );
     }
 
-    if(selectedIngredient)
-    {
-        recipelist = recipelist.filter( objeto =>
+    if (ingredientesArray.length != 0) {
+        recipelist = recipelist.filter(objeto =>
             objeto.ingredients.some(ingredient =>
-                ingredient.name && selectedIngredient && ingredient.name.toString().toLowerCase() === selectedIngredient.toString().toLowerCase()
-            )        
-        )
+                selectedIngredient.includes(ingredient.name)
+            )
+        );
     }
 
     if(selectedminprepTime)
