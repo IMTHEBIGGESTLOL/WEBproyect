@@ -64,7 +64,7 @@ router.get('/:_id', async (req, res)=>{
 })
 
 router.get('/search/me',  auth.validateTokenWithCookie ,async (req, res)=>{
-    console.log(req.params.id);
+    console.log(req._id);
     let user = await User.findUserById(req._id)
     if (!user){
         res.status(404).send({error: "User not found"})
