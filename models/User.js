@@ -224,8 +224,10 @@ userSchema.statics.findUser = async (username)=>{
 }
 
 userSchema.statics.findUserById = async (_id)=>{
+    /*
     let proj = {username: 1, myrecipes: 1, favorites: 1};
-    let user = await User.findById({_id},proj).populate('myrecipes', 'title').populate('favorites', 'title');
+    let user = await User.findById(_id).populate('myrecipes', 'title').populate('favorites', 'title');*/
+    let user = await User.findById(_id);
     return user;
 }
 
