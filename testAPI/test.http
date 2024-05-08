@@ -93,7 +93,7 @@ GET {{host}}/api/recipes
 x-auth: 2342
 
 ###
-GET {{host}}/api/recipes/66256e68c3d0c110c660a8f8
+GET {{host}}/api/recipes/662962c76c7b8ce78f29353a
 x-auth: 23423
 
 //Fecha, rating

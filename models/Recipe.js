@@ -259,7 +259,7 @@ recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
 recipeSchema.statics.findRecipe = async (_id) => {
     try {
         let proj = {}
-        let recipe = await Recipe.findById(_id).populate('author', 'username').populate('reviews', 'comment creation_date author rating').populate('categories', 'name').populate('chat', 'user content timestamp');
+        let recipe = await Recipe.findById(_id).populate('author', 'username').populate({path: 'reviews', populate: {path: 'author' , model:'User' , select: 'username' } }).populate('categories', 'name').populate('chat', 'user content timestamp');
         console.log(recipe);
 
         if (!recipe) {

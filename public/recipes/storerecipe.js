@@ -98,13 +98,57 @@ async function addMessageToChat() {
         // You might want to do something with the message here, such as displaying it in the chat
     } else {
         console.error("Element with id 'content' not found.");
+
+        
     }
     location.reload()    
 }
 
+//Funcion para postear una review
+async function addReview() {
+    const review = document.getElementById('new-review');
+    const rating = document.getElementById('new-rating');
 
+    // Checar si ha excrito algo
+    if (review != '' && rating != '' && rating.value <= 5 && rating.value >= 0) {
+        // Get the value of the input field
+        const content = {comment: review.value, rating: rating.value};
+        console.log("review: " + content);
+        // Reset the input field after retrieving the value (if needed)
+        review.value = '';
+        rating.value = '';
 
+        let resp = await fetch('/api/reviews/' + recipeId , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(content)
+        })
+        console.log(resp.status);
+        let data = await resp.json()
+       
+        location.reload()   
+        // You might want to do something with the message here, such as displaying it in the chat
+    } 
+    
+}
 
+async function del_review(id){
+    // Checar si ha excrito algo
+    if (id != '') {        
+
+        let resp = await fetch('/api/reviews/' + recipeId +'/' + id, {
+            method: 'DELETE',
+        })
+
+        console.log(resp.status);
+        let data = await resp.json()
+       
+        location.reload()   
+        // You might want to do something with the message here, such as displaying it in the chat
+    } 
+}
 
 
 function renderRecipe(obj, user){
@@ -123,7 +167,14 @@ function renderRecipe(obj, user){
     });
 
     let reviewHtml = '';
+    
     obj.reviews.forEach((review,index)=>{
+        let delButton = '';
+        if(review.author.username == obj.author.username){
+            delButton += `<div class="edit button">
+                                <button class="btn btn-danger btn-sm fixed-button" onclick="del_review('${review._id}')"> <i class="bi bi-trash3-fill"></i> </button>
+                            </div>`
+        }
         reviewHtml += `<div class="container">
                             <div class="card">
                                 <div class="card-body">
@@ -134,6 +185,7 @@ function renderRecipe(obj, user){
                                         <div class="col-md-10">
                                             <p>
                                                 <a class="float-left"><strong>${review.author.username}</strong></a>
+                                                
                                                 <span class="float-right"> ${review.rating} <i class="bi bi-star-fill"></i></span>
                                                 
 
@@ -142,7 +194,8 @@ function renderRecipe(obj, user){
                                                 <p style = "color:gray; font-size: 80%"><strong>${review.creation_date}</strong></p>
                                                 <p>${review.comment}</p>
                                                 <p>
-                                                    <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Subscribe</a>
+                                                    <a class="float-right btn text-white btn-danger"> Subscribe</a>
+                                                    <a class = "float- left">${delButton}</a>
                                             </p>
                                             </div>
                                         </div>
@@ -219,6 +272,27 @@ function renderRecipe(obj, user){
                     <div class="review-area">
                             ${reviewHtml}
                     </div>
+
+                    <div class="container">
+                        <div class="row" id="post-review-box" style="margin-top: 20px;">
+                            <div class="col-md-8 offset-md-2">
+                                
+                                <div class="form-group">
+                                    <textarea class="form-control animated" id="new-review" name="comment" placeholder="Enter your review here..." rows="5"></textarea>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <input type="number" min="0" max="5" id="new-rating" class="form-control" placeholder="Rating between 0 and 5...">
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <button class="btn btn-success btn-sm"  onclick="addReview()">Save</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
 
                     ${editbutton_ifuser}
 
