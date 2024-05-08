@@ -71,29 +71,40 @@ const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 const chatMessages = document.getElementById('chat-messages');
 
-// Evento para enviar un mensaje cuando se envíe el formulario
-messageForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    // Obtener el contenido del mensaje
-    const content = messageInput.value.trim();
-
-    if (content !== '') {
-        // Agregar el mensaje al chat localmente
-        addMessageToChat({ user: 'Tú', content: content });
-
-        // Limpiar el campo de entrada de mensajes
-        messageInput.value = '';
-    }
-});
 
 // Función para agregar un mensaje al chat
-function addMessageToChat(message) {
-    const messageElement = document.createElement('div');
-    
-    messageElement.textContent = `${message.user}: ${message.content}`;
-    chatMessages.appendChild(messageElement);
+async function addMessageToChat() {
+    // const messageElement = document.createElement('div');
+    const newMessage = document.getElementById('message-input');
+
+    // Check if the element exists
+    if (newMessage != '') {
+        // Get the value of the input field
+        const content = {content: newMessage.value};
+        console.log("message: " + content);
+        // Reset the input field after retrieving the value (if needed)
+        newMessage.value = '';
+
+        let resp = await fetch('/api/recipes/' + recipeId + '/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(content)
+        })
+        console.log(resp.status);
+        let data = await resp.json()
+       
+        // You might want to do something with the message here, such as displaying it in the chat
+    } else {
+        console.error("Element with id 'content' not found.");
+    }
+    location.reload()    
 }
+
+
+
+
 
 
 function renderRecipe(obj, user){
@@ -122,7 +133,7 @@ function renderRecipe(obj, user){
                                         </div>
                                         <div class="col-md-10">
                                             <p>
-                                                <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>${review.author.username}</strong></a>
+                                                <a class="float-left"><strong>${review.author.username}</strong></a>
                                                 <span class="float-right"> ${review.rating} <i class="bi bi-star-fill"></i></span>
                                                 
 
@@ -142,10 +153,8 @@ function renderRecipe(obj, user){
     });
     
     let chatRecipe = '';
-    obj.chat.forEach((message, index)=>{
-        chatRecipe += `
-        <div id="chat-messages">${message.user}: ${message.content}</div>
-        `
+    obj.chat.forEach((messa, index)=>{  
+        chatRecipe += `<p>${messa.user}: ${messa.content}</p>`
     }
 
 
@@ -200,11 +209,11 @@ function renderRecipe(obj, user){
                     <hr>
 
                     <div class="chat-area">
-                        ${chatRecipe}
-                        <form id="message-form">
-                            <input type="text" id="message-input" placeholder="Escribe un mensaje...">
-                            <button type="submit">Enviar</button>
-                        </form>
+                        <div id="chat-messages">${chatRecipe}</div>
+                       
+                        <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+                        <button onclick="addMessageToChat()">Enviar</button>
+                       
                     </div>
 
                     <div class="review-area">
@@ -226,7 +235,9 @@ function render(html, elementId){
 function goBack() {
     window.history.back();
 }
+
 let selectedCategories = [];
+
 function render_to_edit()
 {
     document.getElementById("edittitle").value = receta.title;

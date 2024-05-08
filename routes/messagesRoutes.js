@@ -16,4 +16,11 @@ router.post('/:recipeId', auth.validateToken ,async (req, res) => {
     res.send(message);
 });
 
+router.delete('/:messageId', auth.validateToken, async (req, res) => {
+    const postId = req.body.postId;
+    const deletedMessage = await Post.findOneAndDelete({ _id: postId });
+    res.send(deletedMessage);
+
+});
+
 module.exports = router;

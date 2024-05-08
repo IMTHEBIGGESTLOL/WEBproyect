@@ -214,6 +214,16 @@ recipeSchema.statics.addMessages = async (recipeId, messageId) => {
     return {error: "Recipe not found"};
 }
 
+recipeSchema.statics.deleteMessages = async (recipeId, messageId) => {
+    let recipe = await Recipe.findById(recipeId);
+    if(recipe){
+        recipe.chat.push(messageId);
+        return await recipe.save();
+    }
+
+    return {error: "Recipe not found"};
+}
+
 recipeSchema.statics.addReviews = async (recipeId, reviewId) => {
     let recipe = await Recipe.findById(recipeId);
     if(recipe){
@@ -249,7 +259,7 @@ recipeSchema.statics.saveRecipe = async (username, _id, recipeData)=>{
 recipeSchema.statics.findRecipe = async (_id) => {
     try {
         let proj = {}
-        let recipe = await Recipe.findById(_id).populate('author', 'username').populate('reviews', 'comment creation_date author rating').populate('categories', 'name');
+        let recipe = await Recipe.findById(_id).populate('author', 'username').populate('reviews', 'comment creation_date author rating').populate('categories', 'name').populate('chat', 'user content timestamp');
         console.log(recipe);
 
         if (!recipe) {

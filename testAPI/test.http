@@ -149,12 +149,15 @@ Content-Type: application/json
 DELETE {{host}}/api/recipes/66316976d1ea5cac7623908a
 
 ###POST MESSAGE TO A RECIPE (CHAT)
-POST {{host}}/api/recipes/662ea6c7fece8c0dc62ba9ad/chat
+POST {{host}}/api/recipes/662962c76c7b8ce78f29353a/chat
 Content-Type: application/json
 
 {
-    "content": "Deliciosa nuggets la vrd"
+    "content": "Deliciosa nachos la vrd"
 }
+
+###DELETE MESSAGE FROM CHAT
+DELETE {{host}}/api/recipes/662962c76c7b8ce78f29353a/chat/'mmesageid'
 
 ### GET CURRENT USER RECIPES
 GET {{host}}/api/recipes/mine
@@ -164,7 +167,7 @@ GET {{host}}/api/recipes/mine
 GET {{host}}/api/recipes/favorites
 
 ### GET CHAT DE UNA RECETA EN ESPECIFICO
-GET {{host}}/api/recipes/chat/66256e68c3d0c110c660a8f8
+GET {{host}}/api/recipes/chat/662962c76c7b8ce78f29353a
 
 //PRUEBA DE QUE ESTA PARTE DEL CODIGO DE ACTUALICE EN GITHUB :)!!!!!
 

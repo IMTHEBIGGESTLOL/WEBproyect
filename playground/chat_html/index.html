@@ -3,62 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Chat Forum</title>
+    <title>Chat</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div id="chatForum">
-        <!-- Chat messages will be displayed here -->
-    </div>
-    <input type="text" id="usernameInput" placeholder="Your username">
-    <input type="text" id="messageInput" placeholder="Type your message">
-    <button onclick="sendMessage()">Send</button>
+    <div id="chat-messages"></div>
+    <form id="message-form">
+        <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+        <button type="submit">Enviar</button>
+    </form>
 
-    <script>
-        // Function to populate chat messages
-        function renderChatMessages() {
-            const chatForum = document.getElementById("chatForum");
-            chatForum.innerHTML = ""; // Clear previous messages
-
-            // Loop through each message in the recipe scheme and display it
-            recipe.forEach(message => {
-                const messageDiv = document.createElement("div");
-                messageDiv.innerHTML = `<strong>${message.username}</strong>: ${message.content} - ${message.time}`;
-                chatForum.appendChild(messageDiv);
-            });
-        }
-
-        // Function to send a new message
-        function sendMessage() {
-            const username = document.getElementById("usernameInput").value;
-            const messageContent = document.getElementById("messageInput").value;
-            const time = new Date().toLocaleString(); // Current time
-
-            // Create new message object
-            const newMessage = {
-                username: username,
-                content: messageContent,
-                time: time
-            };
-
-            // Add the new message to the recipe scheme
-            recipe.push(newMessage);
-
-            // Re-render the chat messages
-            renderChatMessages();
-
-            // Clear input fields
-            document.getElementById("usernameInput").value = "";
-            document.getElementById("messageInput").value = "";
-        }
-
-        // Example recipe scheme
-        let recipe = [
-            { username: "Alice", content: "Hello!", time: "12:00 PM" },
-            { username: "Bob", content: "Hi Alice!", time: "12:05 PM" }
-        ];
-
-        // Render chat messages on page load
-        renderChatMessages();
-    </script>
+    <script src="./js.js"></script>
 </body>
 </html>

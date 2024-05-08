@@ -31,6 +31,21 @@ messageSchema.statics.saveMessage = async (username, recipeId, messageData)=>{
 
 }
 
+messageSchema.statics.findOneAndDelete = async (username, recipeId, messageData)=>{
+    let user = username;
+
+    messageData.user = user ;
+
+    let newMessage = Post(messageData);
+    let doc = await newMessage.save();
+
+    await Recipe.deleteMessage(recipeId, doc._id);
+    return doc;
+
+}
+
+
+
 let Post = mongoose.model('Message', messageSchema);
 
 module.exports = {Post};
