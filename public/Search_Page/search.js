@@ -5,8 +5,8 @@ let actualpage;
 let pageSize = 6
 
 document.addEventListener("DOMContentLoaded", function() {
-    actualPage = sessionStorage.getItem('recipe_page') || 1;
     getData();
+    actualPage = sessionStorage.getItem('recipe_page') || 1;
 });
 
 async function getData()
@@ -323,3 +323,6 @@ function showUsersTable(prodlist)
 {
     DataManager.pagination(1,prodlist,View.toHtmlTable, 1000);
 }
+
+
+

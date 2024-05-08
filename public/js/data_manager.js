@@ -229,7 +229,7 @@ class ViewCategory
                         </div>
     
                         <h2>${obj.name}</h2>
-                        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                        <p><a class="btn btn-secondary" href="./Search_Page/index.html">View details &raquo;</a></p>
                     </div>`;
         return html;
         

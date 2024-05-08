@@ -194,3 +194,20 @@ hr {
     border-radius: 0;
   }
 }
+
+#chat-messages {
+  height: 300px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+#message-form {
+  margin-top: 10px;
+}
+
+#message-input {
+  width: 80%;
+  padding: 5px;
+  margin-right: 5px;
+}

@@ -1,6 +1,7 @@
 let receta;
 let categories = [];
 let recipeId;
+
 // Función para obtener el parámetro de la URL por su nombre
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -64,6 +65,37 @@ async function loadRecipe(recipeId)
     render(html, "recipe");
 }
 
+// Cosas del chat:
+// Obtener referencias a elementos del DOM
+const messageForm = document.getElementById('message-form');
+const messageInput = document.getElementById('message-input');
+const chatMessages = document.getElementById('chat-messages');
+
+// Evento para enviar un mensaje cuando se envíe el formulario
+messageForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Obtener el contenido del mensaje
+    const content = messageInput.value.trim();
+
+    if (content !== '') {
+        // Agregar el mensaje al chat localmente
+        addMessageToChat({ user: 'Tú', content: content });
+
+        // Limpiar el campo de entrada de mensajes
+        messageInput.value = '';
+    }
+});
+
+// Función para agregar un mensaje al chat
+function addMessageToChat(message) {
+    const messageElement = document.createElement('div');
+    
+    messageElement.textContent = `${message.user}: ${message.content}`;
+    chatMessages.appendChild(messageElement);
+}
+
+
 function renderRecipe(obj, user){
 
     let ingredientsHtml = '';
@@ -107,7 +139,17 @@ function renderRecipe(obj, user){
                                     </div>
                                 </div>
                             </div>`;
-    }); 
+    });
+    
+    let chatRecipe = '';
+    obj.chat.forEach((message, index)=>{
+        chatRecipe += `
+        <div id="chat-messages">${message.user}: ${message.content}</div>
+        `
+    }
+
+
+)
 
     let editbutton_ifuser = '';
     if(user.username == obj.author.username){
@@ -158,11 +200,14 @@ function renderRecipe(obj, user){
                     <hr>
 
                     <div class="chat-area">
-                        <p>chat will be here</p>
+                        ${chatRecipe}
+                        <form id="message-form">
+                            <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+                            <button type="submit">Enviar</button>
+                        </form>
                     </div>
 
                     <div class="review-area">
-                        <p>Review wil be here</p>
                             ${reviewHtml}
                     </div>
 

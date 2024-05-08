@@ -149,11 +149,11 @@ Content-Type: application/json
 DELETE {{host}}/api/recipes/66316976d1ea5cac7623908a
 
 ###POST MESSAGE TO A RECIPE (CHAT)
-POST {{host}}/api/recipes/662c5ca131d708cc0b160897/chat
+POST {{host}}/api/recipes/662ea6c7fece8c0dc62ba9ad/chat
 Content-Type: application/json
 
 {
-    "content": "Deliciosa pizza la vrd"
+    "content": "Deliciosa nuggets la vrd"
 }
 
 ### GET CURRENT USER RECIPES
@@ -172,11 +172,11 @@ GET {{host}}/api/recipes/chat/66256e68c3d0c110c660a8f8
 //Reviews
 
 ### POST REVIEW
-POST {{host}}/api/reviews/662962c76c7b8ce78f29353a
+POST {{host}}/api/reviews/662ea6c7fece8c0dc62ba9ad
 Content-Type: application/json
 
 {
-    "comment": "Best Nachos ever",
+    "comment": "Best nuggets ever",
     "rating": 5
 }
 
