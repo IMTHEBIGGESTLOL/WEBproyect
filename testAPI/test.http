@@ -1,4 +1,4 @@
-@host = http://localhost:3000
+@host = http://localhost:3005
 
 //USERS
 
@@ -51,10 +51,10 @@ DELETE {{host}}/api/users/email/juanito@gmail.com
 x-auth: 23423
 
 ### ADD A NEW REVIEW SUBSCRIPTION TO USER
-POST {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
+POST {{host}}/api/users/663447013e18ce1d27c0a00b/reviews/subscribe
 
 ### DELETE A REVIEW SUBSCRIPTION
-DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
+DELETE {{host}}/api/users/66257c3c86ac710e681910fc/reviews/subscribe
 
 ### 
 # POST {{host}}/api/auth/login
@@ -66,13 +66,12 @@ DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
 # }
 
 ###
-
 POST {{host}}/api/auth/login2
 Content-Type: application/json
 
 {
-    "email": "dany@gmail.com",
-    "password" : "1234"
+    "email": "guille@gmail.com",
+    "password" : "4321"
 }
 
 ###

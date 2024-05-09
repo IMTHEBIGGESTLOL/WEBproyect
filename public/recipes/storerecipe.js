@@ -112,7 +112,7 @@ async function addReview() {
     // Checar si ha excrito algo
     if (review != '' && rating != '' && rating.value <= 5 && rating.value >= 0) {
         // Get the value of the input field
-        const content = {comment: review.value, rating: parseInt(rating.value)};
+        const content = {comment: review.value, rating: rating.value};
         console.log("review: " + content);
         // Reset the input field after retrieving the value (if needed)
         review.value = '';
@@ -129,7 +129,7 @@ async function addReview() {
         let data = await resp.json()
        
         location.reload()   
-        
+        // You might want to do something with the message here, such as displaying it in the chat
     } 
     
 }
@@ -146,7 +146,23 @@ async function del_review(id){
         let data = await resp.json()
        
         location.reload()   
-        
+        // You might want to do something with the message here, such as displaying it in the chat
+    } 
+}
+
+async function sub(id){
+
+    // Checar si ha excrito algo
+    if (id != '') {        
+
+        let resp = await fetch('/api/users/' + id + '/reviews/subscribe', {
+            method: 'POST',
+        })
+
+        console.log(resp.status);
+       
+        location.reload()   
+        // You might want to do something with the message here, such as displaying it in the chat
     } 
 }
 
@@ -175,7 +191,24 @@ function renderRecipe(obj, user){
                                 <button class="btn btn-danger btn-sm fixed-button" onclick="del_review('${review._id}')"> <i class="bi bi-trash3-fill"></i> </button>
                             </div>`
         }
-        reviewHtml += `<div class="container">
+
+        
+        let subButton = '';
+        console.log(user.reviewsubscriptions.toString())
+        console.log(review.author._id.toString())
+        const isSubscribed = user.reviewsubscriptions.some(subs => /*Lo esta tomando como undifined*/subs._id === review.author._id.toString() );
+
+        if (!isSubscribed && review.author.username != user.username) {
+            subButton += `<div class="edit button">
+                                <button class="btn btn-danger btn fixed-button" onclick="sub('${review.author._id}')">Subscribe</button>
+                            </div>`;
+        } else if (isSubscribed){
+            subButton = '';
+        }
+        
+        
+        
+        reviewHtml += `<div class="container">  
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
@@ -194,7 +227,7 @@ function renderRecipe(obj, user){
                                                 <p style = "color:gray; font-size: 80%"><strong>${review.creation_date}</strong></p>
                                                 <p>${review.comment}</p>
                                                 <p>
-                                                    <a class="float-right btn text-white btn-danger"> Subscribe</a>
+                                                    <a class="float-right ">${subButton} </a>
                                                     <a class = "float- left">${delButton}</a>
                                             </p>
                                             </div>
@@ -310,7 +343,6 @@ function goBack() {
     window.history.back();
 }
 
-var recipeForm = document.getElementById("recipeForm");
 let selectedCategories = [];
 
 function render_to_edit()
@@ -361,8 +393,6 @@ function addCategory(id, name) {
         return category._id === id;
     });
 
-    console.log({selected: selectedCategories})
-
     if (!exists) {
         selectedCategories.push({ _id: id, name: name });
 
@@ -372,39 +402,33 @@ function addCategory(id, name) {
         // Limpiar dropdown
         document.getElementById("categoryDropdownMenuButton").innerHTML = "Seleccionar Categorías";
     }
-
-    console.log({selected2: selectedCategories})
 }
 
-
-
 // Renderizar las categorías seleccionadas
-function renderSelectedCategories() {
+function renderSelectedCategories(categoriesin = selectedCategories ) {
     var selectedCategoriesContainer = document.getElementById("selectedCategorieshtml");
     selectedCategoriesContainer.innerHTML = "";
 
-    selectedCategories.forEach(function(category) {
+    categoriesin.forEach(function(category) {
         var selectedCategory = document.createElement("div");
         selectedCategory.classList.add("alert", "alert-primary", "alert-dismissible", "fade", "show");
         selectedCategory.innerHTML = `
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="removeCategory('${category._id}')"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="removeCategory(${category.id})"></button>
             ${category.name}
         `;
         selectedCategoriesContainer.appendChild(selectedCategory);
     });
 
-    console.log({add_categories: selectedCategories});
+    console.log({add_categories: categoriesin});
 }
 
 // Eliminar categoría seleccionada
 function removeCategory(id) {
     var index = selectedCategories.findIndex(obj => obj._id === id);
-    console.log({id,index})
     if (index !== -1) {
         selectedCategories.splice(index, 1); 
     }
 
-    console.log({selec: selectedCategories})
     renderSelectedCategories()
 }
 
