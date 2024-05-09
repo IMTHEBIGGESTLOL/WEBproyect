@@ -71,12 +71,15 @@ POST {{host}}/api/auth/login2
 Content-Type: application/json
 
 {
-    "email": "dany@gmail.com",
+    "email": "carlo@gmail.com",
     "password" : "1234"
 }
 
 ###
 GET {{host}}/api/auth/logout
+
+###
+GET {{host}}/api/users/search/me
 
 
 //RECIPES

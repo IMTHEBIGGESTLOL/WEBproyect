@@ -3,6 +3,7 @@ const {User} = require('../models/User')
 const auth = require('../middleware/auth')
 //const {nanoid} = require('nanoid')
 const fs = require('fs')
+const bcrypt = require('bcrypt');
 
 // console.log(users);
 router.get('/', auth.validateHeader, auth.validateAdmin, async (req,res)=>{
@@ -123,32 +124,40 @@ router.post('/', async (req,res)=>{
 
 
 //updating an existent object
-router.put('/username/:username', async (req,res)=>{
+router.put('/update', auth.validateTokenWithCookie, async (req,res)=>{
     //search for the id
-    let user = await User.findUser(req.params.username);
+    const userId = req._id;
 
-    //if not found 
-    if (!user){
-        // return 404 not found 
-        res.status(404).send({error: 'User not found'})
-        return
+    try {
+        const updateUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+
+        if (!updateUser) {
+            res.status(404).send({ error: 'User not found' });
+            return;
+        }
+
+        res.send(updateUser);
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).send({ error: 'Internal server error' });
     }
-       
-    //if found
-        // update data z
-    // let {name, email} = req.body;
-
-    // if(!name || !email) {
-    //     res.status(400).send({error: 'name or email are not valid'})
-    //     return
-    // }
-    
-    let updateUser = await User.updateUser(user.email, req.body);
-    //fs.writeFileSync('./data/usersdata.json', JSON.stringify(users) )
-    res.send(updateUser)
-
-        
 })
+
+router.put('/change-password', auth.validateTokenWithCookie, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await User.findOne({ _id: req._id });
+    if (!user || !bcrypt.compareSync(currentPassword, user.password)) {
+        res.status(400).send({ error: 'Current password is incorrect' });
+        return;
+    }
+
+    user.password = bcrypt.hashSync(newPassword, 10);
+    await user.save();
+
+    res.status(200).send({ message: 'Password changed successfully' });
+});
+
 
 router.delete('/username/:username', auth.validateTokenWithCookie, async (req, res)=>{
     // search for the id
