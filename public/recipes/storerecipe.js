@@ -96,7 +96,7 @@ async function addMessageToChat() {
         console.log(resp.status);
         let data = await resp.json()
        
-        // You might want to do something with the message here, such as displaying it in the chat
+        
     } else {
         console.error("Element with id 'content' not found.");
 
@@ -115,7 +115,7 @@ async function addReview() {
         // Get the value of the input field
         const content = {comment: review.value, rating: rating.value};
         console.log("review: " + content);
-        // Reset the input field after retrieving the value (if needed)
+        
         review.value = '';
         rating.value = '';
 
@@ -130,7 +130,7 @@ async function addReview() {
         let data = await resp.json()
        
         location.reload()   
-        // You might want to do something with the message here, such as displaying it in the chat
+        
     } 
     
 }
@@ -147,7 +147,7 @@ async function del_review(id){
         let data = await resp.json()
        
         location.reload()   
-        // You might want to do something with the message here, such as displaying it in the chat
+        
     } 
 }
 
@@ -163,7 +163,6 @@ async function sub(id){
         console.log(resp.status);
        
         location.reload()   
-        // You might want to do something with the message here, such as displaying it in the chat
     } 
 }
 
@@ -208,10 +207,10 @@ function renderRecipe(obj, user){
 
         
         let subButton = '';
-        console.log(user.reviewsubscriptions.toString())
+        console.log({susbs: user.reviewsubscriptions})
         console.log(review.author._id.toString())
-        const isSubscribed = user.reviewsubscriptions.some(subs => /*Lo esta tomando como undifined*/subs._id === review.author._id.toString() );
-
+        const isSubscribed = user.reviewsubscriptions.some(subs => subs === review.author._id.toString() );
+        console.log(isSubscribed);
         if (!isSubscribed && review.author.username != user.username) {
             subButton += `<div class="edit button">
                                 <button class="btn btn-danger btn fixed-button" onclick="sub('${review.author._id}')">Subscribe</button>
