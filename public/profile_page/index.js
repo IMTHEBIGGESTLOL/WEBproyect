@@ -160,7 +160,7 @@ async function changePassword() {
     }
 
     try {
-        const resp = await fetch(`/api/users/change-password`, {
+        const resp = await fetch('/api/users/change-password', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -170,6 +170,8 @@ async function changePassword() {
                 newPassword: newPassword
             })
         });
+
+        console.log({resp: resp})
 
         if (resp.ok) {
             console.log('Password changed successfully');
@@ -238,6 +240,5 @@ async function del_sub(id){
         console.log(resp.status);
        
         location.reload()   
-        // You might want to do something with the message here, such as displaying it in the chat
     } 
 }

@@ -3,6 +3,7 @@ const {User} = require('../models/User')
 const auth = require('../middleware/auth')
 //const {nanoid} = require('nanoid')
 const fs = require('fs')
+const bcrypt = require('bcrypt');
 
 
 // console.log(users);
