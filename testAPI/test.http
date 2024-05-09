@@ -197,6 +197,6 @@ POST {{host}}/api/categories
 Content-Type: application/json
 
 {
-    "name": "Pasta",
-    "photo": "https://i.pinimg.com/564x/b9/5e/28/b95e28ff906b6fdd024d5799e98f2573.jpg"
+    "name": "Seafood",
+    "photo": "https://i.pinimg.com/564x/51/d6/83/51d683a318b2dcbc2b92d89dcc63f797.jpg"
 }

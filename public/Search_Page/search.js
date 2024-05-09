@@ -7,7 +7,7 @@ let pageSize = 6
 
 document.addEventListener("DOMContentLoaded", function() {
     getData();
-    actualPage = sessionStorage.getItem('recipe_page') || 1;
+    actualpage = sessionStorage.getItem('recipe_page') || 1;
 });
 
 async function getData()
@@ -72,7 +72,7 @@ function toHtml(fnToHtml = View.toHtmlList, prodlist) {
 function pagination(page=1, prodlist = recipes_toShow, fnToHtml = View.toHtmlList, pagesize = pageSize) {
         
     sessionStorage.setItem("recipe_page", page);
-    actualPage = page;
+    actualpage = page;
 
     // Calcula el índice inicial y final de los productos a mostrar en la página
     let startIndex = (page - 1) * pagesize;
@@ -99,11 +99,10 @@ function pageLogic(prodList, pageSize)
 
     let paginationHTML = '';
     for (let i = 1; i <= totalPages; i++) {
-        let encodedProdList = encodeURIComponent(JSON.stringify(prodList));
-        if (i === parseInt(sessionStorage.getItem("page"))) {
-            paginationHTML += `<li class="page-item active"><a class="page-link" href="#" onclick="pagination(${i}, JSON.parse(decodeURIComponent('${encodedProdList}')))">${i}</a></li>`;
+        if (i === parseInt(sessionStorage.getItem("recipe_page"))) {
+            paginationHTML += `<li class="page-item active"><a class="page-link" href="#" onclick="pagination(${i})">${i}</a></li>`;
         } else {
-            paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="pagination(${i}, JSON.parse(decodeURIComponent('${encodedProdList}')))">${i}</a></li>`;
+            paginationHTML += `<li class="page-item"><a class="page-link" href="#" onclick="pagination(${i})">${i}</a></li>`;
         }
     }
 
