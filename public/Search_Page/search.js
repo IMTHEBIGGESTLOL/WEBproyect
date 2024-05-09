@@ -5,10 +5,24 @@ let ingredientesArray = [];
 let actualpage;
 let pageSize = 6
 
+function getParameterByCategory(name, url) {
+    console.log(url);
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    console.log(results);
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     getData();
     actualpage = sessionStorage.getItem('recipe_page') || 1;
 });
+
 
 async function getData()
 {
@@ -51,6 +65,13 @@ async function loadCategories()
     console.log(categories);
 
     categorySelect()
+
+    let category = getParameterByCategory('category')
+    if (category) {
+        document.querySelector('#categorySelect').value = category;
+        readFilterValues();
+    }
+
 }
 
 function categorySelect() {

@@ -2,6 +2,7 @@ let receta;
 let categories = [];
 let recipeId;
 
+// This is an example for the button of categories
 // Función para obtener el parámetro de la URL por su nombre
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -166,6 +167,19 @@ async function sub(id){
     } 
 }
 
+async function del_message(id){
+    if (id != '') {        
+
+        let resp = await fetch('/api/messages/' + recipeId +'/' + id, {
+            method: 'DELETE',
+        })
+
+        console.log(resp.status);
+        let data = await resp.json()
+       
+        location.reload()   
+    } 
+}
 
 function renderRecipe(obj, user){
 
@@ -239,12 +253,48 @@ function renderRecipe(obj, user){
     });
     
     let chatRecipe = '';
-    obj.chat.forEach((messa, index)=>{  
-        chatRecipe += `<p>${messa.user}: ${messa.content}</p>`
-    }
+    let delButtonChat = '';
+    obj.chat.forEach((messa, index) => {
+        // Convert timestamp to a Date object
+        const dateObj = new Date(messa.timestamp);
+        // Format date to a more readable format
+        const formattedDate = dateObj.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        
+        if (messa.user == user.username) {
+            chatRecipe += `
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <p><strong>${messa.user}:</strong> ${messa.content}</p>
+                        <p style="color: gray; font-size: 12px;">${formattedDate}</p>
+                    </div>
+                    <div class="edit button">
+                        <button class="btn btn-danger btn-sm fixed-button" onclick="del_message('${messa._id}')">
+                            <i class="bi bi-trash3-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        } else {
+            chatRecipe += `
+                <div>
+                    <p><strong>${messa.user}:</strong> ${messa.content}</p>
+                    <p style="color: gray; font-size: 12px;">${formattedDate}</p>
+                </div>
+            `;
+        }
+    });
+    
 
 
-)
+
+
 
     let editbutton_ifuser = '';
     if(user.username == obj.author.username){
@@ -295,7 +345,7 @@ function renderRecipe(obj, user){
                     <hr>
 
                     <div class="chat-area">
-                        <div id="chat-messages">${chatRecipe}</div>
+                        <div id="chat-messages"><p>${chatRecipe}</p> </div>
                        
                         <input type="text" id="message-input" placeholder="Escribe un mensaje...">
                         <button onclick="addMessageToChat()">Enviar</button>

@@ -1,4 +1,4 @@
-@host = http://localhost:3005
+@host = http://localhost:3001
 
 //USERS
 
@@ -70,13 +70,8 @@ POST {{host}}/api/auth/login2
 Content-Type: application/json
 
 {
-<<<<<<< HEAD
     "email": "carlo@gmail.com",
     "password" : "1234"
-=======
-    "email": "guille@gmail.com",
-    "password" : "4321"
->>>>>>> 7220b96bcabc383461baf5ca826653d84cbbd811
 }
 
 ###
