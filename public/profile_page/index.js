@@ -1,7 +1,10 @@
+let user;
+
 async function showUserData(section) {
     try {
         const resp = await fetch('/api/users/search/me', { method: 'GET' });
         const data = await resp.json();
+        user = data;
 
         console.log(data);
 
@@ -137,10 +140,13 @@ async function showUserData(section) {
                 document.getElementById('cancelBtnPersonal').classList.add('d-none');
             });
         }
-        
+        let html = renderSubs(data);
+        render(html, "subs")
     } catch (error) {
         console.error('Error obtaining user data:', error);
     }
+
+    
 }
 
 async function changePassword() {
@@ -182,3 +188,56 @@ showUserData('general');
 showUserData('personal-info');
 
 document.getElementById('saveBtnPassword').addEventListener('click', changePassword);
+
+function renderSubs(user){
+    let subHtml = '';
+    if (user.reviewsubscriptions.length == 0){
+        subHtml += `<div class="edit button float-right">
+                        <p>You havent subscribe to anyone :P</p>
+                    </div>`
+    }
+    user.reviewsubscriptions.forEach((sub,index)=>{
+        
+        subHtml += `<div class="container">  
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            <a class="float-center" style = "font-size: 200%"><strong>${sub}</strong></a>
+                        </p>
+                            <div class="edit button float-right">
+                                    <button class="btn btn-danger btn-lg fixed-button" onclick="del_sub('${sub}')"> <i class="bi bi-trash3-fill"></i> </button>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </div>`
+
+    })
+    return subHtml;
+}
+
+function render(html, elementId){
+    document.querySelector(`#${elementId}`).innerHTML = html;
+}
+
+async function del_sub(id){
+
+    // Checar si ha excrito algo
+    if (id != '') {        
+
+        let resp = await fetch('/api/users/' + id + '/reviews/subscribe', {
+            method: 'DELETE',
+        })
+
+        console.log(resp.status);
+       
+        location.reload()   
+        // You might want to do something with the message here, such as displaying it in the chat
+    } 
+}
