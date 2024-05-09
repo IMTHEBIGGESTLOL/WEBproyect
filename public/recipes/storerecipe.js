@@ -310,6 +310,7 @@ function goBack() {
     window.history.back();
 }
 
+var recipeForm = document.getElementById("recipeForm");
 let selectedCategories = [];
 
 function render_to_edit()
@@ -360,6 +361,8 @@ function addCategory(id, name) {
         return category._id === id;
     });
 
+    console.log({selected: selectedCategories})
+
     if (!exists) {
         selectedCategories.push({ _id: id, name: name });
 
@@ -369,33 +372,39 @@ function addCategory(id, name) {
         // Limpiar dropdown
         document.getElementById("categoryDropdownMenuButton").innerHTML = "Seleccionar Categorías";
     }
+
+    console.log({selected2: selectedCategories})
 }
 
+
+
 // Renderizar las categorías seleccionadas
-function renderSelectedCategories(categoriesin = selectedCategories ) {
+function renderSelectedCategories() {
     var selectedCategoriesContainer = document.getElementById("selectedCategorieshtml");
     selectedCategoriesContainer.innerHTML = "";
 
-    categoriesin.forEach(function(category) {
+    selectedCategories.forEach(function(category) {
         var selectedCategory = document.createElement("div");
         selectedCategory.classList.add("alert", "alert-primary", "alert-dismissible", "fade", "show");
         selectedCategory.innerHTML = `
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="removeCategory(${category.id})"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="removeCategory('${category._id}')"></button>
             ${category.name}
         `;
         selectedCategoriesContainer.appendChild(selectedCategory);
     });
 
-    console.log({add_categories: categoriesin});
+    console.log({add_categories: selectedCategories});
 }
 
 // Eliminar categoría seleccionada
 function removeCategory(id) {
     var index = selectedCategories.findIndex(obj => obj._id === id);
+    console.log({id,index})
     if (index !== -1) {
         selectedCategories.splice(index, 1); 
     }
 
+    console.log({selec: selectedCategories})
     renderSelectedCategories()
 }
 
