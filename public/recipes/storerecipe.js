@@ -112,7 +112,7 @@ async function addReview() {
     // Checar si ha excrito algo
     if (review != '' && rating != '' && rating.value <= 5 && rating.value >= 0) {
         // Get the value of the input field
-        const content = {comment: review.value, rating: rating.value};
+        const content = {comment: review.value, rating: parseInt(rating.value)};
         console.log("review: " + content);
         // Reset the input field after retrieving the value (if needed)
         review.value = '';
@@ -129,7 +129,7 @@ async function addReview() {
         let data = await resp.json()
        
         location.reload()   
-        // You might want to do something with the message here, such as displaying it in the chat
+        
     } 
     
 }
@@ -146,7 +146,7 @@ async function del_review(id){
         let data = await resp.json()
        
         location.reload()   
-        // You might want to do something with the message here, such as displaying it in the chat
+        
     } 
 }
 
@@ -170,7 +170,7 @@ function renderRecipe(obj, user){
     
     obj.reviews.forEach((review,index)=>{
         let delButton = '';
-        if(review.author.username == obj.author.username){
+        if(review.author.username == user.username){
             delButton += `<div class="edit button">
                                 <button class="btn btn-danger btn-sm fixed-button" onclick="del_review('${review._id}')"> <i class="bi bi-trash3-fill"></i> </button>
                             </div>`

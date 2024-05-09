@@ -324,7 +324,13 @@ recipeSchema.statics.calculateRating = async (_id)=>{
         total += review.rating
     })
 
-    recipe_to_calculate.rating = total/len;
+    rate = total/len
+    if (len == 0)
+        recipe_to_calculate.rating = 0;
+    else
+        recipe_to_calculate.rating = total/len;
+
+    console.log({valor: recipe_to_calculate.rating })
     await recipe_to_calculate.save()
     return recipe_to_calculate
 }
