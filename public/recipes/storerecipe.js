@@ -493,12 +493,30 @@ async function Deleterecipe()
 {
     console.log(recipeId);
 
-    let resp = await fetch('/api/recipes/' + recipeId,{
-        method :'DELETE'
-    })
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+    if (result.isConfirmed) {
+        Swal.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success"
+        });
+        let resp = await fetch('/api/recipes/' + recipeId,{
+            method :'DELETE'
+        })
+    
+        location.reload();
+        window.location.href = "./recipes_page.html";
+    }
+    });
 
-    location.reload();
-    window.location.href = "./recipes_page.html";
 }
 
 // Manejar el envío del formulario
