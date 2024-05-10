@@ -304,6 +304,14 @@ function renderRecipe(obj, user){
                               </div>`
     }
 
+    let deletebutton_ifuser = '';
+    if(user.username == obj.author.username){
+        editbutton_ifuser += `<div class="edit button">
+                                <button class="btn btn-danger btn-lg fixed-button"
+                                 onclick="Deleterecipe()"> Delete </button>
+                              </div>`
+    }
+
     let html = `
                 <div class="recipe-img">
                     <img src="${obj.photo}" alt="">
@@ -479,6 +487,18 @@ function removeCategory(id) {
     }
 
     renderSelectedCategories()
+}
+
+async function Deleterecipe()
+{
+    console.log(recipeId);
+
+    let resp = await fetch('/api/recipes/' + recipeId,{
+        method :'DELETE'
+    })
+
+    location.reload();
+    window.location.href = "./recipes_page.html";
 }
 
 // Manejar el envío del formulario

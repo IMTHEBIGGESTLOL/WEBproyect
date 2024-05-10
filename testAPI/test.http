@@ -70,7 +70,7 @@ POST {{host}}/api/auth/login2
 Content-Type: application/json
 
 {
-    "email": "carlo@gmail.com",
+    "email": "guille@gmail.com",
     "password" : "1234"
 }
 
@@ -199,6 +199,6 @@ POST {{host}}/api/categories
 Content-Type: application/json
 
 {
-    "name": "Seafood",
+    "name": "mexican",
     "photo": "https://i.pinimg.com/564x/51/d6/83/51d683a318b2dcbc2b92d89dcc63f797.jpg"
 }
