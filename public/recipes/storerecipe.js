@@ -109,15 +109,24 @@ async function addMessageToChat() {
 async function addReview() {
     const review = document.getElementById('new-review');
     const rating = document.getElementById('new-rating');
-
+    
     // Checar si ha excrito algo
-    if (review != '' && rating != '' && rating.value <= 5 && rating.value >= 0) {
+    if (review.value != '' && rating.value != '' && rating.value <= 5 && rating.value >= 0) {
         // Get the value of the input field
+        
         const content = {comment: review.value, rating: rating.value};
         console.log("review: " + content);
         
         review.value = '';
         rating.value = '';
+
+        Swal.fire({
+            icon: "success",
+            title: "Saved!",
+            text: "Your review has been saved",
+            showConfirmButton: false,
+            timer: 2500
+          });
 
         let resp = await fetch('/api/reviews/' + recipeId , {
             method: 'POST',
@@ -126,29 +135,71 @@ async function addReview() {
             },
             body: JSON.stringify(content)
         })
+
         console.log(resp.status);
         let data = await resp.json()
        
         location.reload()   
         
+    }else if(review.value == ''){
+        Swal.fire({
+            title: "Mssing Data",
+            text: "You are missing the review",
+            icon: "warning"
+          });
+    }else if(rating.value == ''){
+        Swal.fire({
+            title: "Mssing Data",
+            text: "You are missing the rating",
+            icon: "warning"
+          });
+    }else if(rating.value > 5 || rating.value < 0){
+        Swal.fire({
+            title: "Incorrect Data",
+            text: "The rating value is not between 0 and 5",
+            icon: "warning"
+          });
     } 
     
 }
 
 async function del_review(id){
     // Checar si ha excrito algo
-    if (id != '') {        
-
-        let resp = await fetch('/api/reviews/' + recipeId +'/' + id, {
-            method: 'DELETE',
-        })
-
-        console.log(resp.status);
-        let data = await resp.json()
-       
-        location.reload()   
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+    if (result.isConfirmed) {
         
-    } 
+
+        if (id != '') {        
+
+            Swal.fire({
+                title: "Deleted!",
+                text: "Your review has been deleted.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2500
+                });
+
+            let resp = await fetch('/api/reviews/' + recipeId +'/' + id, {
+                method: 'DELETE',
+            })
+
+            console.log(resp.status);
+            let data = await resp.json()
+        
+            location.reload()   
+        
+        } 
+    }
+    });
+    
 }
 
 async function sub(id){
@@ -202,6 +253,7 @@ function renderRecipe(obj, user){
         if(review.author.username == user.username){
             delButton += `<div class="edit button">
                                 <button class="btn btn-danger btn-sm fixed-button" onclick="del_review('${review._id}')"> <i class="bi bi-trash3-fill"></i> </button>
+                                <button class="btn btn-primary btn-sm fixed-button" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="renderEditReview('${review.comment}','${review.rating}'), EditReview('${review._id}')"> <i class="bi bi-pencil-square"></i> </button>
                             </div>`
         }
 
@@ -372,7 +424,7 @@ function renderRecipe(obj, user){
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <input type="number" min="0" max="5" id="new-rating" class="form-control" placeholder="Rating between 0 and 5...">
+                                        <input type="number" step="0.1" min="0" max="5" id="new-rating" class="form-control" placeholder="Rating between 0 and 5...">
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <button class="btn btn-success btn-sm"  onclick="addReview()">Save</button>
@@ -419,6 +471,17 @@ function render_to_edit()
         selectedCategories.push(categoria);
       });
     renderSelectedCategories()
+
+}
+
+function renderEditReview(c,r)
+{
+    console.log(c)
+    console.log(r)
+
+    document.getElementById("Ureview").value = c;
+    document.getElementById("Urating").value = r;
+
 
 }
 
@@ -535,10 +598,7 @@ recipeForm.addEventListener("submit", async function(event) {
 
 
     // Convertir ingredientes y pasos en arrays
-    recipeData.ingredients = recipeData.ingredients.split('\n').map(function(line) {
-        var parts = line.split(':');
-        return { name: parts[0].trim(), quantity: parts[1].trim() };
-    });
+    
     recipeData.steps = recipeData.steps.split('\n').map(function(step) {
         return step.trim();
     });
@@ -583,3 +643,53 @@ recipeForm.addEventListener("submit", async function(event) {
 
     loadRecipe(recipeId);
 });
+
+async function EditReview(id){
+    reviewForm.addEventListener("submit", async function(event) {
+        event.preventDefault(); // Evitar que el formulario se envíe por defecto
+    
+        let reviewData = {}
+    
+        reviewData.comment = document.querySelector('#Ureview').value
+        reviewData.rating = document.querySelector('#Urating').value
+        
+        console.log("Datos del review:", JSON.stringify(reviewData));
+    
+        let resp = await fetch('/api/reviews/'+ recipeId + '/' +id,{
+            method :'PUT',
+            headers:{
+                'content-type': 'Application/json'
+            },
+            body: JSON.stringify(reviewData)
+    
+           
+        })
+    
+        console.log(resp.status);
+        let data = await resp.json()
+        //console.log(data);
+    
+       if(data.error)
+       {
+            Swal.fire("Error", data.error , "error");
+            return;
+       }else{
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "The Review has been saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+    
+            var modal = bootstrap.Modal.getInstance(document.getElementById("reviewModal"));
+            modal.hide();
+    
+            location.reload()
+       }
+    
+        // Cerrar el modal
+        
+    });
+}
+

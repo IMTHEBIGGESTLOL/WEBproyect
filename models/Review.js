@@ -45,6 +45,19 @@ reviewSchema.statics.saveReview = async (_id,reviewData, recipeId)=>{
 
 }
 
+reviewSchema.statics.updateReview = async (_id,reviewData, recipeId)=>{
+    delete reviewData.author;
+
+    let updateReview = await Review.findOneAndUpdate({_id},
+                                                    {$set: reviewData},
+                                                    {new:true})
+    
+    await Recipe.calculateRating(recipeId);
+    return updateReview;
+
+}
+
+
 reviewSchema.statics.deleteReview = async (_id, recipeId)=>{
     let deletedReview = await Review.findOneAndDelete({_id})
     console.log(deletedReview);

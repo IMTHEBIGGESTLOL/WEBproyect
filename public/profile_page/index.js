@@ -140,8 +140,15 @@ async function showUserData(section) {
                 document.getElementById('cancelBtnPersonal').classList.add('d-none');
             });
         }
-        let html = renderSubs(data);
-        render(html, "subs")
+        let htmlsubs = renderSubs(data);
+        render(htmlsubs, "subs")
+
+        let htmlfeed = renderSubs(data);
+        render(htmlfeed, "feed")
+
+        let htmlreview = renderSubs(data);
+        render(htmlreview, "reviews")
+
     } catch (error) {
         console.error('Error obtaining user data:', error);
     }

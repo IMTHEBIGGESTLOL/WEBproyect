@@ -20,6 +20,26 @@ router.post('/:recipeId', auth.validateTokenWithCookie ,async (req, res) => {
     res.send(newReview);
 });
 
+router.put('/:recipeId/:reviewId', auth.validateTokenWithCookie ,async (req, res) => {
+    
+    let review = await Review.findById(req.params.reviewId);
+
+    if(!review){
+        res.status(404).send({error: "Review Not Found"})
+        return;
+    } 
+
+    if(review.author._id != req._id){
+        res.status(403).send({error: "You dont have permissions"})
+        return
+    }
+
+    console.log(req.body);
+    let UpdateReview = await Review.updateReview(review._id, req.body, req.params.recipeId);
+    res.send(UpdateReview);
+});
+
+
 router.delete('/:recipeId/:reviewId', auth.validateTokenWithCookie, async (req, res)=>{
     const reviewid = req.params.reviewId;
     let review = await Review.findById(reviewid);
