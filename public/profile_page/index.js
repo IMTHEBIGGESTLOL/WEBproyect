@@ -143,10 +143,10 @@ async function showUserData(section) {
         let htmlsubs = renderSubs(data);
         render(htmlsubs, "subs")
 
-        let htmlfeed = renderSubs(data);
+        let htmlfeed = renderFeed(data);
         render(htmlfeed, "feed")
 
-        let htmlreview = renderSubs(data);
+        let htmlreview = renderReviews(data);
         render(htmlreview, "reviews")
 
     } catch (error) {
@@ -199,6 +199,8 @@ showUserData('personal-info');
 document.getElementById('saveBtnPassword').addEventListener('click', changePassword);
 
 function renderSubs(user){
+
+    
     let subHtml = '';
     if (user.reviewsubscriptions.length == 0){
         subHtml += `<div class="edit button float-right">
@@ -229,6 +231,81 @@ function renderSubs(user){
 
     })
     return subHtml;
+}
+
+function renderFeed(user){
+    let feedHtml = '';
+    if (user.reviewsubscriptions.length == 0){
+        feedHtml += `<div class="edit button float-right">
+                        <p>You havent subscribe to anyone thats why your feed is empty :P</p>
+                    </div>`
+    }
+
+    
+    user.reviewsubscriptions.forEach((sub,index)=>{
+    
+        feedHtml += `<div class="container">  
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                    </div>
+                    <div class="col-md-10">
+                        <p>
+                            <a class="float-center" style = "font-size: 200%"><strong>${sub}</strong></a>
+                        </p>
+                            
+                        </div>
+                        
+                        <div class= "container">
+                            <div class= "card">
+                                <div class= "card-body">
+                                    <p>${renderReviews(user)}</p>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </div>`
+
+    })
+    return feedHtml;
+}
+
+function renderReviews(user){
+    let reviewHtml = '';
+    if (user.reviewsubscriptions.length == 0){
+        reviewHtml += `<div class="edit button float-right">
+                        <p>You havent made a review :P</p>
+                    </div>`
+    }
+
+    
+    user.myreviews.forEach((sub,index)=>{
+        
+        reviewHtml += `<div class="container">  
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    
+                    <div class="col-md-10">
+                        <p>
+                            <p class="float-center" style = "font-size: 200%"><strong>${sub}</strong></p>
+                            <p class="float-center" style = "font-size: 100%"><strong>${sub.comment}</strong></p>
+                            <p class="float-right" style = "font-size: 80%"><strong>${sub.rating}</strong></p>
+                        </p>
+                            
+                        </div>
+                        
+                    </div>   
+                </div>
+            </div>
+        </div>`
+
+    })
+    return reviewHtml;
 }
 
 function render(html, elementId){
