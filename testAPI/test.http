@@ -66,7 +66,6 @@ DELETE {{host}}/api/users/6620682a8c79b23fa54bd305/reviews/subscribe
 # }
 
 ###
-
 POST {{host}}/api/auth/login2
 Content-Type: application/json
 
@@ -186,6 +185,16 @@ Content-Type: application/json
 {
     "comment": "ñAM",
     "rating": 5
+}
+
+
+###
+PUT {{host}}/api/messages/662d1ecf64edfec16ef2fc2a/663d0e90e72cc89f6a344a24
+Content-Type: application/json
+
+{
+    "content": "upsydayse"
+
 }
 
 ### DELETE REVIEW

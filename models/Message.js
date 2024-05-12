@@ -37,6 +37,14 @@ messageSchema.statics.deleteMessage = async (_id, recipeId)=>{
    return deletedMessage;
 }
 
+messageSchema.statics.editMessage = async (_id,messageData, recipeId)=>{
+    let updatedMessage = await Post.findOneAndUpdate({_id},
+        {$set: messageData},
+        {new:true})    
+        console.log(updatedMessage);
+    return updatedMessage;
+ }
+
 
 
 let Post = mongoose.model('Message', messageSchema);

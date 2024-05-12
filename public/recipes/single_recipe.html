@@ -141,6 +141,27 @@
         </div>
       </div>
     </div>
+    
+    <!--Modal for editreview-->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="messageModalLabel">Update Message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="messageForms">
+              <div class="mb-3">
+                <label for="comment" class="form-label">New Messaage:</label>
+                <textarea class="form-control animated" id="UMessage" name="comment" placeholder="Enter your new Message..." rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   
   
     <button onclick="goBack()" id="back-btn" class="back-link">

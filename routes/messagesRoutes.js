@@ -29,4 +29,22 @@ router.delete('/:recipeId/:messageId', auth.validateTokenWithCookie, async (req,
 
 });
 
+router.put('/:recipeId/:messageId', auth.validateTokenWithCookie ,async (req, res) => {
+    
+    const messageid = req.params.messageId;
+    let message = await Post.findById(messageid);
+
+    if(!message){
+        res.status(404).send({error: "Message Not Found"})
+        return;
+    } 
+
+    console.log(req.body);
+    let massageUpdated = await Post.editMessage(messageid, req.body, req.params.recipeId);
+    res.send(massageUpdated);
+});
+
+
+
+
 module.exports = router;

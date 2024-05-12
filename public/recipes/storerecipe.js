@@ -66,23 +66,17 @@ async function loadRecipe(recipeId)
     render(html, "recipe");
 }
 
-// Cosas del chat:
-// Obtener referencias a elementos del DOM
+
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 const chatMessages = document.getElementById('chat-messages');
 
 
-// Función para agregar un mensaje al chat
 async function addMessageToChat() {
-    // const messageElement = document.createElement('div');
     const newMessage = document.getElementById('message-input');
 
-    // Check if the element exists
     if (newMessage != '') {
-        // Get the value of the input field
         const content = {content: newMessage.value};
-        //console.log("message: " + content);
         newMessage.value = '';
 
         let resp = await fetch('/api/recipes/' + recipeId + '/chat', {
@@ -92,16 +86,14 @@ async function addMessageToChat() {
             },
             body: JSON.stringify(content)
         })
-        //console.log(resp.status);
         let data = await resp.json()
        
         
     } else {
-        //console.error("Element with id 'content' not found.");
 
         
     }
-    location.reload()    
+    loadRecipe(recipeId)
 }
 
 //Funcion para postear una review
@@ -216,19 +208,40 @@ async function sub(id){
     } 
 }
 
-async function del_message(id){
-    if (id != '') {        
+async function del_message(id) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+        if (result.isConfirmed) { 
+            if (id != '') {        
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your message has been deleted.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2500
+                });
 
-        let resp = await fetch('/api/messages/' + recipeId +'/' + id, {
-            method: 'DELETE',
-        })
+                let resp = await fetch('/api/messages/' + recipeId + '/' + id, {
+                    method: 'DELETE',
+                });
 
-        //console.log(resp.status);
-        let data = await resp.json()
-       
-        location.reload()   
-    } 
+                //console.log(resp.status);
+                let data = await resp.json();
+                
+                loadRecipe(recipeId);
+            } 
+        }
+    });
 }
+
+
 
 function renderRecipe(obj, user){
 
@@ -324,9 +337,14 @@ function renderRecipe(obj, user){
                         <p><strong>${messa.user}:</strong> ${messa.content}</p>
                         <p style="color: gray; font-size: 12px;">${formattedDate}</p>
                     </div>
-                    <div class="edit button">
+                    <div class="buttons">
                         <button class="btn btn-danger btn-sm fixed-button" onclick="del_message('${messa._id}')">
                             <i class="bi bi-trash3-fill"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm fixed-button" data-bs-toggle="modal" 
+                            data-bs-target="#messageModal" onclick="renderEditMessage('${messa.content}'), 
+                            EditMessages('${messa._id}')"> 
+                            <i class="bi bi-pencil-square"></i> 
                         </button>
                     </div>
                 </div>
@@ -692,3 +710,54 @@ async function EditReview(id){
     });
 }
 
+function renderEditMessage(contentMessa)
+{
+
+    document.getElementById("UMessage").value = contentMessa;
+
+
+}
+
+async function EditMessages(id){
+    messageForms.addEventListener("submit", async function(event) {
+        event.preventDefault();
+    
+        let messageData = {}
+    
+        messageData.content = document.querySelector('#UMessage').value
+        
+    
+        let resp = await fetch('/api/messages/' + recipeId + '/' + id,{
+            method :'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(messageData)
+    
+           
+        })
+    
+        //console.log(resp.status);
+        let data = await resp.json()
+        //console.log(data);
+    
+       if(data.error)
+       {
+            Swal.fire("Error", data.error , "error");
+            return;
+       }else{
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "The Message has been edited",
+                showConfirmButton: false,
+                timer: 1500
+            });
+    
+            var modal = bootstrap.Modal.getInstance(document.getElementById("messageModal"));
+            modal.hide();
+    
+            loadRecipe(recipeId);
+        }        
+    });
+}
