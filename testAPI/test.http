@@ -7,7 +7,7 @@ GET {{host}}/api/users
 x-auth: 23423
 
 ### GET USER BY _ID
-GET {{host}}/api/users/6620682a8c79b23fa54bd305
+GET {{host}}/api/users/6622be9d57e31fbd632546c6
 x-auth: 23423
 
 ### GET USER BY USERNAME

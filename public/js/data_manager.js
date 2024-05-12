@@ -11,12 +11,12 @@ class DataManager
 
     static pruebaID(_id)
     {
-        console.log(_id);
+        //console.log(_id);
     }
 
     static async loadData(category = null){
     
-        console.log(category);
+        //console.log(category);
         let resp = await fetch('/api/recipes',{
             method :'GET',
             headers: {
@@ -24,10 +24,10 @@ class DataManager
             }
         })
     
-        console.log(resp.status);
+        //console.log(resp.status);
         let data = await resp.json()
 
-        console.log(data);
+        //console.log(data);
         
         recipesArray = data.recipes;
 
@@ -41,7 +41,7 @@ class DataManager
             }
         })
     
-        console.log(resp_cat.status);
+        //console.log(resp_cat.status);
         let cat = await resp_cat.json()
         
         categories = cat.categories;
@@ -79,7 +79,7 @@ class DataManager
         // Filtra los productos para mostrar solo los de la página actual
         let productsToShow = prodlist.slice(startIndex, endIndex);
     
-        console.log(productsToShow);
+        //console.log(productsToShow);
 
         this.pageLogic(prodlist,pageSize);
     
@@ -89,7 +89,7 @@ class DataManager
     }
 
     static toHtml(fnToHtml = View.toHtmlList, prodlist) {
-        console.log("entro");
+        //console.log("entro");
         return fnToHtml(prodlist);
     }
 
@@ -97,7 +97,7 @@ class DataManager
     {
         const totalPages = Math.ceil(prodList.length / pageSize);
 
-        console.log(prodList);
+        //console.log(prodList);
 
         let paginationHTML = '';
         for (let i = 1; i <= totalPages; i++) {
@@ -128,7 +128,7 @@ class View
     }
 
     static toHtmlList(list){
-        console.log("entro2");
+        //console.log("entro2");
         let html = `
                     ${list.map((prod) => View.toHtmlDiv(prod)).join("")}
                 
@@ -213,7 +213,7 @@ class ViewCategory
     }
 
     static toHtmlList(list){
-        console.log("entro2");
+        //console.log("entro2");
         let html = `
                     ${list.map((prod) => ViewCategory.toHtmlDiv(prod)).join("")}
                 
@@ -222,7 +222,7 @@ class ViewCategory
     }
     
     static toHtmlDiv(obj) {
-        console.log("entro3");
+        //console.log("entro3");
         let html = `<div class="col-lg-4">
                         <div class="bd-placeholder-img rounded-circle" style="width: 200px; height: 200px;">
                             <img src="${obj.photo}" alt="" class="w-100">

@@ -30,14 +30,14 @@ async function loadCategories()
         }
     })
 
-    console.log(resp.status);
+    //console.log(resp.status);
     let data = await resp.json()
 
-    console.log(data);
+    //console.log(data);
     
     categories = data.categories;
 
-    console.log(categories);
+    //console.log(categories);
 
     renderCategoryDropdown()
 }
@@ -48,18 +48,18 @@ async function loadRecipe(recipeId)
         method :'GET'
     })
 
-    console.log(resp.status);
+    //console.log(resp.status);
     let data = await resp.json()
 
     receta = data;
 
-    console.log(data);
+    //console.log(data);
 
     let respuser = await fetch('/api/users/search/me',{
         method :'GET'
     })
 
-    console.log(respuser.status);
+    //console.log(respuser.status);
     user = await respuser.json()
 
     let html = renderRecipe(data, user);
@@ -82,8 +82,7 @@ async function addMessageToChat() {
     if (newMessage != '') {
         // Get the value of the input field
         const content = {content: newMessage.value};
-        console.log("message: " + content);
-        // Reset the input field after retrieving the value (if needed)
+        //console.log("message: " + content);
         newMessage.value = '';
 
         let resp = await fetch('/api/recipes/' + recipeId + '/chat', {
@@ -93,12 +92,12 @@ async function addMessageToChat() {
             },
             body: JSON.stringify(content)
         })
-        console.log(resp.status);
+        //console.log(resp.status);
         let data = await resp.json()
        
         
     } else {
-        console.error("Element with id 'content' not found.");
+        //console.error("Element with id 'content' not found.");
 
         
     }
@@ -115,7 +114,7 @@ async function addReview() {
         // Get the value of the input field
         
         const content = {comment: review.value, rating: rating.value};
-        console.log("review: " + content);
+        //console.log("review: " + content);
         
         review.value = '';
         rating.value = '';
@@ -136,7 +135,7 @@ async function addReview() {
             body: JSON.stringify(content)
         })
 
-        console.log(resp.status);
+        //console.log(resp.status);
         let data = await resp.json()
        
         location.reload()   
@@ -191,7 +190,7 @@ async function del_review(id){
                 method: 'DELETE',
             })
 
-            console.log(resp.status);
+            //console.log(resp.status);
             let data = await resp.json()
         
             location.reload()   
@@ -211,7 +210,7 @@ async function sub(id){
             method: 'POST',
         })
 
-        console.log(resp.status);
+        //console.log(resp.status);
        
         location.reload()   
     } 
@@ -224,7 +223,7 @@ async function del_message(id){
             method: 'DELETE',
         })
 
-        console.log(resp.status);
+        //console.log(resp.status);
         let data = await resp.json()
        
         location.reload()   
@@ -259,10 +258,10 @@ function renderRecipe(obj, user){
 
         
         let subButton = '';
-        console.log({susbs: user.reviewsubscriptions})
-        console.log(review.author._id.toString())
-        const isSubscribed = user.reviewsubscriptions.some(subs => subs === review.author._id.toString() );
-        console.log(isSubscribed);
+        //console.log({susbs: user.reviewsubscriptions})
+        //console.log(review.author._id.toString())
+        const isSubscribed = user.reviewsubscriptions.some(subs => subs._id === review.author._id.toString() );
+        //console.log(isSubscribed);
         if (!isSubscribed && review.author.username != user.username) {
             subButton += `<div class="edit button">
                                 <button class="btn btn-danger btn fixed-button" onclick="sub('${review.author._id}')">Subscribe</button>
@@ -476,8 +475,8 @@ function render_to_edit()
 
 function renderEditReview(c,r)
 {
-    console.log(c)
-    console.log(r)
+    //console.log(c)
+    //console.log(r)
 
     document.getElementById("Ureview").value = c;
     document.getElementById("Urating").value = r;
@@ -539,7 +538,7 @@ function renderSelectedCategories(categoriesin = selectedCategories ) {
         selectedCategoriesContainer.appendChild(selectedCategory);
     });
 
-    console.log({add_categories: categoriesin});
+    //console.log({add_categories: categoriesin});
 }
 
 // Eliminar categoría seleccionada
@@ -554,7 +553,7 @@ function removeCategory(id) {
 
 async function Deleterecipe()
 {
-    console.log(recipeId);
+   // console.log(recipeId);
 
     Swal.fire({
         title: "Are you sure?",
@@ -609,7 +608,7 @@ recipeForm.addEventListener("submit", async function(event) {
     });
 
     // Enviar los datos a la API o realizar otras acciones según sea necesario
-    console.log("Datos de la receta:", recipeData);
+    //console.log("Datos de la receta:", recipeData);
 
     let resp = await fetch('/api/recipes/' + recipeId,{
         method :'PUT',
@@ -619,7 +618,7 @@ recipeForm.addEventListener("submit", async function(event) {
         body: JSON.stringify(recipeData)
     })
 
-    console.log(resp.status);
+    //console.log(resp.status);
     let data = await resp.json()
     //console.log(data);
 
@@ -653,7 +652,7 @@ async function EditReview(id){
         reviewData.comment = document.querySelector('#Ureview').value
         reviewData.rating = document.querySelector('#Urating').value
         
-        console.log("Datos del review:", JSON.stringify(reviewData));
+        //console.log("Datos del review:", JSON.stringify(reviewData));
     
         let resp = await fetch('/api/reviews/'+ recipeId + '/' +id,{
             method :'PUT',
@@ -665,7 +664,7 @@ async function EditReview(id){
            
         })
     
-        console.log(resp.status);
+        //console.log(resp.status);
         let data = await resp.json()
         //console.log(data);
     

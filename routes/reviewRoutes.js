@@ -53,9 +53,7 @@ router.delete('/:recipeId/:reviewId', auth.validateTokenWithCookie, async (req, 
         return
     }
 
-    await Recipe.removeReviews(reviewid, req.params.recipeId);
-    await Recipe.calculateRating(req.params.recipeId);
-    let reviewdeleted = await Review.deleteReview(reviewid, req.params.recipeId);
+    let reviewdeleted = await Review.deleteReview(req.username, reviewid, req.params.recipeId);
     res.send(reviewdeleted);
 });
 

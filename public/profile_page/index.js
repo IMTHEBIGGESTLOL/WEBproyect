@@ -218,10 +218,10 @@ function renderSubs(user){
                     </div>
                     <div class="col-md-10">
                         <p>
-                            <a class="float-center" style = "font-size: 200%"><strong>${sub}</strong></a>
+                            <a class="float-center" style = "font-size: 200%"><strong>${sub.username}</strong></a>
                         </p>
                             <div class="edit button float-right">
-                                    <button class="btn btn-danger btn-lg fixed-button" onclick="del_sub('${sub}')"> <i class="bi bi-trash3-fill"></i> </button>
+                                    <button class="btn btn-danger btn-lg fixed-button" onclick="del_sub('${sub._id}')"> <i class="bi bi-trash3-fill"></i> </button>
                             </div>
                         </div>
                     </div>   
@@ -253,7 +253,7 @@ function renderFeed(user){
                     </div>
                     <div class="col-md-10">
                         <p>
-                            <a class="float-center" style = "font-size: 200%"><strong>${sub}</strong></a>
+                            <a class="float-center" style = "font-size: 200%"><strong>${sub.username}</strong></a>
                         </p>
                             
                         </div>
@@ -292,7 +292,7 @@ function renderReviews(user){
                     
                     <div class="col-md-10">
                         <p>
-                            <p class="float-center" style = "font-size: 200%"><strong>${sub}</strong></p>
+                            <p class="float-center" style = "font-size: 200%"><strong>Comment and Rating</strong></p>
                             <p class="float-center" style = "font-size: 100%"><strong>${sub.comment}</strong></p>
                             <p class="float-right" style = "font-size: 80%"><strong>${sub.rating}</strong></p>
                         </p>

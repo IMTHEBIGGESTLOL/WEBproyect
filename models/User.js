@@ -115,6 +115,30 @@ userSchema.statics.addMyReviews = async (_id, reviewId) => {
     return {error: "User not found"};
 }
 
+
+userSchema.statics.removemyReviews = async (username, reviewId) => {
+    let user = await User.findOne({username});
+    if(user){
+        // Buscar el índice del objeto con el ID de la receta en los favoritos del usuario
+        var indiceAEliminar = user.myreviews.findIndex(function(review) {
+            return review == reviewId.toString();
+        });
+
+        console.log({username, reviewId: reviewId.toString(), indice: indiceAEliminar})
+
+        // Si se encuentra el objeto, eliminarlo
+        if (indiceAEliminar !== -1) {
+            user.myreviews.splice(indiceAEliminar, 1);
+            await user.save(); // Guardar los cambios en la base de datos
+            return { success: true };
+        } else {
+            return { error: "Recipe not found in user's reviews" };
+        }
+    }
+
+    return {error: "User not found"};
+}
+
 userSchema.statics.addFavorites = async (username, recipeId) => {
     let user = await User.findOne({username});
     if(user){
@@ -227,7 +251,7 @@ userSchema.statics.findUserById = async (_id)=>{
     /*
     let proj = {username: 1, myrecipes: 1, favorites: 1};
     let user = await User.findById(_id).populate('myrecipes', 'title').populate('favorites', 'title');*/
-    let user = await User.findById(_id);
+    let user = await User.findById(_id).populate('myrecipes', 'title').populate('myreviews', 'comment rating').populate('reviewsubscriptions', 'username');
     return user;
 }
 

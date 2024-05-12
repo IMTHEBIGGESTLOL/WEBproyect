@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function getData()
 {
-    console.log("hola");
+    //console.log("hola");
     await DataManager.loadData();
 
     recipes_toShow = recipesArray.slice();
 
-    console.log(recipes_toShow);
+    //console.log(recipes_toShow);
 }

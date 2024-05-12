@@ -6,6 +6,7 @@ const fs = require('fs');
 const {User} = require('../models/User.js');
 const auth = require('../middleware/auth.js');
 const {Post} = require('../models/Message.js');
+const {Review} = require('../models/Review.js');
 
 
 router.get('/',  auth.addSkipLimittoGet(),async (req, res) => {
@@ -143,6 +144,10 @@ router.delete('/:recipeId',auth.validateTokenWithCookie ,async (req, res) => {
         return
     }
 
+    for (let i = 0; i < recipe.reviews.length; i++)
+    {
+        await Review.deleteReview(req.username, recipe.reviews[i]._id, req.params.recipeId)
+    }
     let recipedeleted = await Recipe.deleteRecipe(recipeId);
     await User.removeMyRecipes(req.username, req.params.recipeId);
     res.send(recipedeleted);

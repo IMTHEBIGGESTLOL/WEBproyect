@@ -1,6 +1,6 @@
 const {mongoose} = require("../DB/connectDB")
 const {Recipe} = require("../models/Recipe.js")
-
+const { User } = require("../models/User.js");
 
 let reviewSchema = mongoose.Schema({
     comment: {
@@ -57,8 +57,11 @@ reviewSchema.statics.updateReview = async (_id,reviewData, recipeId)=>{
 
 }
 
-
-reviewSchema.statics.deleteReview = async (_id, recipeId)=>{
+reviewSchema.statics.deleteReview = async (username, _id, recipeId)=>{
+    console.log({exacto: _id});
+    await User.removemyReviews(username, _id);
+    await Recipe.removeReviews(_id, recipeId);
+    await Recipe.calculateRating(recipeId);
     let deletedReview = await Review.findOneAndDelete({_id})
     console.log(deletedReview);
     return deletedReview;

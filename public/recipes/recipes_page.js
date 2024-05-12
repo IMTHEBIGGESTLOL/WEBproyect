@@ -4,7 +4,7 @@ let recipes_toShow = [];
 document.addEventListener("DOMContentLoaded", function() {
     loadCategories();
     getData();
-    console.log(categories)
+    //console.log(categories)
 });
 
 async function loadCategories()
@@ -16,14 +16,14 @@ async function loadCategories()
         }
     })
 
-    console.log(resp.status);
+    //console.log(resp.status);
     let data = await resp.json()
 
-    console.log(data);
+    //console.log(data);
     
     categories = data.categories;
 
-    console.log(categories);
+    //console.log(categories);
 
     renderCategoryDropdown()
 }
@@ -34,10 +34,10 @@ async function getData()
         method :'GET'
     })
 
-    console.log(resp.status);
+    //console.log(resp.status);
     let data = await resp.json()
 
-    console.log(data);
+    //console.log(data);
     
     recipes_toShow = data.recipes;
 
@@ -47,7 +47,7 @@ async function getData()
 }
 
 function toHtml(fnToHtml = View.toHtmlList, prodlist) {
-    console.log("entro");
+    //console.log("entro");
     return fnToHtml(prodlist);
 }
 
@@ -84,7 +84,7 @@ function addCategory(id, name) {
         return category.id === id;
     });
 
-    console.log({selected: selectedCategories})
+    //console.log({selected: selectedCategories})
 
     if (!exists) {
         selectedCategories.push({ id: id, name: name });
@@ -96,7 +96,7 @@ function addCategory(id, name) {
         document.getElementById("categoryDropdownMenuButton").innerHTML = "Seleccionar Categorías";
     }
 
-    console.log({selected2: selectedCategories})
+    //console.log({selected2: selectedCategories})
 }
 
 // Renderizar las categorías seleccionadas
@@ -114,18 +114,18 @@ function renderSelectedCategories() {
         selectedCategoriesContainer.appendChild(selectedCategory);
     });
 
-    console.log({add_categories: selectedCategories});
+    //console.log({add_categories: selectedCategories});
 }
 
 // Eliminar categoría seleccionada
 function removeCategory(id) {
     var index = selectedCategories.findIndex(obj => obj.id === id);
-    console.log({id,index})
+    //console.log({id,index})
     if (index !== -1) {
         selectedCategories.splice(index, 1); 
     }
 
-    console.log({selec: selectedCategories})
+    //console.log({selec: selectedCategories})
     renderSelectedCategories()
 }
 
@@ -157,7 +157,7 @@ recipeForm.addEventListener("submit", async function(event) {
     });
 
     // Enviar los datos a la API o realizar otras acciones según sea necesario
-    console.log("Datos de la receta:", recipeData);
+    //console.log("Datos de la receta:", recipeData);
 
     let resp = await fetch('/api/recipes',{
         method :'POST',
@@ -167,7 +167,7 @@ recipeForm.addEventListener("submit", async function(event) {
         body: JSON.stringify(recipeData)
     })
 
-    console.log(resp.status);
+    //console.log(resp.status);
     let data = await resp.json()
     //console.log(data);
 
