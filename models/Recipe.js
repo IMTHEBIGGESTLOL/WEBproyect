@@ -287,7 +287,7 @@ recipeSchema.statics.findRecipe = async (_id) => {
             throw new Error('No se encontró la receta');
         }
 
-        // Asegúrate de que la receta tiene una propiedad 'author'
+        
         if (!recipe.author) {
             throw new Error('La receta no tiene autor');
         }

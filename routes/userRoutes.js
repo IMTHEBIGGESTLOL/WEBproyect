@@ -1,7 +1,6 @@
 const router = require("express").Router()
 const {User} = require('../models/User')
 const auth = require('../middleware/auth')
-//const {nanoid} = require('nanoid')
 const fs = require('fs')
 const bcrypt = require('bcrypt');
 
@@ -9,11 +8,7 @@ const bcrypt = require('bcrypt');
 // console.log(users);
 router.get('/', auth.validateHeader, auth.validateAdmin, async (req,res)=>{
     console.log(req.query);
-    // console.log(req.get('x-auth'));
-    // let token = req.get('x-auth')
-    // let admin = false;
-    // if(token == '23423')
-    //     admin = true;
+    
 
     let filters = {}
 
@@ -30,25 +25,6 @@ router.get('/', auth.validateHeader, auth.validateAdmin, async (req,res)=>{
 
     let filteredUsers = await User.findUsers(filters, req.admin, 5,1);
 
-    // if(name){
-    //     filteredUsers = filteredUsers.filter(u => 
-    //                 u.name.toUpperCase().includes(name.toUpperCase())
-    //                 )
-    // }
-
-    // if(email){
-    //     filteredUsers = filteredUsers.filter(u => 
-    //                 u.email.toUpperCase().includes(email.toUpperCase())
-    //                 )
-    // }
-    // if(minId){
-    //     filteredUsers = filteredUsers.filter(u => u.id >= minId)
-    // }
-    // if(maxId){
-    //     filteredUsers = filteredUsers.filter(u => u.id <= maxId)
-    // }
-
-    // pageSize = pageSize? pageSize: 3
 
     res.send(filteredUsers)
 })
@@ -113,13 +89,7 @@ router.post('/', async (req,res)=>{
     return
     
 
-    // let error = ''
-    // if(name == undefined || !name.trim())
-    //     error += 'name is invalid;'
-    // if(email == undefined || !email.trim())
-    //     error += 'email is invalid'
-
-    // res.status(400).send({error})
+    
 
 })
 

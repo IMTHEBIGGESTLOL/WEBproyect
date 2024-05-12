@@ -318,9 +318,7 @@ function renderRecipe(obj, user){
     let chatRecipe = '';
     let delButtonChat = '';
     obj.chat.forEach((messa, index) => {
-        // Convert timestamp to a Date object
         const dateObj = new Date(messa.timestamp);
-        // Format date to a more readable format
         const formattedDate = dateObj.toLocaleString('en-US', {
             month: 'short',
             day: 'numeric',
@@ -625,7 +623,6 @@ recipeForm.addEventListener("submit", async function(event) {
         return category._id;
     });
 
-    // Enviar los datos a la API o realizar otras acciones según sea necesario
     //console.log("Datos de la receta:", recipeData);
 
     let resp = await fetch('/api/recipes/' + recipeId,{

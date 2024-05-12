@@ -101,7 +101,6 @@ function validateTokenWithCookie(req, res, next){
 
 const addSkipLimittoGet = () => {
     return (req, res, next) => {
-        // Puedes hacer lo que necesites con param1 y param2 aquí antes de llamar a next()
         req.skip = parseInt(req.query.skip) || 0; 
         req.limit = parseInt(req.query.limit) || 6;
         next();

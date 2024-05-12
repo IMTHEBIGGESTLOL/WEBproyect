@@ -75,7 +75,7 @@ userSchema.statics.findUsers= async (filter, isAdmin = false, pageSize=4, pageNu
     let docs = User.find(filter, proj).sort({name: 1}).populate('myrecipes', 'title').populate('friends', 'username name').populate('reviewsubscriptions', 'username').populate({
         path: 'favorites',
         select: 'title', // Selecciona solo el título de cada favorito
-        populate: { // Anidamos otra llamada a populate para el atributo 'author' de cada favorito
+        populate: { 
             path: 'author',
             select: 'username' // Selecciona solo el nombre de usuario del autor de cada favorito
         }

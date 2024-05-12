@@ -156,7 +156,6 @@ recipeForm.addEventListener("submit", async function(event) {
         return category.id;
     });
 
-    // Enviar los datos a la API o realizar otras acciones según sea necesario
     //console.log("Datos de la receta:", recipeData);
 
     let resp = await fetch('/api/recipes',{
