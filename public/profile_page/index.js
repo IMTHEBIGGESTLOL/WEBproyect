@@ -152,8 +152,6 @@ async function showUserData(section) {
     } catch (error) {
         console.error('Error obtaining user data:', error);
     }
-
-    
 }
 
 async function changePassword() {
@@ -197,6 +195,7 @@ showUserData('general');
 showUserData('personal-info');
 
 document.getElementById('saveBtnPassword').addEventListener('click', changePassword);
+
 
 function renderSubs(user){
 

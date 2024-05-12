@@ -39,6 +39,13 @@
   background-color: black;
 }
 
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+
 h3,p{
   color:rgb(46, 38, 38);
 }
